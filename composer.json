@@ -1,0 +1,17 @@
+{
+    "name": "pc/243436-task-force-1",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pavel Trofimov",
+            "email": "pavel.trofimov.tot@mail.ru"
+        }
+    ],
+    "require": {},
+    "autoload": {
+      "psr-4": {
+         "taskforce\\": "classes"
+      }
+    }
+}

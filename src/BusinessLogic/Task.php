@@ -1,8 +1,8 @@
 <?php
 
-namespace taskforse;
+namespace Taskforce\BusinessLogic;
 
-class ActionsAndStatuses
+class Task
 {
     const STATUS_NEW = 'new';
     const STATUS_CANCEL = 'cancel';
@@ -45,13 +45,27 @@ class ActionsAndStatuses
         ];
     }
 
-    public function getStatus()
+    public function getNextStatus($action)
     {
-        return $this->allStatus();
+        if ((string) self::ACTION_CANCEL === (string) $action) {
+            return self::STATUS_CANCEL;
+        } elseif ((string) self::ACTION_RESPONSE === (string) $action) {
+            return self::STATUS_WORK;
+        } elseif ((string) self::ACTION_PERFORMED === (string) $action) {
+            return self::STATUS_PERFORMED;
+        } else {
+            return self::STATUS_FAILED;
+        }
     }
 
-    public function getAction()
+    public function getAvailableActions($status)
     {
-        return $this->allAction();
+        if ((string) self::STATUS_NEW === (string) $status) {
+            return self::ACTION_RESPONSE;
+        } elseif ((string) self::STATUS_WORK === (string) $status) {
+            return [self::ACTION_PERFORMED, self::ACTION_REFUSE];
+        } else {
+            return null;
+        }
     }
 }

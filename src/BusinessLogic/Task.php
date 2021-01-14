@@ -45,27 +45,27 @@ class Task
         ];
     }
 
-    public function getNextStatus($action)
+    public function getNextStatus(string $action)
     {
-        if ((string) self::ACTION_CANCEL === (string) $action) {
+        if (self::ACTION_CANCEL === $action) {
             return self::STATUS_CANCEL;
-        } elseif ((string) self::ACTION_RESPONSE === (string) $action) {
+        } elseif (self::ACTION_RESPONSE === $action) {
             return self::STATUS_WORK;
-        } elseif ((string) self::ACTION_PERFORMED === (string) $action) {
+        } elseif (self::ACTION_PERFORMED === $action) {
             return self::STATUS_PERFORMED;
         } else {
             return self::STATUS_FAILED;
         }
     }
 
-    public function getAvailableActions($status)
+    public function getAvailableActions(string $status)
     {
-        if ((string) self::STATUS_NEW === (string) $status) {
+        if (self::STATUS_NEW === $status) {
             return self::ACTION_RESPONSE;
-        } elseif ((string) self::STATUS_WORK === (string) $status) {
+        } elseif (self::STATUS_WORK === $status) {
             return [self::ACTION_PERFORMED, self::ACTION_REFUSE];
         } else {
-            return null;
+            return [];
         }
     }
 }

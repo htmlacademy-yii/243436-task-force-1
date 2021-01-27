@@ -1,39 +1,62 @@
 <?php
-/*Тестовый коммент, чтобы создать пулреквест, в следующем задании удалю*/
 use Taskforce\BusinessLogic\Task;
+use Taskforce\BusinessLogic\ResponseAction;
+use Taskforce\BusinessLogic\PerformedAction;
+use Taskforce\BusinessLogic\RefuseAction;
+use Taskforce\BusinessLogic\CancelAction;
 
 require_once 'vendor/autoload.php';
 
-$strategy = new Task('Petr', 'Ivan');
+$responseAction = new ResponseAction('', '');
+$cancelAction = new CancelAction('', '');
+$performedAction = new PerformedAction('', '');
+$refuseAction = new RefuseAction('', '');
 
 assert(
-    $strategy->getNextStatus(Task::ACTION_CANCEL) === Task::STATUS_CANCEL, 'Статус не соответствует действию'
+    $cancelAction->getNextStatus(Task::ACTION_CANCEL) === Task::STATUS_CANCEL,
+    'Статус не соответствует действию'
 );
 assert(
-    $strategy->getNextStatus(Task::ACTION_RESPONSE) === Task::STATUS_WORK, 'Статус не соответствует действию'
+    $responseAction->getNextStatus(Task::ACTION_RESPONSE) === Task::STATUS_WORK,
+    'Статус не соответствует действию'
 );
 assert(
-    $strategy->getNextStatus(Task::ACTION_PERFORMED) === Task::STATUS_PERFORMED, 'Статус не соответствует действию'
+    $performedAction->getNextStatus(Task::ACTION_PERFORMED) === Task::STATUS_PERFORMED,
+    'Статус не соответствует действию'
 );
 assert(
-    $strategy->getNextStatus(Task::ACTION_REFUSE) === Task::STATUS_FAILED, 'Статус не соответствует действию'
+    $refuseAction->getNextStatus(Task::ACTION_REFUSE) === Task::STATUS_FAILED,
+    'Статус не соответствует действию'
 );
 
+
 assert(
-    $strategy->getAvailableActions(Task::STATUS_NEW) === Task::ACTION_RESPONSE, 'Статус не соответствует действию'
+    $responseAction->getAvailableActions(Task::STATUS_NEW)->isCompareID(5, 3)
+    && $responseAction->getAvailableActions(Task::STATUS_NEW)->getInsideAction() === Task::ACTION_RESPONSE,
+    'Статус не соответствует действию'
 );
 assert(
-    $strategy->getAvailableActions(Task::STATUS_CANCEL) === [], 'Статус не соответствует действию'
+    $cancelAction->getAvailableActions(Task::STATUS_CANCEL)->isCompareID(5, 5)
+    && $cancelAction->getAvailableActions(Task::STATUS_CANCEL)->getInsideAction() === Task::ACTION_CANCEL,
+    'Статус не соответствует действию'
 );
 assert(
-    $strategy->getAvailableActions(Task::STATUS_WORK)[0] === Task::ACTION_PERFORMED, 'Статус не соответствует действию'
+    $performedAction->getAvailableActions(Task::STATUS_WORK)[0]->isCompareID(5, 5)
+    && $performedAction->getAvailableActions(Task::STATUS_WORK)[0]->getInsideAction() === Task::ACTION_PERFORMED,
+    'Статус не соответствует действию'
 );
 assert(
-    $strategy->getAvailableActions(Task::STATUS_WORK)[1] === Task::ACTION_REFUSE, 'Статус не соответствует действию'
+    $refuseAction->getAvailableActions(Task::STATUS_WORK)[1]->isCompareID(5, 3)
+    && $refuseAction->getAvailableActions(Task::STATUS_WORK)[1]->getInsideAction() === Task::ACTION_REFUSE,
+    'Статус не соответствует действию'
 );
 assert(
-    $strategy->getAvailableActions(Task::STATUS_PERFORMED) === [], 'Статус не соответствует действию'
+    $cancelAction->getAvailableActions(Task::STATUS_PERFORMED)->isCompareID(5, 5)
+    && $cancelAction->getAvailableActions(Task::STATUS_PERFORMED)->getInsideAction() === Task::ACTION_CANCEL,
+    'Статус не соответствует действию'
 );
 assert(
-    $strategy->getAvailableActions(Task::STATUS_FAILED) === [], 'Статус не соответствует действию'
+    $cancelAction->getAvailableActions(Task::STATUS_FAILED)->isCompareID(5, 5)
+    && $cancelAction->getAvailableActions(Task::STATUS_FAILED)->getInsideAction() === Task::ACTION_CANCEL,
+    'Статус не соответствует действию'
 );

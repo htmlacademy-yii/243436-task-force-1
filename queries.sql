@@ -65,17 +65,13 @@ VALUES
   ('2019-08-10', 'kbuttress0@1und1.de', 'Karrie Buttress', 'JcfoKBYAB4k'),
   ('2018-12-21', 'baymer1@hp.com', 'Bob Aymer', 'ZEE54kg');
 
-INSERT INTO statuses
-  (name)
-VALUES
-  ('Новое'), ('Отменено'), ('В работе'), ('Выполнено'), ('Провалено');
-
 INSERT INTO tasks
   (date_add, category_id, path, description, expire, name, address, budget, city_id, lat, lon, user_id_create,
-  status_id, user_id_executor)
+  status_id, user_id_executor, status)
 VALUES
   ('2019-03-09', 2, 'img/cargo.png', 'Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.',
-  '2019-11-15', 'enable impactful technologies', '1 Eagan Crossing', 6587, 1, 6.9641667, 158.2083333, 1, 2, 1);
+  '2019-11-15', 'enable impactful technologies', '1 Eagan Crossing', 6587, 1, 6.9641667, 158.2083333, 1, 2, 1,
+  'В работе');
 
 INSERT INTO users_and_categories
   (user_id, category_id)

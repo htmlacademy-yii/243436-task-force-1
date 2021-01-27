@@ -13,13 +13,13 @@ VALUES
   ('Фото', 'photo');
 
 INSERT INTO cities
-  (city, lat, `long`)
+  (city, lat, lon)
 VALUES
   ('Абаза', 52.6517296, 90.0885929),
   ('Абакан', 53.7223661, 91.4437792);
 
 INSERT INTO opinions
-  (dt_add, rate, description)
+  (date_add, rate, description)
 VALUES
   ('2019-08-19', 3, 'Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla
   eget eros elementum pellentesque.
@@ -36,14 +36,14 @@ VALUES
   Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.');
 
 INSERT INTO profiles
-  (address, bd, about, phone, skype)
+  (city_id, birthday, about, phone, skype)
 VALUES
-  ('38737 Moose Avenue', '1989-11-11', 'In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat.',
+  (1, '1989-11-11', 'In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat.',
   64574473047, 'high-level'),
-  ('738 Hagan Lane', '1989-03-05', 'Pellentesque ultrices mattis odio.', 75531015353, 'mobile');
+  (2, '1989-03-05', '738 Hagan Lane', 75531015353, 'mobile');
 
 INSERT INTO replies
-  (dt_add, rate, description)
+  (date_add, rate, description)
 VALUES
   ('2019-05-09', 1, 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin
   vitae, consectetuer eget, rutrum at, lorem.
@@ -59,14 +59,32 @@ VALUES
   In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec
   condimentum neque sapien placerat ante. Nulla justo.');
 
-INSERT INTO tasks
-  (dt_add, category_id, path, description, expire, name, address, budget, city_id, lat, `long`)
-VALUES
-  ('2019-03-09', 2, 'img/cargo.png', 'Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.',
-  '2019-11-15', 'enable impactful technologies', '1 Eagan Crossing', 6587, 1, 6.9641667, 158.2083333);
-
 INSERT INTO users
-  (dt_add, email, name, password)
+  (date_add, email, name, password)
 VALUES
   ('2019-08-10', 'kbuttress0@1und1.de', 'Karrie Buttress', 'JcfoKBYAB4k'),
   ('2018-12-21', 'baymer1@hp.com', 'Bob Aymer', 'ZEE54kg');
+
+INSERT INTO statuses
+  (name)
+VALUES
+  ('Новое'), ('Отменено'), ('В работе'), ('Выполнено'), ('Провалено');
+
+INSERT INTO tasks
+  (date_add, category_id, path, description, expire, name, address, budget, city_id, lat, lon, user_id_create,
+  status_id, user_id_executor)
+VALUES
+  ('2019-03-09', 2, 'img/cargo.png', 'Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.',
+  '2019-11-15', 'enable impactful technologies', '1 Eagan Crossing', 6587, 1, 6.9641667, 158.2083333, 1, 2, 1);
+
+INSERT INTO users_and_categories
+  (user_id, category_id)
+VALUES
+  (1, 1), (2, 2);
+
+INSERT INTO messages
+  (message, user_id_create, user_id_executor)
+VALUES
+  ('Тестовое сообщение', 1, 2), ('Hellow world', 2, 1);
+
+

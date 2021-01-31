@@ -2,7 +2,7 @@
 
 namespace Taskforce\BusinessLogic;
 
-class RefuseAction extends Task
+class RefuseAction extends Action
 {
 
     public function getNameAction()
@@ -12,13 +12,13 @@ class RefuseAction extends Task
 
     public function getInsideAction()
     {
-        return self::ACTION_REFUSE;
+        return 'refuse';
     }
 
-    public function isCompareID($executorID, $customerID)
+    public function isCompareID($currentID, $executorID, $customerID)
     {
-        if ((int) $executorID !== (int) $customerID) {
-            return true;
+        if ($currentID === $executorID) {
+            return (int) $executorID !== (int) $customerID;
         } else {
             return false;
         }

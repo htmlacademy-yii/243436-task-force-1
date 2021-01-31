@@ -2,7 +2,7 @@
 
 namespace Taskforce\BusinessLogic;
 
-class PerformedAction extends Task
+class PerformedAction extends Action
 {
 
     public function getNameAction()
@@ -12,13 +12,13 @@ class PerformedAction extends Task
 
     public function getInsideAction()
     {
-        return self::ACTION_PERFORMED;
+        return 'performed';
     }
 
-    public function isCompareID($executorID, $customerID)
+    public function isCompareID($currentID, $executorID, $customerID)
     {
-        if ((int) $executorID === (int) $customerID) {
-            return true;
+        if ($currentID !== $executorID) {
+            return (int) $executorID === (int) $customerID;
         } else {
             return false;
         }

@@ -10,11 +10,6 @@ abstract class Task
     const STATUS_PERFORMED = 'performed';
     const STATUS_FAILED = 'failed';
 
-    const ACTION_CANCEL = 'cancel';
-    const ACTION_RESPONSE = 'response';
-    const ACTION_PERFORMED = 'performed';
-    const ACTION_REFUSE = 'refuse';
-
     public $executor;
     public $customer;
 
@@ -35,35 +30,15 @@ abstract class Task
         ];
     }
 
-    public function allAction()
-    {
-        return [
-            self::ACTION_CANCEL => 'Отменить',
-            self::ACTION_RESPONSE => 'Откликнуться',
-            self::ACTION_PERFORMED => 'Выполнено',
-            self::ACTION_REFUSE => 'Отказаться'
-        ];
-    }
-
-    public function getNextStatus(string $action)
-    {
-        if (self::ACTION_CANCEL === $action) {
-            return self::STATUS_CANCEL;
-        } elseif (self::ACTION_RESPONSE === $action) {
-            return self::STATUS_WORK;
-        } elseif (self::ACTION_PERFORMED === $action) {
-            return self::STATUS_PERFORMED;
-        } else {
-            return self::STATUS_FAILED;
-        }
-    }
-
     public function getAvailableActions(string $status)
     {
         if (self::STATUS_NEW === $status) {
             return new ResponseAction('', '');
         } elseif (self::STATUS_WORK === $status) {
-            return [new PerformedAction('', '') , new RefuseAction('', '')];
+            return [
+                new PerformedAction('', ''),
+                new RefuseAction('', '')
+            ];
         } else {
             return new CancelAction('', '');
         }
@@ -71,5 +46,9 @@ abstract class Task
 
     abstract function getNameAction();
     abstract function getInsideAction();
-    abstract function isCompareID($executorID, $customerID);
+    abstract function isCompareID(
+        int $currentID,
+        int $executorID,
+        int $customerID
+    );
 }

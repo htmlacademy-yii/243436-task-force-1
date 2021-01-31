@@ -2,7 +2,7 @@
 
 namespace Taskforce\BusinessLogic;
 
-class CancelAction extends Task
+class CancelAction extends Action
 {
 
     public function getNameAction()
@@ -12,13 +12,13 @@ class CancelAction extends Task
 
     public function getInsideAction()
     {
-        return self::ACTION_CANCEL;
+        return 'cancel';
     }
 
-    public function isCompareID($executorID, $customerID)
+    public function isCompareID($currentID, $executorID, $customerID)
     {
-        if ((int) $executorID === (int) $customerID) {
-            return true;
+        if ($currentID !== $executorID) {
+            return (int) $executorID === (int) $customerID;
         } else {
             return false;
         }

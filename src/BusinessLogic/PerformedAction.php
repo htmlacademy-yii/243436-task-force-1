@@ -7,7 +7,7 @@ class PerformedAction extends Action
 
     public function getNameAction()
     {
-        return parent::allAction()[self::ACTION_PERFORMED];
+        return 'Выполнено';
     }
 
     public function getInsideAction()
@@ -15,12 +15,8 @@ class PerformedAction extends Action
         return 'performed';
     }
 
-    public function isCompareID($currentID, $executorID, $customerID)
+    public function isCompareID($currentID, $executorID = null, $customerID)
     {
-        if ($currentID !== $executorID) {
-            return (int) $executorID === (int) $customerID;
-        } else {
-            return false;
-        }
+        return (int) $currentID === (int) $customerID;
     }
 }

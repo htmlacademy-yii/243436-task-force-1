@@ -4,10 +4,9 @@ namespace Taskforce\BusinessLogic;
 
 class ResponseAction extends Action
 {
-
     public function getNameAction()
     {
-        return parent::allAction()[self::ACTION_RESPONSE];
+        return 'Откликнуться';
     }
 
     public function getInsideAction()
@@ -15,12 +14,8 @@ class ResponseAction extends Action
         return 'response';
     }
 
-    public function isCompareID($currentID, $executorID, $customerID)
+    public function isCompareID($currentID, $executorID, $customerID = null)
     {
-        if ($currentID === $executorID) {
-            return $executorID !== $customerID;
-        } else {
-            return false;
-        }
+        return (int) $currentID === (int) $executorID;
     }
 }

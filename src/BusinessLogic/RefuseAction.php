@@ -7,7 +7,7 @@ class RefuseAction extends Action
 
     public function getNameAction()
     {
-        return parent::allAction()[self::ACTION_REFUSE];
+        return 'Отказаться';
     }
 
     public function getInsideAction()
@@ -15,12 +15,8 @@ class RefuseAction extends Action
         return 'refuse';
     }
 
-    public function isCompareID($currentID, $executorID, $customerID)
+    public function isCompareID($currentID, $executorID, $customerID = null)
     {
-        if ($currentID === $executorID) {
-            return (int) $executorID !== (int) $customerID;
-        } else {
-            return false;
-        }
+        return (int) $currentID === (int) $executorID;
     }
 }

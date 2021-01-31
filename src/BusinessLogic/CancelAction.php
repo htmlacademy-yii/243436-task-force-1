@@ -7,7 +7,7 @@ class CancelAction extends Action
 
     public function getNameAction()
     {
-        return parent::allAction()[self::ACTION_CANCEL];
+        return 'Отменить';
     }
 
     public function getInsideAction()
@@ -15,12 +15,8 @@ class CancelAction extends Action
         return 'cancel';
     }
 
-    public function isCompareID($currentID, $executorID, $customerID)
+    public function isCompareID($currentID, $executorID = null, $customerID)
     {
-        if ($currentID !== $executorID) {
-            return (int) $executorID === (int) $customerID;
-        } else {
-            return false;
-        }
+        return (int) $currentID === (int) $customerID;
     }
 }

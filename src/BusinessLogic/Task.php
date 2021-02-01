@@ -61,11 +61,14 @@ class Task
     public function getAvailableActions(string $status)
     {
         if (self::STATUS_NEW === $status) {
-            return self::ACTION_RESPONSE;
+            return new ResponseAction('', '');
         } elseif (self::STATUS_WORK === $status) {
-            return [self::ACTION_PERFORMED, self::ACTION_REFUSE];
+            return [
+                new PerformedAction('', ''),
+                new RefuseAction('', '')
+            ];
         } else {
-            return [];
+            return new CancelAction('', '');
         }
     }
 }

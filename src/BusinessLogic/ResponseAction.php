@@ -1,21 +1,29 @@
 <?php
 
 namespace Taskforce\BusinessLogic;
+use Taskforce\Exception\RoleException;
 
 class ResponseAction extends Action
 {
-    public function getNameAction()
+    public function getNameAction() : string
     {
         return 'Откликнуться';
     }
 
-    public function getInsideAction()
+    public function getInsideAction() : string
     {
         return 'response';
     }
 
-    public function isCompareID($currentID, $executorID, $customerID = null)
+    public function checkRole(int $currentID, int $customerID) : void
     {
-        return (int) $currentID === (int) $executorID;
+        if ($currentID !== $customerID) {
+            throw new RoleException("У вас нет прав");
+        }
+    }
+
+    public function isCompareID($currentID, $executorID, $customerID) : bool
+    {
+        return $currentID === $executorID;
     }
 }

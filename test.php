@@ -1,9 +1,57 @@
 <?php
+
+use Taskforce\BusinessLogic\CancelAction;
+use Taskforce\BusinessLogic\ResponseAction;
+use Taskforce\BusinessLogic\PerformedAction;
+use Taskforce\BusinessLogic\RefuseAction;
 use Taskforce\BusinessLogic\Task;
+use Taskforce\Exception\ActionException;
+use Taskforce\Exception\StatusException;
+use Taskforce\Exception\RoleException;
 
 require_once 'vendor/autoload.php';
 
 $task = new Task('', '');
+$cancelAction = new CancelAction();
+$responseAction = new ResponseAction();
+$performedAction = new PerformedAction();
+$refuseAction = new RefuseAction();
+
+try {
+    $task->checkStatus($task->allStatus()[Task::STATUS_NEW]);
+} catch (StatusException $e) {
+    echo die($e->getMessage());
+}
+
+try {
+    $task->checkAction($task->allAction()[Task::ACTION_CANCEL]);
+} catch (ActionException $e) {
+    echo die($e->getMessage());
+}
+
+try {
+    $cancelAction->checkRole(5, 5);
+} catch (RoleException $e) {
+    echo die($e->getMessage());
+}
+
+try {
+    $responseAction->checkRole(5, 5);
+} catch (RoleException $e) {
+    echo die($e->getMessage());
+}
+
+try {
+    $performedAction->checkRole(5, 5);
+} catch (RoleException $e) {
+    echo die($e->getMessage());
+}
+
+try {
+    $refuseAction->checkRole(5, 5);
+} catch (RoleException $e) {
+    echo die($e->getMessage());
+}
 
 assert(
     $task->getNextStatus(Task::ACTION_RESPONSE) === Task::STATUS_WORK,

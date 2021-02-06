@@ -1,22 +1,30 @@
 <?php
 
 namespace Taskforce\BusinessLogic;
+use Taskforce\Exception\RoleException;
 
 class CancelAction extends Action
 {
 
-    public function getNameAction()
+    public function getNameAction() : string
     {
         return 'Отменить';
     }
 
-    public function getInsideAction()
+    public function getInsideAction() : string
     {
         return 'cancel';
     }
 
-    public function isCompareID($currentID, $executorID = null, $customerID)
+    public function checkRole(int $currentID, int $customerID) : void
     {
-        return (int) $currentID === (int) $customerID;
+        if ($currentID !== $customerID) {
+            throw new RoleException("У вас нет прав");
+        }
+    }
+
+    public function isCompareID($currentID, $executorID, $customerID) : bool
+    {
+        return $currentID === $customerID;
     }
 }

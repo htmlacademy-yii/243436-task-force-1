@@ -6,5 +6,5 @@ abstract class Action
 {
     abstract function getNameAction();
     abstract function getInsideAction();
-    abstract function isCompareID($currentID, $executorID, $customerID);
+    abstract function isCompareID(int $currentID, ?int $executorID, ?int $customerID);
 }

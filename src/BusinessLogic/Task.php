@@ -1,6 +1,8 @@
 <?php
 
 namespace Taskforce\BusinessLogic;
+use Taskforce\Exception\StatusException;
+use Taskforce\Exception\ActionException;
 
 class Task
 {
@@ -18,13 +20,13 @@ class Task
     public $executor;
     public $customer;
 
-    public function __construct($executor, $customer)
+    public function __construct(string $executor,string $customer)
     {
         $this->executor = $executor;
         $this->customer = $customer;
     }
 
-    public function allStatus()
+    public function allStatus() : array
     {
         return [
             self::STATUS_NEW => 'Новое',
@@ -35,7 +37,14 @@ class Task
         ];
     }
 
-    public function allAction()
+    public function checkStatus (string $status) : void
+    {
+        if (!in_array($status, $this->allStatus())) {
+            throw new StatusException("Задан неверный статус");
+        }
+    }
+
+    public function allAction() : array
     {
         return [
             self::ACTION_CANCEL => 'Отменить',
@@ -45,7 +54,14 @@ class Task
         ];
     }
 
-    public function getNextStatus(string $action)
+    public function checkAction (string $action) : void
+    {
+        if (!in_array($action, $this->allAction())) {
+            throw new ActionException("Действие недоступно");
+        }
+    }
+
+    public function getNextStatus(string $action) : string
     {
         if (self::ACTION_CANCEL === $action) {
             return self::STATUS_CANCEL;

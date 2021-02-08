@@ -1,9 +1,66 @@
 <?php
+
 use Taskforce\BusinessLogic\Task;
+use Taskforce\Exception\ActionException;
+use Taskforce\Exception\StatusException;
 
 require_once 'vendor/autoload.php';
 
 $task = new Task('', '');
+
+try {
+    $task->getAvailableActions(Task::STATUS_NEW);
+} catch (StatusException $e) {
+    echo die($e->getMessage());
+}
+
+try {
+    $task->getAvailableActions(Task::STATUS_CANCEL);
+} catch (StatusException $e) {
+    echo die($e->getMessage());
+}
+
+try {
+    $task->getAvailableActions(Task::STATUS_WORK);
+} catch (StatusException $e) {
+    echo die($e->getMessage());
+}
+
+try {
+    $task->getAvailableActions(Task::STATUS_PERFORMED);
+} catch (StatusException $e) {
+    echo die($e->getMessage());
+}
+
+try {
+    $task->getAvailableActions(Task::STATUS_FAILED);
+} catch (StatusException $e) {
+    echo die($e->getMessage());
+}
+
+try {
+    $task->getNextStatus(Task::ACTION_CANCEL);
+} catch (ActionException $e) {
+    echo die($e->getMessage());
+}
+
+try {
+    $task->getNextStatus(Task::ACTION_RESPONSE);
+} catch (ActionException $e) {
+    echo die($e->getMessage());
+}
+
+try {
+    $task->getNextStatus(Task::ACTION_PERFORMED);
+} catch (ActionException $e) {
+    echo die($e->getMessage());
+}
+
+try {
+    $task->getNextStatus(Task::ACTION_REFUSE);
+} catch (ActionException $e) {
+    echo die($e->getMessage());
+}
 
 assert(
     $task->getNextStatus(Task::ACTION_RESPONSE) === Task::STATUS_WORK,

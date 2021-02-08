@@ -4,18 +4,18 @@ namespace Taskforce\BusinessLogic;
 
 class ResponseAction extends Action
 {
-    public function getNameAction()
+    public function getNameAction() : string
     {
         return 'Откликнуться';
     }
 
-    public function getInsideAction()
+    public function getInsideAction() : string
     {
         return 'response';
     }
 
-    public function isCompareID($currentID, $executorID, $customerID = null)
+    public function isCompareID(int $currentID, ?int $executorID, ?int $customerID) : bool
     {
-        return (int) $currentID === (int) $executorID;
+        return $currentID === $executorID;
     }
 }

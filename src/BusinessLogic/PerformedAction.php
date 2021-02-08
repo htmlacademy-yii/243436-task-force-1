@@ -5,18 +5,18 @@ namespace Taskforce\BusinessLogic;
 class PerformedAction extends Action
 {
 
-    public function getNameAction()
+    public function getNameAction() : string
     {
         return 'Выполнено';
     }
 
-    public function getInsideAction()
+    public function getInsideAction() : string
     {
         return 'performed';
     }
 
-    public function isCompareID($currentID, $executorID = null, $customerID)
+    public function isCompareID(int $currentID, ?int $executorID, ?int $customerID) : bool
     {
-        return (int) $currentID === (int) $customerID;
+        return $currentID === $customerID;
     }
 }

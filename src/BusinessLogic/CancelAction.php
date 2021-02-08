@@ -5,18 +5,18 @@ namespace Taskforce\BusinessLogic;
 class CancelAction extends Action
 {
 
-    public function getNameAction()
+    public function getNameAction() : string
     {
         return 'Отменить';
     }
 
-    public function getInsideAction()
+    public function getInsideAction() : string
     {
         return 'cancel';
     }
 
-    public function isCompareID($currentID, $executorID = null, $customerID)
+    public function isCompareID(int $currentID, ?int $executorID, ?int $customerID) : bool
     {
-        return (int) $currentID === (int) $customerID;
+        return $currentID === $customerID;
     }
 }

@@ -39,7 +39,9 @@ class Task
 
     public function checkStatus (string $status) : void
     {
-        if (!in_array($status, $this->allStatus())) {
+        $statusList = ['new', 'cancel', 'work', 'performed', 'failed'];
+
+        if (!in_array($status, $statusList)) {
             throw new StatusException("Задан неверный статус");
         }
     }
@@ -54,15 +56,19 @@ class Task
         ];
     }
 
-    public function checkAction (string $action) : void
+    private function checkAction(string $action) : void
     {
-        if (!in_array($action, $this->allAction())) {
+        $actionList = ['cancel', 'response', 'performed', 'refuse'];
+
+        if (!in_array($action, $actionList)) {
             throw new ActionException("Действие недоступно");
         }
     }
 
     public function getNextStatus(string $action) : string
     {
+        $this->checkAction($action);
+
         if (self::ACTION_CANCEL === $action) {
             return self::STATUS_CANCEL;
         } elseif (self::ACTION_RESPONSE === $action) {
@@ -76,6 +82,8 @@ class Task
 
     public function getAvailableActions(string $status)
     {
+        $this->checkStatus($status);
+
         if (self::STATUS_NEW === $status) {
             return new ResponseAction('', '');
         } elseif (self::STATUS_WORK === $status) {

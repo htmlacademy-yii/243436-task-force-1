@@ -1,7 +1,6 @@
 <?php
 
 namespace Taskforce\BusinessLogic;
-use Taskforce\Exception\RoleException;
 
 class RefuseAction extends Action
 {
@@ -16,14 +15,7 @@ class RefuseAction extends Action
         return 'refuse';
     }
 
-    public function checkRole(int $currentID, int $executorID) : void
-    {
-        if ($currentID !== $executorID) {
-            throw new RoleException("У вас нет прав");
-        }
-    }
-
-    public function isCompareID($currentID, $executorID, $customerID) : bool
+    public function isCompareID(int $currentID, ?int $executorID, ?int $customerID) : bool
     {
         return $currentID === $executorID;
     }

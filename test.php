@@ -3,6 +3,7 @@
 use Taskforce\BusinessLogic\Task;
 use Taskforce\Exception\ActionException;
 use Taskforce\Exception\StatusException;
+use Taskforce\Importer\SQLGenerator;
 
 require_once 'vendor/autoload.php';
 
@@ -110,3 +111,22 @@ assert(
     && $task->getAvailableActions(Task::STATUS_FAILED)->getInsideAction() === Task::ACTION_CANCEL,
     'Статус не соответствует действию'
 );
+
+$SQLgenerator = new SQLGenerator();
+
+$file = [
+    'categories'=>['name', 'icon'],
+    'cities'=>['city','lat','lon'],
+    'messages'=>['message', 'user_id_create', 'user_id_executor'],
+    'opinions'=>['date_add', 'rate', 'description'],
+    'profiles'=>['city_id', 'birthday', 'about', 'phone', 'skype'],
+    'replies'=>['date_add', 'rate', 'description'],
+    'tasks'=>['date_add', 'category_id', 'path', 'description', 'expire', 'name', 'address', 'budget', 'lat', 'lon',
+    'city_id', 'user_id_create', 'user_id_executor', 'status'],
+    'users_and_categories'=>['user_id', 'category_id'],
+    'users'=>['email', 'name', 'password', 'date_add']
+];
+
+foreach($file as $key=>$value) {
+    $SQLgenerator->Generator($key, $value);
+}

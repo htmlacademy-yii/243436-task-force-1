@@ -15,7 +15,7 @@ CREATE TABLE cities (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	city VARCHAR(100) NOT NULL,
 	lat DOUBLE NOT NULL,
-	lon DOUBLE UNSIGNED NOT NULL
+	lon DOUBLE NOT NULL
 );
 
 CREATE TABLE opinions (
@@ -43,10 +43,10 @@ CREATE TABLE replies (
 
 CREATE TABLE users (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	date_add DATETIME NOT NULL,
   email VARCHAR(72) NOT NULL,
 	name VARCHAR(100) NOT NULL,
-	password CHAR(64) NOT NULL
+	password CHAR(64) NOT NULL,
+  date_add DATETIME NOT NULL
 );
 
 CREATE TABLE tasks (
@@ -59,9 +59,9 @@ CREATE TABLE tasks (
   name VARCHAR(255) NOT NULL,
   address VARCHAR(700),
   budget INT UNSIGNED,
+  lat DOUBLE,
+	lon DOUBLE,
   city_id INT UNSIGNED,
-  lat DOUBLE UNSIGNED,
-	lon DOUBLE UNSIGNED,
   user_id_create INT UNSIGNED NOT NULL,
   user_id_executor INT UNSIGNED,
   status VARCHAR(100) NOT NULL
@@ -83,7 +83,6 @@ ALTER TABLE tasks ADD FOREIGN KEY (category_id) REFERENCES categories(id);
 ALTER TABLE tasks ADD FOREIGN KEY (city_id) REFERENCES cities(id);
 ALTER TABLE tasks ADD FOREIGN KEY (user_id_create) REFERENCES users(id);
 ALTER TABLE tasks ADD FOREIGN KEY (user_id_executor) REFERENCES users(id);
-ALTER TABLE tasks ADD FOREIGN KEY (status_id) REFERENCES statuses(id);
 ALTER TABLE profiles ADD FOREIGN KEY (city_id) REFERENCES cities(id);
 ALTER TABLE users_and_categories ADD FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE users_and_categories ADD FOREIGN KEY (category_id) REFERENCES categories(id);

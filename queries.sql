@@ -70,8 +70,7 @@ INSERT INTO tasks
   status_id, user_id_executor, status)
 VALUES
   ('2019-03-09', 2, 'img/cargo.png', 'Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.',
-  '2019-11-15', 'enable impactful technologies', '1 Eagan Crossing', 6587, 1, 6.9641667, 158.2083333, 1, 2, 1,
-  'В работе');
+  '2019-11-15', 'enable impactful technologies', '1 Eagan Crossing', 6587,1,1,2,1,В работе);
 
 INSERT INTO users_and_categories
   (user_id, category_id)

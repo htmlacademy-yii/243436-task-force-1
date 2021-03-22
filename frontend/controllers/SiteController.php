@@ -14,6 +14,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\Categories;
 
 /**
  * Site controller
@@ -256,5 +257,12 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    public function actionTest()
+    {
+        $categories = Categories::find()->all();
+
+        return $this->render('test', compact('categories'));
     }
 }

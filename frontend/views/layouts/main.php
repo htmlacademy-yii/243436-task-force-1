@@ -1,5 +1,8 @@
 <?php
     use yii\helpers\Html;
+    use frontend\assets\AppAsset;
+
+    AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -111,7 +114,7 @@
             </div>
             <div class="header__account">
                 <a class="header__account-photo">
-                <img src="./img/user-photo.png"
+                <img src="../../img/user-photo.png"
                     width="43" height="44"
                     alt="Аватар пользователя">
                 </a>
@@ -135,7 +138,9 @@
             </div>
         </header>
         <main class="page-main">
-            <?= $content; ?>
+            <div class="main-container page-container">
+                <?= $content; ?>
+            </div>
         </main>
         <footer class="page-footer">
             <div class="main-container page-footer__container">
@@ -174,7 +179,7 @@
             <div class="page-footer__copyright">
                 <a>
                 <img class="copyright-logo"
-                    src="./img/academy-logo.png"
+                    src="../../img/academy-logo.png"
                     width="185" height="63"
                     alt="Логотип HTML Academy">
                 </a>

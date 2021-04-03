@@ -9,9 +9,20 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'language' => 'ru-RU',
+    'charset' => 'utf-8',
+    'bootstrap' => 'log',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@frontend/messages',
+                    'sourceLanguage' => 'ru'
+                ],
+            ],
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'baseUrl' => ''
@@ -44,7 +55,6 @@ return [
             'rules' => [
             ],
         ],
-
     ],
     'params' => $params,
 ];

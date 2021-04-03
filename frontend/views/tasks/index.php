@@ -2,7 +2,6 @@
         <div class="new-task__wrapper">
           <h1>Новые задания</h1>
           <?php foreach($tasks as $task) : ?>
-            <?php if((string) $task->status === 'Новое') : ?>
                 <div class="new-task__card">
                     <div class="new-task__title">
                     <a href="view.html" class="link-regular"><h2><?= $task->name; ?></h2></a>
@@ -12,9 +11,8 @@
                     <p class="new-task_description"><?= $task->description; ?></p>
                     <b class="new-task__price new-task__price--translation"><?= $task->budget; ?><b> ₽</b></b>
                     <p class="new-task__place"><?= $task->city->city; ?></p>
-                    <span class="new-task__time"><?= get_time_rate($task->date_add); ?></span>
+                    <span class="new-task__time"><?= Yii::$app->formatter->asRelativeTime($task->date_add); ?></span>
                 </div>
-            <?php endif; ?>
           <?php endforeach; ?>
         </div>
         <div class="new-task__pagination">

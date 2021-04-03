@@ -59,7 +59,7 @@ class Messages extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUserIdCreate()
+    public function getCreator()
     {
         return $this->hasOne(Users::class, ['id' => 'user_id_create']);
     }
@@ -69,7 +69,7 @@ class Messages extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUserIdExecutor()
+    public function getExecutor()
     {
         return $this->hasOne(Users::class, ['id' => 'user_id_executor']);
     }

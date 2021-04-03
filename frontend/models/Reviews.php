@@ -61,7 +61,7 @@ class Reviews extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUserIdCreate()
+    public function getCreator()
     {
         return $this->hasOne(Users::class, ['id' => 'user_id_create']);
     }
@@ -71,20 +71,8 @@ class Reviews extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUserIdExecutor()
+    public function getExecutor()
     {
         return $this->hasOne(Users::class, ['id' => 'user_id_executor']);
-    }
-
-    /**
-     * Считает сумму поставленных оценок по отзывам для пользователя.
-     *
-     * @param int $id id исполнителя
-     *
-     * @return string возвращает сумму поставленных оценок
-     */
-    public function sumRating(int $id)
-    {
-        return $this->find()->where(['user_id_executor' => $id])->sum('rating');
     }
 }

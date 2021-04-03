@@ -97,7 +97,7 @@ class Users extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMessages()
+    public function getMessagesCreator()
     {
         return $this->hasMany(Messages::class, ['user_id_create' => 'id']);
     }
@@ -107,7 +107,7 @@ class Users extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMessages0()
+    public function getMessagesExecutor()
     {
         return $this->hasMany(Messages::class, ['user_id_executor' => 'id']);
     }
@@ -117,7 +117,7 @@ class Users extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getReviews()
+    public function getReviewsCreator()
     {
         return $this->hasMany(Reviews::class, ['user_id_create' => 'id']);
     }
@@ -127,7 +127,7 @@ class Users extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getReviews0()
+    public function getReviewsCount()
     {
         return $this->hasMany(Reviews::class, ['user_id_executor' => 'id'])->count();
     }
@@ -137,7 +137,7 @@ class Users extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTasks()
+    public function getTasksCreator()
     {
         return $this->hasMany(Tasks::class, ['user_id_create' => 'id']);
     }
@@ -147,7 +147,7 @@ class Users extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTasks0()
+    public function getTasksCount()
     {
         return $this->hasMany(Tasks::class, ['user_id_executor' => 'id'])->count();
     }
@@ -167,19 +167,24 @@ class Users extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsersAndSkills()
+    public function getSkills()
     {
         return $this->hasMany(Skills::class, ['id' => 'skill_id'])->viaTable('users_and_skills', ['user_id' => 'id']);
     }
 
-    public function getAverageRating($id)
+    /**
+     * Считает среднюю оценку по отзывам.
+     *
+     * @return string|null возвращает среднюю оценку всех отзывов
+     */
+    public function getAverageRating()
     {
-        $sum = new Reviews;
+        $sum_rating = Reviews::find()->where(['user_id_executor' => $this->id])->sum('rating');
 
-        if((int) $sum->sumRating($id) !== 0) {
-            return round($sum->sumRating($id)/$this->getReviews0());
+        if((int) $sum_rating !== 0) {
+            return round($sum_rating/$this->getReviewsCount());
         } else {
-            return 'Пока отзывов не было';
+            return null;
         }
     }
 }

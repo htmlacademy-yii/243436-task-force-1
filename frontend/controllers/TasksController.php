@@ -9,8 +9,11 @@ class TasksController extends Controller
 {
     public function actionIndex()
     {
+        $this->view->title = 'Новый задания';
+
         $tasks = Tasks::find()
-            ->joinWith(['category', 'city', 'userIdCreate', 'userIdExecutor'])
+            ->where(['status' => 'Новое'])
+            ->joinWith(['category', 'city', 'creator', 'executor'])
             ->orderBy('date_add DESC')->all();
 
         return $this->render('index', compact('tasks'));

@@ -5,24 +5,25 @@ namespace frontend\models;
 use Yii;
 
 /**
- * This is the model class for table "messages".
+ * This is the model class for table "reviews".
  *
  * @property int $id
- * @property string $message
- * @property int|null $user_id_create
- * @property int|null $user_id_executor
+ * @property string $review
+ * @property int $rating
+ * @property int $user_id_create
+ * @property int $user_id_executor
  *
  * @property Users $userIdCreate
  * @property Users $userIdExecutor
  */
-class Messages extends \yii\db\ActiveRecord
+class Reviews extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'messages';
+        return 'reviews';
     }
 
     /**
@@ -31,9 +32,9 @@ class Messages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['message'], 'required'],
-            [['message'], 'string'],
-            [['user_id_create', 'user_id_executor'], 'integer'],
+            [['review', 'rating', 'user_id_create', 'user_id_executor'], 'required'],
+            [['review'], 'string'],
+            [['rating', 'user_id_create', 'user_id_executor'], 'integer'],
             [['user_id_create'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' =>
             ['user_id_create' => 'id']],
             [['user_id_executor'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' =>
@@ -48,7 +49,8 @@ class Messages extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'message' => 'Message',
+            'review' => 'Review',
+            'rating' => 'Rating',
             'user_id_create' => 'User Id Create',
             'user_id_executor' => 'User Id Executor',
         ];

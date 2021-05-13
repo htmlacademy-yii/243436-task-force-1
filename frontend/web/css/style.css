@@ -421,6 +421,18 @@ footer {
   margin-top: 0;
   margin-bottom: 5px; }
 
+.new-user__wrapper h1 {
+  font-family: "PT Sans", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  margin-top: 0;
+  margin-bottom: 5px;
+  padding: 15px 0 5px 20px;
+  margin-bottom: 0px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #d4d4d4;
+}
+
 .new-task__card {
   font-family: "Myriad Pro", sans-serif;
   font-weight: 400;
@@ -1874,9 +1886,10 @@ footer {
       -ms-flex-direction: column;
           flex-direction: column;
   width: 780px;
-  padding: 20px;
+  /* padding: 20px; */
   margin-right: 20px;
-  background-color: #ffffff; }
+  /* background-color: #ffffff; */
+}
 
 .user__search-link {
   display: -webkit-box;
@@ -1947,7 +1960,10 @@ footer {
   border-top: none;
   border-bottom: 2px solid #d4d4d4;
   padding-bottom: 10px;
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  padding: 20px;
+  background-color: #ffffff;
+}
 
 .user__search div:last-child {
   border-bottom: none; }

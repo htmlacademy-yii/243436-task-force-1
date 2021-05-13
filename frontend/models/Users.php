@@ -93,7 +93,7 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Messages]].
+     * Gets query for [[MessagesCreator]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -103,7 +103,7 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Messages0]].
+     * Gets query for [[MessagesExecutor]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -113,7 +113,7 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Reviews]].
+     * Gets query for [[ReviewsCreator]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -123,7 +123,7 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Reviews0]].
+     * Gets query for [[ReviewsCount]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -133,7 +133,7 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Tasks]].
+     * Gets query for [[TasksCreator]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -143,7 +143,7 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Tasks0]].
+     * Gets query for [[TasksCount]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -157,9 +157,10 @@ class Users extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsersAndCategories()
+    public function getCategories()
     {
-        return $this->hasMany(UsersAndCategories::class, ['user_id' => 'id']);
+        return $this->hasMany(Categories::class, ['id' => 'category_id'])
+        ->viaTable('users_and_categories', ['user_id' => 'id']);
     }
 
     /**

@@ -21,8 +21,6 @@ class UsersForm extends Model
 
     public function moreList()
     {
-        // $users = Users::find()->select('id')->asArray()->all();
-        // $users = Tasks::find()->select('user_id_executor')->asArray()->all();
         return ['Сейчас свободен', 'Сейчас онлайн', 'Есть отзывы', 'В избранном'];
     }
 

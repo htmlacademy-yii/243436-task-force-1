@@ -19,7 +19,7 @@ return [
                 'app*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@frontend/messages',
-                    'sourceLanguage' => 'ru'
+                    'sourceLanguage' => 'ru',
                 ],
             ],
         ],

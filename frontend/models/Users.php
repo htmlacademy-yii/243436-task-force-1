@@ -133,6 +133,16 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[ReviewsCount]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReviewsExecutor()
+    {
+        return $this->hasMany(Reviews::class, ['user_id_executor' => 'id']);
+    }
+
+    /**
      * Gets query for [[TasksCreator]].
      *
      * @return \yii\db\ActiveQuery
@@ -140,6 +150,16 @@ class Users extends \yii\db\ActiveRecord
     public function getTasksCreator()
     {
         return $this->hasMany(Tasks::class, ['user_id_create' => 'id']);
+    }
+
+    /**
+     * Gets query for [[TasksExecutor]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTasksExecutor()
+    {
+        return $this->hasMany(Tasks::class, ['user_id_executor' => 'id']);
     }
 
     /**
@@ -153,7 +173,7 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[UsersAndCategories]].
+     * Gets query for [[Categories]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -164,13 +184,23 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[UsersAndSkills]].
+     * Gets query for [[Skills]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getSkills()
     {
         return $this->hasMany(Skills::class, ['id' => 'skill_id'])->viaTable('users_and_skills', ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Favorites]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFavorites()
+    {
+        return $this->hasMany(Favorites::class, ['user_id_create' => 'id', 'user_id_executor' => 'id']);
     }
 
     /**
@@ -187,5 +217,55 @@ class Users extends \yii\db\ActiveRecord
         } else {
             return null;
         }
+    }
+
+    /**
+     * Возвращает id исполнителей, у которых есть отзывы.
+     *
+     * @return array массив id исполнителей, у которых есть отзывы
+     */
+    public function getUserIdExecutor()
+    {
+        $i = 0;
+
+        $id = [];
+
+        $executorId = Reviews::find()->select('user_id_executor')->asArray()->all();
+
+        foreach($executorId as $executor) {
+            foreach($executor as $value) {
+                $id[$i] = $value;
+                $i++;
+            }
+        }
+
+        $executor = $id;
+
+        return $executor;
+    }
+
+    /**
+     * Возвращает id исполнителей, которые находятся в избранном
+     *
+     * @return array массив id исполнителей, которые находятся в избранном
+     */
+    public function getFavoritesId()
+    {
+        $i = 0;
+
+        $id = [];
+
+        $executorId = Favorites::find()->select('user_id_executor')->asArray()->all();
+
+        foreach($executorId as $executor) {
+            foreach($executor as $value) {
+                $id[$i] = $value;
+                $i++;
+            }
+        }
+
+        $executor = $id;
+
+        return $executor;
     }
 }

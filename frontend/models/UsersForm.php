@@ -12,6 +12,11 @@ class UsersForm extends Model
 
     public $search;
 
+    const FREE = 'Сейчас свободен';
+    const ONLINE = 'Сейчас онлайн';
+    const REVIEWS = 'Есть отзывы';
+    const FAVORITES = 'В избранном';
+
     public function rules()
     {
         return [
@@ -21,7 +26,12 @@ class UsersForm extends Model
 
     public function moreList()
     {
-        return ['Сейчас свободен', 'Сейчас онлайн', 'Есть отзывы', 'В избранном'];
+        return [
+            self::FREE => 'Сейчас свободен',
+            self::ONLINE => 'Сейчас онлайн',
+            self::REVIEWS => 'Есть отзывы',
+            self::FAVORITES => 'В избранном'
+        ];
     }
 
     public function categoryList()

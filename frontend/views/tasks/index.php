@@ -93,11 +93,11 @@
                     'template' => "{label}\n{input}"
                     ])
                 ->dropdownList($tasksForm->periodList(), [
-                    'value' => $_GET['time'] ?? 'week',
+                    'value' => \Yii::$app->request->get('TasksForm')['period'] ?? 'week',
                     'class' => 'multiple-select input',
                     'id' => 8,
                     'size' => 1,
-                    'name' => 'time'
+                    'name' => 'TasksForm[period]'
                 ])
                 ->label('Период', [
                     'class' => 'search-task__name',
@@ -112,10 +112,10 @@
                     'template' => "{label}\n{input}"
                     ])
                 ->input('search', [
-                    'value' => $_GET['q'] ?? '',
+                    'value' => \Yii::$app->request->get('TasksForm')['search'] ?? '',
                     'class' => 'input-middle input',
                     'id' => 9,
-                    'name' => 'q',
+                    'name' => 'TasksForm[search]',
                     'placeholder' => ''
                 ])
                 ->label('Поиск по названию', [

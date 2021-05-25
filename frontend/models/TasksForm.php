@@ -14,6 +14,9 @@ class TasksForm extends Model
 
     public $search;
 
+    const NOT_EXECUTOR = 'Без исполнителя';
+    const DISTANT_WORK = 'Удаленная работа';
+
     public function rules()
     {
         return [
@@ -28,7 +31,7 @@ class TasksForm extends Model
 
     public function moreList()
     {
-        return [1 => 'Без исполнителя', 2 => 'Удаленная работа'];
+        return [self::NOT_EXECUTOR => 'Без исполнителя', self::DISTANT_WORK => 'Удаленная работа'];
     }
 
     public function categoryList()

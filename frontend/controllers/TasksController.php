@@ -14,9 +14,7 @@ class TasksController extends Controller
 
         $tasksForm = new TasksForm();
 
-        if(\Yii::$app->request->getIsGet()) {
-            $tasksForm->load(\Yii::$app->request->get());
-        }
+        $tasksForm->load(\Yii::$app->request->get());
 
         $tasks = Tasks::find()
             ->where(['status' => 'Новое'])
@@ -28,31 +26,30 @@ class TasksController extends Controller
         }
 
         if(!(isset($tasksForm->more[0]) && isset($tasksForm->more[1]))) {
-            if ((isset($tasksForm->more[0]) && $tasksForm->more[0] == 1)
-            || (isset($tasksForm->more[1]) && $tasksForm->more[1] == 1)) {
-                $tasks->andWhere('user_id_executor IS NULL');
-            }
-
-            if ((isset($tasksForm->more[0]) && $tasksForm->more[0] == 2)
-            || (isset($tasksForm->more[1]) && $tasksForm->more[1] == 2)) {
-                $tasks->andWhere('tasks.city_id IS NULL');
+            if (!empty($tasksForm->more)) {
+                if (in_array($tasksForm::NOT_EXECUTOR, $tasksForm->more)) {
+                    $tasks->andWhere('user_id_executor IS NULL');
+                }
+                if (in_array($tasksForm::DISTANT_WORK, $tasksForm->more)) {
+                    $tasks->andWhere('tasks.city_id IS NULL');
+                }
             }
         }
 
-        if (\Yii::$app->request->get('time') === 'day') {
+        if (isset($tasksForm->period) && $tasksForm->period === 'day') {
             $tasks->andWhere('tasks.date_add BETWEEN CURDATE() AND (CURDATE() + 1)');
         }
 
-        if (\Yii::$app->request->get('time') === 'week') {
+        if (isset($tasksForm->period) && $tasksForm->period === 'week') {
             $tasks->andWhere('tasks.date_add >= DATE_SUB(NOW(), INTERVAL 7 DAY)');
         }
 
-        if (\Yii::$app->request->get('time') === 'month') {
+        if (isset($tasksForm->period) && $tasksForm->period === 'month') {
             $tasks->andWhere('tasks.date_add >= DATE_SUB(NOW(), INTERVAL 30 DAY)');
         }
 
-        if (\Yii::$app->request->get('q')) {
-            $tasks->andWhere(['like', 'tasks.name', $_GET['q']]);
+        if ($tasksForm->search) {
+            $tasks->andWhere(['like', 'tasks.name', $tasksForm->search]);
         }
 
         $tasks = $tasks->all();

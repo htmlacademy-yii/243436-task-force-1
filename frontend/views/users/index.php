@@ -176,10 +176,10 @@
                     'template' => "{label}\n{input}"
                     ])
                 ->input('search', [
-                    'value' => $_GET['q'] ?? '',
+                    'value' => \Yii::$app->request->get('UsersForm')['search'] ?? '',
                     'class' => 'input-middle input',
                     'id' => 9,
-                    'name' => 'q',
+                    'name' => 'UsersForm[search]',
                     'placeholder' => '',
                     'for' => 110
                 ])

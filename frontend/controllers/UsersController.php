@@ -16,10 +16,7 @@ class UsersController extends Controller
 
         $userIdExecutor = new Users();
 
-
-        if(\Yii::$app->request->getIsGet()) {
-            $usersForm->load(\Yii::$app->request->get());
-        }
+        $usersForm->load(\Yii::$app->request->get());
 
         $users = Users::find()
             ->where(['role' => 'Исполнитель'])
@@ -30,40 +27,28 @@ class UsersController extends Controller
             $users->andWhere(['users_and_categories.category_id' => $usersForm->category]);
         }
 
-        if ((isset($usersForm->more[0]) && $usersForm->more[0] == 0)
-        || (isset($usersForm->more[1]) && $usersForm->more[1] == 0)
-        || (isset($usersForm->more[2]) && $usersForm->more[2] == 0)
-        || (isset($usersForm->more[3]) && $usersForm->more[3] == 0)
-        ) {
-            $users->andWhere('tasks.user_id_executor IS NULL');
+        if(!(isset($usersForm->more[0])
+        && isset($usersForm->more[1])
+        && isset($usersForm->more[2])
+        && isset($usersForm->more[3]))) {
+            if (!empty($usersForm->more)) {
+                if (in_array($usersForm::FREE, $usersForm->more)) {
+                    $users->andWhere('tasks.user_id_executor IS NULL');
+                }
+                if (in_array($usersForm::ONLINE, $usersForm->more)) {
+                    $users->andWhere('users.date_visit > DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
+                }
+                if (in_array($usersForm::REVIEWS, $usersForm->more)) {
+                    $users->andWhere(['reviews.user_id_executor' => $userIdExecutor->getUserIdExecutor()]);
+                }
+                if (in_array($usersForm::FAVORITES, $usersForm->more)) {
+                    $users->andWhere(['users.id' => $userIdExecutor->getFavoritesId()]);
+                }
+            }
         }
 
-        if ((isset($usersForm->more[0]) && $usersForm->more[0] == 1)
-        || (isset($usersForm->more[1]) && $usersForm->more[1] == 1)
-        || (isset($usersForm->more[2]) && $usersForm->more[2] == 1)
-        || (isset($usersForm->more[3]) && $usersForm->more[3] == 1)
-        ) {
-            $users->andWhere('users.date_visit > DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
-        }
-
-        if ((isset($usersForm->more[0]) && $usersForm->more[0] == 2)
-        || (isset($usersForm->more[1]) && $usersForm->more[1] == 2)
-        || (isset($usersForm->more[2]) && $usersForm->more[2] == 2)
-        || (isset($usersForm->more[3]) && $usersForm->more[3] == 2)
-        ) {
-            $users->andWhere(['reviews.user_id_executor' => $userIdExecutor->getUserIdExecutor()]);
-        }
-
-        if ((isset($usersForm->more[0]) && $usersForm->more[0] == 3)
-        || (isset($usersForm->more[1]) && $usersForm->more[1] == 3)
-        || (isset($usersForm->more[2]) && $usersForm->more[2] == 3)
-        || (isset($usersForm->more[3]) && $usersForm->more[3] == 3)
-        ) {
-            $users->andWhere(['users.id' => $userIdExecutor->getFavoritesId()]);
-        }
-
-        if (\Yii::$app->request->get('q')) {
-            $users->andWhere(['like', 'users.name', $_GET['q']]);
+        if ($usersForm->search) {
+            $users->andWhere(['like', 'users.name', $usersForm->search]);
         }
 
         $users = $users->all();

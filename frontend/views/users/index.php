@@ -135,7 +135,7 @@
                         'options' => ['tag' => false],
                         'template' => "{input}"
                     ])
-                    ->checkboxList($usersForm->categoryList(), [
+                    ->checkboxList($categories->categoryList(), [
                         'item' => function ($index, $label, $name, $checked, $value) {
                             $checked = $checked ? 'checked' : '';
 
@@ -176,10 +176,8 @@
                     'template' => "{label}\n{input}"
                     ])
                 ->input('search', [
-                    'value' => \Yii::$app->request->get('UsersForm')['search'] ?? '',
                     'class' => 'input-middle input',
                     'id' => 9,
-                    'name' => 'UsersForm[search]',
                     'placeholder' => '',
                     'for' => 110
                 ])

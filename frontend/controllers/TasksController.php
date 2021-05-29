@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\Categories;
 use frontend\models\Tasks;
 use frontend\models\TasksForm;
 use yii\web\Controller;
@@ -14,6 +15,8 @@ class TasksController extends Controller
 
         $tasksForm = new TasksForm();
 
+        $categories = new Categories();
+
         $tasksForm->load(\Yii::$app->request->get());
 
         $tasks = Tasks::find()
@@ -25,26 +28,27 @@ class TasksController extends Controller
             $tasks->andWhere(['category_id' => $tasksForm->category]);
         }
 
-        if(!(isset($tasksForm->more[0]) && isset($tasksForm->more[1]))) {
-            if (!empty($tasksForm->more)) {
-                if (in_array($tasksForm::NOT_EXECUTOR, $tasksForm->more)) {
-                    $tasks->andWhere('user_id_executor IS NULL');
-                }
-                if (in_array($tasksForm::DISTANT_WORK, $tasksForm->more)) {
-                    $tasks->andWhere('tasks.city_id IS NULL');
-                }
+        if (is_array($tasksForm->more)) {
+            if (in_array($tasksForm::NOT_EXECUTOR, $tasksForm->more)
+            && !in_array($tasksForm::DISTANT_WORK, $tasksForm->more)) {
+                $tasks->andWhere('user_id_executor IS NULL');
+            } elseif (in_array($tasksForm::DISTANT_WORK, $tasksForm->more)
+            && !in_array($tasksForm::NOT_EXECUTOR, $tasksForm->more)) {
+                $tasks->andWhere('tasks.city_id IS NULL');
+            } elseif (array_intersect([$tasksForm::DISTANT_WORK, $tasksForm::NOT_EXECUTOR], $tasksForm->more)) {
+                $tasks->andWhere('user_id_executor IS NULL OR tasks.city_id IS NULL');
             }
         }
 
-        if (isset($tasksForm->period) && $tasksForm->period === 'day') {
+        if ($tasksForm->period === 'day') {
             $tasks->andWhere('tasks.date_add BETWEEN CURDATE() AND (CURDATE() + 1)');
         }
 
-        if (isset($tasksForm->period) && $tasksForm->period === 'week') {
+        if ($tasksForm->period === 'week') {
             $tasks->andWhere('tasks.date_add >= DATE_SUB(NOW(), INTERVAL 7 DAY)');
         }
 
-        if (isset($tasksForm->period) && $tasksForm->period === 'month') {
+        if ($tasksForm->period === 'month') {
             $tasks->andWhere('tasks.date_add >= DATE_SUB(NOW(), INTERVAL 30 DAY)');
         }
 
@@ -54,6 +58,6 @@ class TasksController extends Controller
 
         $tasks = $tasks->all();
 
-        return $this->render('index', compact('tasks', 'tasksForm'));
+        return $this->render('index', compact('tasks', 'tasksForm', 'categories'));
     }
 }

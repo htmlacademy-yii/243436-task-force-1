@@ -67,4 +67,20 @@ class Categories extends \yii\db\ActiveRecord
     {
         return $this->hasMany(UsersAndCategories::class, ['category_id' => 'id']);
     }
+
+    /**
+     * @return array возвращает список категорий
+     */
+    public function categoryList()
+    {
+        $category_list = [];
+
+        $categories = Categories::find()->select('id, name')->indexBy('id')->asArray()->all();
+
+        foreach($categories as $key => $category) {
+            $category_list[$key] = $category['name'];
+        }
+
+        return $category_list;
+    }
 }

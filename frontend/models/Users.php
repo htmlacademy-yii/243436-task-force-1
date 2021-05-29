@@ -239,7 +239,7 @@ class Users extends \yii\db\ActiveRecord
             }
         }
 
-        $executor = $id;
+        $executor = implode(",",$id);
 
         return $executor;
     }
@@ -264,7 +264,7 @@ class Users extends \yii\db\ActiveRecord
             }
         }
 
-        $executor = $id;
+        $executor = implode(",",$id);
 
         return $executor;
     }

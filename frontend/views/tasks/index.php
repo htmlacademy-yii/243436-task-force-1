@@ -51,7 +51,7 @@
                         'options' => ['tag' => false],
                         'template' => "{input}"
                     ])
-                    ->checkboxList($tasksForm->categoryList(), [
+                    ->checkboxList($categories->categoryList(), [
                         'item' => function ($index, $label, $name, $checked, $value) {
                             $checked = $checked ? 'checked' : '';
 
@@ -97,7 +97,6 @@
                     'class' => 'multiple-select input',
                     'id' => 8,
                     'size' => 1,
-                    'name' => 'TasksForm[period]'
                 ])
                 ->label('Период', [
                     'class' => 'search-task__name',
@@ -112,10 +111,8 @@
                     'template' => "{label}\n{input}"
                     ])
                 ->input('search', [
-                    'value' => \Yii::$app->request->get('TasksForm')['search'] ?? '',
                     'class' => 'input-middle input',
                     'id' => 9,
-                    'name' => 'TasksForm[search]',
                     'placeholder' => ''
                 ])
                 ->label('Поиск по названию', [

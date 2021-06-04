@@ -222,24 +222,13 @@ class Users extends \yii\db\ActiveRecord
     /**
      * Возвращает id исполнителей, у которых есть отзывы.
      *
-     * @return array массив id исполнителей, у которых есть отзывы
+     * @return string id исполнителей, у которых есть отзывы
      */
     public function getUserIdExecutor()
     {
-        $i = 0;
+        $id = Reviews::find()->select('user_id_executor')->distinct()->column();
 
-        $id = [];
-
-        $executorId = Reviews::find()->select('user_id_executor')->asArray()->all();
-
-        foreach($executorId as $executor) {
-            foreach($executor as $value) {
-                $id[$i] = $value;
-                $i++;
-            }
-        }
-
-        $executor = implode(",",$id);
+        $executor = implode(",", $id);
 
         return $executor;
     }
@@ -247,24 +236,13 @@ class Users extends \yii\db\ActiveRecord
     /**
      * Возвращает id исполнителей, которые находятся в избранном
      *
-     * @return array массив id исполнителей, которые находятся в избранном
+     * @return string id исполнителей, которые находятся в избранном
      */
     public function getFavoritesId()
     {
-        $i = 0;
+        $id = Favorites::find()->select('user_id_executor')->distinct()->column();
 
-        $id = [];
-
-        $executorId = Favorites::find()->select('user_id_executor')->asArray()->all();
-
-        foreach($executorId as $executor) {
-            foreach($executor as $value) {
-                $id[$i] = $value;
-                $i++;
-            }
-        }
-
-        $executor = implode(",",$id);
+        $executor = implode(",", $id);
 
         return $executor;
     }

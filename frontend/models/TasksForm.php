@@ -6,16 +6,19 @@ use yii\base\Model;
 
 class TasksForm extends Model
 {
-    public $category = [];
+    public $category;
 
-    public $more = [];
+    public $more;
 
-    public $period = [];
+    public $period;
 
     public $search;
 
     const NOT_EXECUTOR = 'Без исполнителя';
     const DISTANT_WORK = 'Удаленная работа';
+    const DAY = 'day';
+    const WEEK = 'week';
+    const MONTH = 'month';
 
     public function rules()
     {
@@ -26,7 +29,7 @@ class TasksForm extends Model
 
     public function periodList()
     {
-        return ['day' => 'За день', 'week' => 'За неделю', 'month' => 'За месяц'];
+        return [self::DAY => 'За день', self::WEEK => 'За неделю', self::MONTH => 'За месяц'];
     }
 
     public function moreList()

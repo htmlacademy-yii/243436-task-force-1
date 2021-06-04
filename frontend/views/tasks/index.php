@@ -93,7 +93,7 @@
                     'template' => "{label}\n{input}"
                     ])
                 ->dropdownList($tasksForm->periodList(), [
-                    'value' => \Yii::$app->request->get('TasksForm')['period'] ?? 'week',
+                    'value' => $tasksForm->period ?? 'week',
                     'class' => 'multiple-select input',
                     'id' => 8,
                     'size' => 1,

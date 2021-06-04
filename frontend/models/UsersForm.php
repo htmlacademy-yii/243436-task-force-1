@@ -6,9 +6,9 @@ use yii\base\Model;
 
 class UsersForm extends Model
 {
-    public $category = [];
+    public $category;
 
-    public $more = [];
+    public $more;
 
     public $search;
 

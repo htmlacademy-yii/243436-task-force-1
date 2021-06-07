@@ -19,7 +19,7 @@ return [
                 'app*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@frontend/messages',
-                    'sourceLanguage' => 'ru'
+                    'sourceLanguage' => 'ru',
                 ],
             ],
         ],
@@ -53,6 +53,8 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
+                'tasks' => 'tasks/index',
+                'users' => 'users/index'
             ],
         ],
     ],

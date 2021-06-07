@@ -93,7 +93,7 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Messages]].
+     * Gets query for [[MessagesCreator]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -103,7 +103,7 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Messages0]].
+     * Gets query for [[MessagesExecutor]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -113,7 +113,7 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Reviews]].
+     * Gets query for [[ReviewsCreator]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -123,7 +123,7 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Reviews0]].
+     * Gets query for [[ReviewsCount]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -133,7 +133,17 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Tasks]].
+     * Gets query for [[ReviewsCount]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReviewsExecutor()
+    {
+        return $this->hasMany(Reviews::class, ['user_id_executor' => 'id']);
+    }
+
+    /**
+     * Gets query for [[TasksCreator]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -143,7 +153,17 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Tasks0]].
+     * Gets query for [[TasksExecutor]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTasksExecutor()
+    {
+        return $this->hasMany(Tasks::class, ['user_id_executor' => 'id']);
+    }
+
+    /**
+     * Gets query for [[TasksCount]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -153,23 +173,34 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[UsersAndCategories]].
+     * Gets query for [[Categories]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsersAndCategories()
+    public function getCategories()
     {
-        return $this->hasMany(UsersAndCategories::class, ['user_id' => 'id']);
+        return $this->hasMany(Categories::class, ['id' => 'category_id'])
+        ->viaTable('users_and_categories', ['user_id' => 'id']);
     }
 
     /**
-     * Gets query for [[UsersAndSkills]].
+     * Gets query for [[Skills]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getSkills()
     {
         return $this->hasMany(Skills::class, ['id' => 'skill_id'])->viaTable('users_and_skills', ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Favorites]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFavorites()
+    {
+        return $this->hasMany(Favorites::class, ['user_id_create' => 'id', 'user_id_executor' => 'id']);
     }
 
     /**
@@ -186,5 +217,33 @@ class Users extends \yii\db\ActiveRecord
         } else {
             return null;
         }
+    }
+
+    /**
+     * Возвращает id исполнителей, у которых есть отзывы.
+     *
+     * @return string id исполнителей, у которых есть отзывы
+     */
+    public function getUserIdExecutor()
+    {
+        $id = Reviews::find()->select('user_id_executor')->distinct()->column();
+
+        $executor = implode(",", $id);
+
+        return $executor;
+    }
+
+    /**
+     * Возвращает id исполнителей, которые находятся в избранном
+     *
+     * @return string id исполнителей, которые находятся в избранном
+     */
+    public function getFavoritesId()
+    {
+        $id = Favorites::find()->select('user_id_executor')->distinct()->column();
+
+        $executor = implode(",", $id);
+
+        return $executor;
     }
 }

@@ -75,4 +75,14 @@ class Reviews extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Users::class, ['id' => 'user_id_executor']);
     }
+
+    /**
+     * Gets query for [[Task].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTask()
+    {
+        return $this->hasOne(Tasks::class, ['id' => 'task_id']);
+    }
 }

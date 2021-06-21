@@ -212,8 +212,8 @@ class Users extends \yii\db\ActiveRecord
     {
         $sum_rating = Reviews::find()->where(['user_id_executor' => $this->id])->sum('rating');
 
-        if((int) $sum_rating !== 0) {
-            return round($sum_rating/$this->getReviewsCount());
+        if((int) $sum_rating >= 1) {
+            return number_format($sum_rating/$this->getReviewsCount(), 2, '.', '');
         } else {
             return null;
         }

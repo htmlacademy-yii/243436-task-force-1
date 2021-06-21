@@ -10,7 +10,9 @@
         <?php foreach($tasks as $task) : ?>
             <div class="new-task__card">
                 <div class="new-task__title">
-                <a href="view.html" class="link-regular"><h2><?= $task->name; ?></h2></a>
+                <a href="<?= Url::to(['tasks/view', 'id' => $task['id']]) ?>" class="link-regular">
+                    <h2><?= $task->name; ?></h2>
+                </a>
                 <a class="new-task__type link-regular"
                 href="<?= Url::to(['tasks/index', 'TasksForm'=>['category' => $task['category_id']]]) ?>">
                     <p><?= $task->category->name; ?></p>

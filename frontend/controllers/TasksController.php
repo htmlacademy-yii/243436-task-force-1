@@ -4,8 +4,11 @@ namespace frontend\controllers;
 
 use frontend\models\Categories;
 use frontend\models\Tasks;
+use frontend\models\Clips;
+use frontend\models\Respond;
 use frontend\models\TasksForm;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 class TasksController extends Controller
 {
@@ -63,5 +66,43 @@ class TasksController extends Controller
         $tasks = $tasks->all();
 
         return $this->render('index', compact('tasks', 'tasksForm', 'categories'));
+    }
+
+    public function actionView($id)
+    {
+        $tasks = Tasks::find()
+            ->where(['tasks.id' => $id])
+            ->one();
+
+        $tasksCount = Tasks::find()
+            ->where(['user_id_create' => $tasks['user_id_create']])
+            ->count();
+
+        $clips = Clips::find()
+            ->where(['task_id' => $id])
+            ->all();
+
+        $responds = Respond::find()
+            ->where(['task_id' => $id])
+            ->joinWith(['executor'])
+            ->all();
+
+        $respondsCount = Respond::find()
+            ->where(['task_id' => $id])
+            ->count();
+
+        if (empty($tasks)) {
+            throw new NotFoundHttpException('Страница не найдена...');
+        }
+
+        $this->view->title = $tasks['name'];
+
+        $now_time = time();
+        $past_time = strtotime($tasks->creator->date_add);
+        $result_time = floor(($now_time - $past_time) / 86400);
+
+        return $this->render(
+            'view', compact('id', 'tasks', 'clips', 'responds', 'respondsCount', 'tasksCount', 'result_time')
+        );
     }
 }

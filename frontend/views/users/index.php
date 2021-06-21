@@ -11,7 +11,7 @@
             <div class="content-view__feedback-card user__search-wrapper">
                 <div class="feedback-card__top">
                     <div class="user__search-icon">
-                    <a href="user.html">
+                    <a href="<?= Url::to(['users/user', 'id' => $user['id']]) ?>">
                         <?= Html::img("@web/{$user->path}", ['width' => 65, 'height' => 65]) ?>
                     </a>
                     <span>
@@ -37,56 +37,55 @@
                                 few{# отзыва}
                                 many{# отзывов}
                                 other{# отзыва}}',
-                            ['n' => $user->tasksCount]
+                            ['n' => $user->reviewsCount]
                         ); ?>
                     </span>
                     </div>
                     <div class="feedback-card__top--name user__search-card">
-                    <p class="link-name"><a href="user.html" class="link-regular"><?= $user->name; ?></a></p>
+                    <p class="link-name">
+                        <a href="<?= Url::to(['users/user', 'id' => $user['id']]) ?>" class="link-regular">
+                            <?= $user->name; ?>
+                        </a>
+                    </p>
 
-                    <?php switch ($user->getAverageRating($user->id)):
-                        case 1: ?>
-                            <span></span>
-                            <span class="star-disabled"></span>
-                            <span class="star-disabled"></span>
-                            <span class="star-disabled"></span>
-                            <span class="star-disabled"></span>
-                        <?php break; ?>
-                        <?php case 2: ?>
-                            <span></span>
-                            <span></span>
-                            <span class="star-disabled"></span>
-                            <span class="star-disabled"></span>
-                            <span class="star-disabled"></span>
-                        <?php break; ?>
-                        <?php case 3: ?>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span class="star-disabled"></span>
-                            <span class="star-disabled"></span>
-                        <?php break; ?>
-                        <?php case 4: ?>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span class="star-disabled"></span>
-                        <?php break; ?>
-                        <?php case 5: ?>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        <?php break; ?>
-                        <?php default: ?>
-                            <span class="star-disabled"></span>
-                            <span class="star-disabled"></span>
-                            <span class="star-disabled"></span>
-                            <span class="star-disabled"></span>
-                            <span class="star-disabled"></span>
-                    <?php endswitch; ?>
+                    <?php if ($user->getAverageRating() >= 1 && $user->getAverageRating() < 2) : ?>
+                        <span></span>
+                        <span class="star-disabled"></span>
+                        <span class="star-disabled"></span>
+                        <span class="star-disabled"></span>
+                        <span class="star-disabled"></span>
+                    <?php elseif ($user->getAverageRating() >= 2 && $user->getAverageRating() < 3) : ?>
+                        <span></span>
+                        <span></span>
+                        <span class="star-disabled"></span>
+                        <span class="star-disabled"></span>
+                        <span class="star-disabled"></span>
+                    <?php elseif ($user->getAverageRating() >= 3 && $user->getAverageRating() < 4) : ?>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span class="star-disabled"></span>
+                        <span class="star-disabled"></span>
+                    <?php elseif ($user->getAverageRating() >= 4 && $user->getAverageRating() < 5) : ?>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span class="star-disabled"></span>
+                    <?php elseif ($user->getAverageRating() >= 5) : ?>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    <?php else : ?>
+                        <span class="star-disabled"></span>
+                        <span class="star-disabled"></span>
+                        <span class="star-disabled"></span>
+                        <span class="star-disabled"></span>
+                        <span class="star-disabled"></span>
+                    <?php endif; ?>
+
 
                     <b><?= $user->getAverageRating(); ?></b>
                     <p class="user__search-content"><?= $user->about; ?></p>
@@ -98,7 +97,10 @@
 
                 <div class="link-specialization user__search-link--bottom">
                     <?php foreach($user->categories as $category) : ?>
-                        <a href="browse.html" class="link-regular"><?= $category->name ?></a>
+                        <a href="<?= Url::to(['users/index', 'UsersForm'=>['category' => $category->id]]) ?>"
+                        class="link-regular">
+                            <?= $category->name ?>
+                        </a>
                     <?php endforeach; ?>
                 </div>
             </div>

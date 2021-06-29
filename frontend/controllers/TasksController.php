@@ -74,6 +74,10 @@ class TasksController extends Controller
             ->where(['tasks.id' => $id])
             ->one();
 
+        if (empty($tasks)) {
+            throw new NotFoundHttpException('Страница не найдена...');
+        }
+
         $tasksCount = Tasks::find()
             ->where(['user_id_create' => $tasks['user_id_create']])
             ->count();
@@ -87,14 +91,6 @@ class TasksController extends Controller
             ->joinWith(['executor'])
             ->all();
 
-        $respondsCount = Respond::find()
-            ->where(['task_id' => $id])
-            ->count();
-
-        if (empty($tasks)) {
-            throw new NotFoundHttpException('Страница не найдена...');
-        }
-
         $this->view->title = $tasks['name'];
 
         $now_time = time();
@@ -102,7 +98,7 @@ class TasksController extends Controller
         $result_time = floor(($now_time - $past_time) / 86400);
 
         return $this->render(
-            'view', compact('id', 'tasks', 'clips', 'responds', 'respondsCount', 'tasksCount', 'result_time')
+            'view', compact('id', 'tasks', 'clips', 'responds', 'tasksCount', 'result_time')
         );
     }
 }

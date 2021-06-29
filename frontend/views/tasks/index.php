@@ -11,18 +11,26 @@
             <div class="new-task__card">
                 <div class="new-task__title">
                 <a href="<?= Url::to(['tasks/view', 'id' => $task['id']]) ?>" class="link-regular">
-                    <h2><?= $task->name; ?></h2>
+                    <h2><?= Html::encode($task->name); ?></h2>
                 </a>
                 <a class="new-task__type link-regular"
                 href="<?= Url::to(['tasks/index', 'TasksForm'=>['category' => $task['category_id']]]) ?>">
-                    <p><?= $task->category->name; ?></p>
+                    <p><?= Html::encode($task->category->name); ?></p>
                 </a>
                 </div>
-                <div class="new-task__icon new-task__icon--<?= $task->category->icon; ?>"></div>
-                <p class="new-task_description"><?= $task->description; ?></p>
-                <b class="new-task__price new-task__price--translation"><?= $task->budget; ?><b> ₽</b></b>
-                <p class="new-task__place"><?= $task->city->city ?? 'Удаленная работа'; ?></p>
-                <span class="new-task__time"><?= Yii::$app->formatter->asRelativeTime($task->date_add); ?></span>
+                <div class="new-task__icon new-task__icon--<?= Html::encode($task->category->icon); ?>"></div>
+                <p class="new-task_description">
+                    <?= Html::encode($task->description); ?>
+                </p>
+                <b class="new-task__price new-task__price--translation">
+                    <?= Html::encode($task->budget); ?><b> ₽</b>
+                </b>
+                <p class="new-task__place">
+                    <?= Html::encode($task->city->name ?? 'Удаленная работа'); ?>
+                </p>
+                <span class="new-task__time">
+                    <?= Yii::$app->formatter->asRelativeTime(Html::encode($task->date_add)); ?>
+                </span>
             </div>
         <?php endforeach; ?>
     </div>

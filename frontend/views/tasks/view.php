@@ -8,23 +8,24 @@
         <div class="content-view__card-wrapper">
         <div class="content-view__header">
             <div class="content-view__headline">
-            <h1><?= $tasks['name']; ?></h1>
+            <h1><?= Html::encode($tasks['name']); ?></h1>
             <span>Размещено в категории
                 <a href="<?= Url::to(['tasks/index', 'TasksForm'=>['category' => $tasks['category_id']]]) ?>"
                 class="link-regular">
-                    <?= $tasks->category->name; ?>
+                    <?= Html::encode($tasks->category->name); ?>
                 </a>
-                <?= Yii::$app->formatter->asRelativeTime($tasks->date_add); ?>
+                <?= Yii::$app->formatter->asRelativeTime(Html::encode($tasks->date_add)); ?>
             </span>
             </div>
             <b class="new-task__price new-task__price--clean content-view-price">
-                <?= $tasks->budget; ?><b> ₽</b>
+                <?= Html::encode($tasks->budget); ?><b> ₽</b>
             </b>
-            <div class="new-task__icon new-task__icon--<?= $tasks->category->icon; ?> content-view-icon"></div>
+            <div class="new-task__icon new-task__icon--<?= Html::encode($tasks->category->icon); ?> content-view-icon">
+            </div>
         </div>
         <div class="content-view__description">
             <h3 class="content-view__h3">Общее описание</h3>
-            <p><?= $tasks->description; ?></p>
+            <p><?= Html::encode($tasks->description); ?></p>
         </div>
         <div class="content-view__attach">
             <h3 class="content-view__h3">Вложения</h3>
@@ -64,47 +65,52 @@
         </div>
     </div>
     <div class="content-view__feedback">
-        <h2>Отклики <span>(<?= $respondsCount ?>)</span></h2>
+        <h2>Отклики <span>(<?= count($responds); ?>)</span></h2>
 
         <div class="content-view__feedback-wrapper">
             <?php foreach($responds as $respond) : ?>
                 <div class="content-view__feedback-card">
                     <div class="feedback-card__top">
-                    <a href="user.html">
+                    <a href="<?= Url::to(['users/user', 'id' => $respond->executor->id]) ?>">
                         <?= Html::img("@web/{$respond->executor->path}", ['width' => 55, 'height' => 55]) ?>
                     </a>
                     <div class="feedback-card__top--name">
-                        <p><a href="user.html" class="link-regular"><?= $respond->executor->name; ?></a></p>
-
-                        <?php if ($respond->executor->getAverageRating() >= 1
-                        && $respond->executor->getAverageRating() < 2) : ?>
+                        <p>
+                            <a href="<?= Url::to(['users/user', 'id' => $respond->executor->id]) ?>"
+                            class="link-regular">
+                                <?= Html::encode($respond->executor->name); ?>
+                            </a>
+                        </p>
+                        <?php $average_rating = $respond->executor->getAverageRating(); ?>
+                        <?php if ($average_rating >= 1
+                        && $average_rating < 2) : ?>
                             <span></span>
                             <span class="star-disabled"></span>
                             <span class="star-disabled"></span>
                             <span class="star-disabled"></span>
                             <span class="star-disabled"></span>
-                        <?php elseif ($respond->executor->getAverageRating() >= 2
-                        && $respond->executor->getAverageRating() < 3) : ?>
+                        <?php elseif ($average_rating >= 2
+                        && $average_rating < 3) : ?>
                             <span></span>
                             <span></span>
                             <span class="star-disabled"></span>
                             <span class="star-disabled"></span>
                             <span class="star-disabled"></span>
-                        <?php elseif ($respond->executor->getAverageRating() >= 3
-                        && $respond->executor->getAverageRating() < 4) : ?>
+                        <?php elseif ($average_rating >= 3
+                        && $average_rating < 4) : ?>
                             <span></span>
                             <span></span>
                             <span></span>
                             <span class="star-disabled"></span>
                             <span class="star-disabled"></span>
-                        <?php elseif ($respond->executor->getAverageRating() >= 4
-                        && $respond->executor->getAverageRating() < 5) : ?>
+                        <?php elseif ($average_rating >= 4
+                        && $average_rating < 5) : ?>
                             <span></span>
                             <span></span>
                             <span></span>
                             <span></span>
                             <span class="star-disabled"></span>
-                        <?php elseif ($respond->executor->getAverageRating() >= 5) : ?>
+                        <?php elseif ($average_rating >= 5) : ?>
                             <span></span>
                             <span></span>
                             <span></span>
@@ -118,13 +124,15 @@
                             <span class="star-disabled"></span>
                         <?php endif; ?>
 
-                        <b><?= $respond->executor->getAverageRating(); ?></b>
+                        <b><?= Html::encode($average_rating); ?></b>
                     </div>
-                    <span class="new-task__time"><?= Yii::$app->formatter->asRelativeTime($respond->date); ?></span>
+                    <span class="new-task__time">
+                        <?= Yii::$app->formatter->asRelativeTime(Html::encode($respond->date)); ?>
+                    </span>
                     </div>
                     <div class="feedback-card__content">
-                    <p><?= $respond->comment; ?></p>
-                    <span><?= $respond->budget; ?> ₽</span>
+                    <p><?= Html::encode($respond->comment); ?></p>
+                    <span><?= Html::encode($respond->budget); ?> ₽</span>
                     </div>
                     <div class="feedback-card__actions">
                     <a class="button__small-color response-button button"
@@ -144,7 +152,7 @@
         <div class="profile-mini__top">
             <?= Html::img("@web/{$tasks->creator->path}", ['width' => 55, 'height' => 55, 'alt' => 'Аватар заказчика']) ?>
             <div class="profile-mini__name five-stars__rate">
-            <p><?= $tasks->creator->name; ?></p>
+            <p><?= Html::encode($tasks->creator->name); ?></p>
             </div>
         </div>
         <p class="info-customer">

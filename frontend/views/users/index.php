@@ -44,35 +44,35 @@
                     <div class="feedback-card__top--name user__search-card">
                     <p class="link-name">
                         <a href="<?= Url::to(['users/user', 'id' => $user['id']]) ?>" class="link-regular">
-                            <?= $user->name; ?>
+                            <?= Html::encode($user->name); ?>
                         </a>
                     </p>
-
-                    <?php if ($user->getAverageRating() >= 1 && $user->getAverageRating() < 2) : ?>
+                    <?php $average_rating = $user->getAverageRating(); ?>
+                    <?php if ($average_rating >= 1 && $average_rating < 2) : ?>
                         <span></span>
                         <span class="star-disabled"></span>
                         <span class="star-disabled"></span>
                         <span class="star-disabled"></span>
                         <span class="star-disabled"></span>
-                    <?php elseif ($user->getAverageRating() >= 2 && $user->getAverageRating() < 3) : ?>
+                    <?php elseif ($average_rating >= 2 && $average_rating < 3) : ?>
                         <span></span>
                         <span></span>
                         <span class="star-disabled"></span>
                         <span class="star-disabled"></span>
                         <span class="star-disabled"></span>
-                    <?php elseif ($user->getAverageRating() >= 3 && $user->getAverageRating() < 4) : ?>
+                    <?php elseif ($average_rating >= 3 && $average_rating < 4) : ?>
                         <span></span>
                         <span></span>
                         <span></span>
                         <span class="star-disabled"></span>
                         <span class="star-disabled"></span>
-                    <?php elseif ($user->getAverageRating() >= 4 && $user->getAverageRating() < 5) : ?>
+                    <?php elseif ($average_rating >= 4 && $average_rating < 5) : ?>
                         <span></span>
                         <span></span>
                         <span></span>
                         <span></span>
                         <span class="star-disabled"></span>
-                    <?php elseif ($user->getAverageRating() >= 5) : ?>
+                    <?php elseif ($average_rating >= 5) : ?>
                         <span></span>
                         <span></span>
                         <span></span>
@@ -87,11 +87,11 @@
                     <?php endif; ?>
 
 
-                    <b><?= $user->getAverageRating(); ?></b>
-                    <p class="user__search-content"><?= $user->about; ?></p>
+                    <b><?= Html::encode($average_rating); ?></b>
+                    <p class="user__search-content"><?= Html::encode($user->about); ?></p>
                     </div>
                     <span class="new-task__time">
-                        Был на сайте <?= Yii::$app->formatter->asRelativeTime($user->date_visit); ?>
+                        Был на сайте <?= Yii::$app->formatter->asRelativeTime(Html::encode($user->date_visit)); ?>
                     </span>
                 </div>
 
@@ -99,7 +99,7 @@
                     <?php foreach($user->categories as $category) : ?>
                         <a href="<?= Url::to(['users/index', 'UsersForm'=>['category' => $category->id]]) ?>"
                         class="link-regular">
-                            <?= $category->name ?>
+                            <?= Html::encode($category->name); ?>
                         </a>
                     <?php endforeach; ?>
                 </div>

@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "users".
@@ -210,13 +211,26 @@ class Users extends \yii\db\ActiveRecord
      */
     public function getAverageRating()
     {
-        $sum_rating = Reviews::find()->where(['user_id_executor' => $this->id])->sum('rating');
+        $reviews = Reviews::find()->where(['user_id_executor' => $this->id])->all();
 
-        if((int) $sum_rating !== 0) {
-            return round($sum_rating/$this->getReviewsCount());
-        } else {
-            return null;
+        $count_reviews = count($reviews);
+
+        $rating = [];
+        $i = 0;
+
+        foreach($reviews as $review) {
+            $rating[$i] = $review['rating'];
+            $i++;
         }
+
+        $sum_reviews = array_sum($rating);
+
+        $average_rating = '';
+
+        if((int) $sum_reviews >= 1) {
+            $average_rating = number_format($sum_reviews/$count_reviews, 2, '.', '');
+        }
+        return $average_rating;
     }
 
     /**

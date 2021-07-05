@@ -252,7 +252,16 @@
         </div>
         <div id="chat-container">
           <!--                    добавьте сюда атрибут task с указанием в нем id текущего задания-->
-          <chat class="connect-desk__chat"></chat>
+          <div class="connect-desk__chat">
+            <h3>Переписка</h3>
+            <div class="chat__overflow"></div>
+            <p class="chat__your-message">Ваше сообщение</p>
+            <form class="chat__form">
+                <textarea rows="2" name="message-text" placeholder="Текст сообщения"
+                class="input textarea textarea-chat"></textarea>
+                <button type="button" class="button chat__button">Отправить</button>
+            </form>
+          </div>
         </div>
       </section>
     </div>

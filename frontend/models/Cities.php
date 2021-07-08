@@ -69,4 +69,20 @@ class Cities extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Tasks::class, ['city_id' => 'id']);
     }
+
+    /**
+     * @return array возвращает список городов
+     */
+    public function citiesList()
+    {
+        $cities_list = [];
+
+        $cities = Cities::find()->select('name')->select('id, name')->indexBy('id')->all();
+
+        foreach($cities as $key => $city) {
+            $cities_list[$key] = $city['name'];
+        }
+
+        return $cities_list;
+    }
 }

@@ -48,7 +48,7 @@ class Users extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['email', 'name', 'password', 'date_add'], 'required'],
+            [['email', 'name', 'password'], 'required'],
             [['date_add', 'date_visit', 'birthday'], 'safe'],
             [['city_id'], 'integer'],
             [['about'], 'string'],
@@ -58,6 +58,9 @@ class Users extends \yii\db\ActiveRecord
             [['path'], 'string', 'max' => 255],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cities::class, 'targetAttribute' =>
             ['city_id' => 'id']],
+            ['email', 'email'],
+            ['email', 'unique'],
+            ['date_add', 'default', 'value' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd H:m:s')],
         ];
     }
 
@@ -68,14 +71,14 @@ class Users extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'email' => 'Email',
-            'name' => 'Name',
-            'password' => 'Password',
+            'email' => 'Электронная почта',
+            'name' => 'Ваше имя',
+            'password' => 'Пароль',
             'date_add' => 'Date Add',
             'path' => 'Path',
             'date_visit' => 'Date Visit',
             'role' => 'Role',
-            'city_id' => 'City ID',
+            'city_id' => 'Город проживания',
             'birthday' => 'Birthday',
             'about' => 'About',
             'phone' => 'Phone',

@@ -22,7 +22,7 @@
             <?= $form->field($user_form, 'city_id', [
                     'template' => "{label}\n{input}"
                     ])
-                ->dropdownList($cities->citiesList(), [
+                ->dropdownList($cities_list, [
                     'value' => $user_form->city_id,
                     'class' => 'multiple-select input town-select registration-town',
                     'id' => 18,

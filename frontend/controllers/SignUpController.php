@@ -11,23 +11,29 @@ class SignupController extends Controller
 {
     public function actionIndex()
     {
+        if (!\Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $this->view->title = 'Регистрация аккаунта';
 
         $user_form = new Users;
 
         $cities = new Cities();
 
-        if(\Yii::$app->request->getIsPost()) {
+        $cities_list = $cities->citiesList();
+
+        if (\Yii::$app->request->getIsPost()) {
             $user_form->load(\Yii::$app->request->post());
 
-            if($user_form->validate()) {
+            if ($user_form->validate()) {
                 $user_form->password = \Yii::$app->security->generatePasswordHash($user_form->password);
                 $user_form->save(false);
                 $this->goHome();
             }
         }
 
-        return $this->render('index', compact('user_form', 'cities'));
+        return $this->render('index', compact('user_form', 'cities_list'));
     }
 }
 

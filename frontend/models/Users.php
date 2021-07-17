@@ -3,7 +3,8 @@
 namespace frontend\models;
 
 use Yii;
-use yii\helpers\Url;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "users".
@@ -32,8 +33,66 @@ use yii\helpers\Url;
  * @property UsersAndCategories[] $usersAndCategories
  * @property UsersAndSkills[] $usersAndSkills
  */
-class Users extends \yii\db\ActiveRecord
+class Users extends ActiveRecord implements IdentityInterface
 {
+    /**
+     * Finds an identity by the given ID.
+     *
+     * @param string|int $id the ID to be looked for
+     * @return IdentityInterface|null the identity object that matches the given ID.
+     */
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+
+    /**
+     * Finds an identity by the given token.
+     *
+     * @param string $token the token to be looked for
+     * @return IdentityInterface|null the identity object that matches the given token.
+     */
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        // return static::findOne(['access_token' => $token]);
+    }
+
+    /**
+     * @return int|string current user ID
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string current user auth key
+     */
+    public function getAuthKey()
+    {
+        // return $this->authKey;
+    }
+
+    /**
+     * @param string $authKey
+     * @return bool if auth key is valid for current user
+     */
+    public function validateAuthKey($authKey)
+    {
+        // return $this->authKey === $authKey;
+    }
+
+    /**
+     * @param string $password
+     * @return bool if password is valid for current user
+     */
+    public function validatePassword($password)
+    {
+        return \Yii::$app->security->validatePassword($password, $this->password);
+    }
+
+    private $_user;
+
     /**
      * {@inheritdoc}
      */
@@ -48,11 +107,11 @@ class Users extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['email', 'name', 'password'], 'required'],
-            [['date_add', 'date_visit', 'birthday'], 'safe'],
-            [['city_id'], 'integer'],
-            [['about'], 'string'],
-            [['email'], 'string', 'max' => 72],
+            [['email', 'name', 'password'], 'required'], //
+            [['date_add', 'date_visit', 'birthday'], 'safe'],//
+            [['city_id'], 'integer'],//
+            [['about'], 'string'], //
+            [['email'], 'string', 'max' => 72], //
             [['name', 'role', 'phone', 'skype'], 'string', 'max' => 100],
             [['password'], 'string', 'max' => 64],
             [['path'], 'string', 'max' => 255],
@@ -262,5 +321,19 @@ class Users extends \yii\db\ActiveRecord
         $executor = implode(",", $id);
 
         return $executor;
+    }
+
+    /**
+     * Возвращает пользователя из БД по email
+     *
+     * @return object данные пользователя по email
+     */
+    public function getUser()
+    {
+        if ($this->_user === null) {
+            $this->_user = Users::findOne(['email' => $this->email]);
+        }
+
+        return $this->_user;
     }
 }

@@ -116,12 +116,15 @@
                         </div>
                         <div class="header__account">
                             <a class="header__account-photo">
-                                <img src="../../img/user-photo.png"
-                                    width="43" height="44"
-                                    alt="Аватар пользователя">
+                                <?php
+                                    $avatar = Html::encode(\Yii::$app->runAction('profile/user')->path);
+                                    echo Html::img("@web/{$avatar}", [
+                                        'width' => 43, 'height' => 44, 'alt' => 'Аватар пользователя'
+                                        ])
+                                ?>
                             </a>
                             <span class="header__account-name">
-                                Василий
+                                <?= Html::encode(\Yii::$app->runAction('profile/user')->name); ?>
                             </span>
                         </div>
                         <div class="account__pop-up">
@@ -133,7 +136,7 @@
                                     <a href="#">Настройки</a>
                                 </li>
                                 <li>
-                                    <a href="#">Выход</a>
+                                    <a href="<?= Url::to(['profile/logout']) ?>">Выход</a>
                                 </li>
                             </ul>
                         </div>

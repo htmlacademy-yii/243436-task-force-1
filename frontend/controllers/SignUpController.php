@@ -29,6 +29,8 @@ class SignupController extends Controller
             if ($user_form->validate()) {
                 $user_form->password = \Yii::$app->security->generatePasswordHash($user_form->password);
                 $user_form->save(false);
+                $user = $user_form->getUser();
+                \Yii::$app->user->login($user);
                 $this->goHome();
             }
         }

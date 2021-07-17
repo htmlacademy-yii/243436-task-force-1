@@ -28,9 +28,10 @@ return [
             'baseUrl' => ''
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'frontend\models\Users',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'loginUrl' => ['landing/index'],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
@@ -53,8 +54,10 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
+                'signup' => 'signup/index',
                 'tasks' => 'tasks/index',
-                'users' => 'users/index'
+                'users' => 'users/index',
+                '/' => 'landing/index',
             ],
         ],
     ],

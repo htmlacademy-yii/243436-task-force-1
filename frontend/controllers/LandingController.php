@@ -46,5 +46,11 @@ class LandingController extends Controller
 
         return $this->render('index', compact('tasks'));
     }
+
+    public function actionLogout() {
+        \Yii::$app->user->logout();
+
+        return $this->goHome();
+    }
 }
 

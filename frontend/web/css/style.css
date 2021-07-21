@@ -1726,7 +1726,7 @@ footer {
 
 .clipart-woman {
   position: absolute;
-  bottom: 160px;
+  bottom: 156px;
   left: 411px; }
 
 .clipart-message {
@@ -2480,7 +2480,7 @@ footer {
     font-size: 20px;
     margin-top: 17px;
     margin-bottom: 16px; }
-  .form-modal p {
+  .form-modal div, p {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -2521,7 +2521,8 @@ footer {
     padding-right: 10px;
     font-size: 18px;
     color: #ffffff;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+  }
 
 .response-form-payment {
   width: 166px;
@@ -2634,4 +2635,5 @@ footer {
 
 .has-error span {
   color: #FF116E; }
+
 /*# sourceMappingURL=style.css.map */

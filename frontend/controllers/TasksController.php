@@ -7,10 +7,9 @@ use frontend\models\Tasks;
 use frontend\models\Clips;
 use frontend\models\Respond;
 use frontend\models\TasksForm;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
-class TasksController extends Controller
+class TasksController extends SecuredController
 {
     public function actionIndex()
     {

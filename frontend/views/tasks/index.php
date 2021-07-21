@@ -2,6 +2,7 @@
     use yii\widgets\ActiveForm;
     use yii\helpers\Html;
     use yii\helpers\Url;
+    use yii\helpers\StringHelper;
 ?>
 
 <section class="new-task">
@@ -20,7 +21,7 @@
                 </div>
                 <div class="new-task__icon new-task__icon--<?= Html::encode($task->category->icon); ?>"></div>
                 <p class="new-task_description">
-                    <?= Html::encode($task->description); ?>
+                    <?= StringHelper::truncate(Html::encode($task->description), '138', '...'); ?>
                 </p>
                 <b class="new-task__price new-task__price--translation">
                     <?= Html::encode($task->budget); ?><b> ₽</b>

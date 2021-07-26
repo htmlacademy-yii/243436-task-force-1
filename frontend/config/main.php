@@ -54,6 +54,7 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
+                'create' => 'create/index',
                 'signup' => 'signup/index',
                 'tasks' => 'tasks/index',
                 'users' => 'users/index',

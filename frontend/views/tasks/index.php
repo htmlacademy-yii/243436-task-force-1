@@ -24,7 +24,7 @@
                     <?= StringHelper::truncate(Html::encode($task->description), '138', '...'); ?>
                 </p>
                 <b class="new-task__price new-task__price--translation">
-                    <?= Html::encode($task->budget); ?><b> ₽</b>
+                    <?= Html::encode($task->budget) != null ? Html::encode($task->budget).'<b>₽</b>' : '' ?>
                 </b>
                 <p class="new-task__place">
                     <?= Html::encode($task->city->name ?? 'Удаленная работа'); ?>

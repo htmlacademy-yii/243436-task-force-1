@@ -1,0 +1,42 @@
+Array
+(
+    [clips] => Array
+        (
+            [name] => Array
+                (
+                    [0] => paid.png
+                    [1] => kopilka.png
+                    [2] => paid — копия.png
+                )
+
+            [type] => Array
+                (
+                    [0] => image/png
+                    [1] => image/png
+                    [2] => image/png
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => W:\userdata\temp\upload\phpC778.tmp
+                    [1] => W:\userdata\temp\upload\phpC779.tmp
+                    [2] => W:\userdata\temp\upload\phpC77A.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 0
+                    [1] => 0
+                    [2] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 11151
+                    [1] => 37763
+                    [2] => 11151
+                )
+
+        )
+
+)

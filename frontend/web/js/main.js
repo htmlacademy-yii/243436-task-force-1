@@ -68,3 +68,4 @@ if (cityDropdown.length) {
     window.location = '/site/city?city=' + selectedCity;
   });
 }
+

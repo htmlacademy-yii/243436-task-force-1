@@ -1,6 +1,5 @@
 <?php
     use yii\widgets\ActiveForm;
-    use kartik\file\FileInput;
 ?>
 
 <section class="create__task">
@@ -47,35 +46,13 @@
                 ->hint('Выберите категорию');
             ?>
 
-            <?= $form->field($tasks_form, 'clips', [
-                    'template' => "{label}\n
-                        <span style='color: #8a8a8d; margin-bottom: 10px;'>{hint}</span>\n
-                        {input}\n
-                        <span class='registration__text-error'>{error}</span>",
-                    ])
-                ->widget(FileInput::class, [
-                        'name' => 'clips[]',
-                        'options' => [
-                            'multiple' => true
-                        ],
-                        'pluginOptions' => [
-                            'showCaption' => false,
+            <div class="field-container">
+                <label>Файлы</label>
+                <span>Загрузите файлы, которые помогут исполнителю лучше выполнить или оценить работу</span>
+                <div class="create__file dropzone">
 
-                            'showRemove' => false,
-                            'removeIcon' => '<i class="glyphicon glyphicon-trash"></i>',
-                            'removeClass' => 'btn btn-danger',
-
-                            'showUpload' => false,
-
-                            'browseLabel' =>  '<span style="color: #ffffff;">Добавить новый файл</span>',
-                            'browseClass' => 'btn btn-primary btn-block',
-                            'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
-                            'maxFileCount' => 10
-                        ]
-                    ])
-                ->label('Файлы')
-                ->hint('Загрузите файлы, которые помогут исполнителю лучше выполнить или оценить работу');
-            ?>
+                </div>
+            </div>
 
             <?= $form->field($tasks_form, 'city_id')
                 ->textInput([

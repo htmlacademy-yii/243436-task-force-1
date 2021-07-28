@@ -2,9 +2,11 @@
 namespace frontend\controllers;
 
 use frontend\models\Categories;
+use frontend\models\Clips;
 use frontend\models\Tasks;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\UploadedFile;
 
 class CreateController extends Controller
 {
@@ -33,12 +35,6 @@ class CreateController extends Controller
         ];
     }
 
-    public function init()
-    {
-        parent::init();
-        \Yii::$app->user->loginUrl = ['landing/index'];
-    }
-
     public function actionIndex()
     {
         $this->view->title = 'Создание задания';
@@ -49,17 +45,48 @@ class CreateController extends Controller
 
         $category_list = $category->categoryList();
 
+        $session = \Yii::$app->session;
+
+        $task_id = '';
+
+        $clips = '';
+
         if(\Yii::$app->request->getIsPost()) {
             $tasks_form->load(\Yii::$app->request->post());
 
             if ($tasks_form->validate()) {
                 $tasks_form->save();
-                $task_id = \Yii::$app->db->getLastInsertID();
-                $tasks_form->upload($task_id);
+                $task_id = $tasks_form->id;
+
+                foreach($session['images'] as $image) {
+                    $clips = new Clips();
+
+                    $clips->path = $image;
+                    $clips->task_id = $task_id;
+
+                    $clips->save();
+                }
+
                 $this->redirect(['tasks/view', 'id' => $task_id]);
             }
         }
 
         return $this->render('index', compact('tasks_form', 'category_list'));
+    }
+
+    public function actionUpload() {
+        $images = [];
+
+        if ($files = UploadedFile::getInstancesByName('clips')) {
+            foreach ($files as $file) {
+                $newname = uniqid('upload') . '.' . $file->getExtension();
+
+                $file->saveAs('@webroot/uploads/' . $newname);
+
+                $images[] = $newname;
+            }
+
+            \Yii::$app->session['images'] = $images;
+        }
     }
 }

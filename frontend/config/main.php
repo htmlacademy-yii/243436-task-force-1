@@ -25,7 +25,8 @@ return [
         ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
-            'baseUrl' => ''
+            'baseUrl' => '',
+            'enableCsrfValidation'=>false,
         ],
         'user' => [
             'identityClass' => 'frontend\models\Users',

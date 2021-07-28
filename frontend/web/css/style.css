@@ -1401,26 +1401,30 @@ footer {
   display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
-          justify-content: center;
+          justify-content: space-around;
   -webkit-box-align: end;
       -ms-flex-align: end;
-          align-items: flex-end;
+          align-items: center;
   width: 519px;
-  height: 104px;
+  /* height: 104px; */
+  /* overflow-x: auto; */
   border: 1px dashed #8a8a8d;
   background-image: url("../img/upload.png");
   background-repeat: no-repeat;
   background-position: center;
   margin-top: 10px;
   border-radius: 6px; }
-  .create__file:hover {
-    background-color: #f0f0f0; }
+  /* .create__file:hover {
+    background-color: #f0f0f0;
+  } */
 
 .create__file span {
-  margin-bottom: 15px; }
+  position: relative;
+  top: 30px;
+}
 
-.create__file:hover span {
-  font-size: 0; }
+/* .create__file:hover span {
+  font-size: 0; } */
 
 .create__price-time {
   display: -webkit-box;
@@ -2618,11 +2622,11 @@ footer {
 .completion-form-star .star-disabled:hover {
   background-image: url("../img/star.png"); }
 
-.dz-image,
+/* .dz-image,
 .dz-success-mark,
 .dz-error-mark {
   display: none !important;
-}
+} */
 
 .field-container {
   display: -webkit-box;
@@ -2652,3 +2656,16 @@ footer {
   color: #FF116E; }
 
 /*# sourceMappingURL=style.css.map */
+
+.dz-error-message span {
+  color: #ffffff;
+  top: 0;
+}
+
+.dz-size span {
+  color: #000000;
+}
+
+.dz-filename span {
+  color: #000000;
+}

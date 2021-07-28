@@ -3,7 +3,7 @@
 namespace frontend\models;
 
 use Yii;
-use yii\web\UploadedFile;
+
 
 /**
  * This is the model class for table "tasks".
@@ -31,8 +31,6 @@ use yii\web\UploadedFile;
  */
 class Tasks extends \yii\db\ActiveRecord
 {
-    public $clips;
-
     /**
      * {@inheritdoc}
      */
@@ -67,7 +65,6 @@ class Tasks extends \yii\db\ActiveRecord
             ['date_add', 'default', 'value' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd H:m:s')], //значение по умолчанию
             ['user_id_create', 'default', 'value' => \Yii::$app->user->getId()], //значение по умолчанию
             ['status', 'default', 'value' => 'Новое'], //значение по умолчанию
-            [['clips'], 'file'] //валидация для файла
         ];
     }
 
@@ -92,7 +89,6 @@ class Tasks extends \yii\db\ActiveRecord
             'user_id_create' => 'User Id Create',
             'user_id_executor' => 'User Id Executor',
             'status' => 'Status',
-            'clips' => 'Файлы', //правило для файла
         ];
     }
 
@@ -134,29 +130,5 @@ class Tasks extends \yii\db\ActiveRecord
     public function getExecutor()
     {
         return $this->hasOne(Users::class, ['id' => 'user_id_executor']);
-    }
-
-    /**
-     * Сохраняет файл в нужную директорию, присваивает имя файлу
-     * и сохраняет файл и id связной задачи в таблицу
-     *
-     * @param string $task_id id созданного задания
-     */
-    public function upload($task_id)
-    {
-        if ($files = UploadedFile::getInstances($this, 'clips')) {
-            foreach ($files as $file) {
-                $newname = $file->baseName . '.' . $file->getExtension();
-
-                $file->saveAs('@webroot/uploads/' . $newname);
-
-                $clips = new Clips();
-
-                $clips->path = $newname;
-                $clips->task_id = $task_id;
-
-                $clips->save();
-            }
-        }
     }
 }

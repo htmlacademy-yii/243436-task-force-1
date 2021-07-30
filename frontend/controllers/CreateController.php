@@ -58,13 +58,17 @@ class CreateController extends Controller
                 $tasks_form->save();
                 $task_id = $tasks_form->id;
 
-                foreach($session['images'] as $image) {
-                    $clips = new Clips();
+                if (isset($session['images']) && !empty($session['images'])) {
+                    foreach($session['images'] as $image) {
+                        $clips = new Clips();
 
-                    $clips->path = $image;
-                    $clips->task_id = $task_id;
+                        $clips->path = $image;
+                        $clips->task_id = $task_id;
 
-                    $clips->save();
+                        $clips->save();
+                    }
+
+                    $session->remove('images');
                 }
 
                 $this->redirect(['tasks/view', 'id' => $task_id]);
@@ -75,7 +79,8 @@ class CreateController extends Controller
     }
 
     public function actionUpload() {
-        $images = [];
+
+        $images = \Yii::$app->session['images'] ?? [];
 
         if ($files = UploadedFile::getInstancesByName('clips')) {
             foreach ($files as $file) {

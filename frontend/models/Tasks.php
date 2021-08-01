@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use Yii;
 
+
 /**
  * This is the model class for table "tasks".
  *
@@ -44,13 +45,14 @@ class Tasks extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date_add', 'category_id', 'description', 'name', 'user_id_create', 'status'], 'required'],
+            [['category_id', 'description', 'name'], 'required'],
             [['date_add', 'expire'], 'safe'],
-            [['category_id', 'budget', 'city_id', 'user_id_create', 'user_id_executor'], 'integer'],
-            [['description'], 'string'],
+            [['category_id', 'city_id', 'user_id_create', 'user_id_executor'], 'integer'],
+            ['budget', 'integer', 'min' => 0],
+            [['description'], 'string', 'min' => 30],
             [['lat', 'lon'], 'number'],
             [['path', 'status'], 'string', 'max' => 100],
-            [['name'], 'string', 'max' => 255],
+            [['name'], 'string', 'min' => 10, 'max' => 255],
             [['address'], 'string', 'max' => 700],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::class, 'targetAttribute' =>
             ['category_id' => 'id']],
@@ -60,6 +62,9 @@ class Tasks extends \yii\db\ActiveRecord
             ['user_id_create' => 'id']],
             [['user_id_executor'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' =>
             ['user_id_executor' => 'id']],
+            ['date_add', 'default', 'value' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd H:m:s')], //значение по умолчанию
+            ['user_id_create', 'default', 'value' => \Yii::$app->user->getId()], //значение по умолчанию
+            ['status', 'default', 'value' => 'Новое'], //значение по умолчанию
         ];
     }
 
@@ -71,16 +76,16 @@ class Tasks extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'date_add' => 'Date Add',
-            'category_id' => 'Category ID',
+            'category_id' => 'Категория',
             'path' => 'Path',
-            'description' => 'Description',
-            'expire' => 'Expire',
-            'name' => 'Name',
+            'description' => 'Подробности задания',
+            'expire' => 'Сроки исполнения',
+            'name' => 'Мне нужно',
             'address' => 'Address',
-            'budget' => 'Budget',
+            'budget' => 'Бюджет',
             'lat' => 'Lat',
             'lon' => 'Lon',
-            'city_id' => 'City ID',
+            'city_id' => 'Локация',
             'user_id_create' => 'User Id Create',
             'user_id_executor' => 'User Id Executor',
             'status' => 'Status',

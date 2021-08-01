@@ -29,11 +29,10 @@ class Clips extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id_create', 'path'], 'required'],
-            [['user_id_create'], 'integer'],
+            [['task_id'], 'integer'],
             [['path'], 'string', 'max' => 100],
-            [['user_id_create'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class,
-            'targetAttribute' => ['user_id_create' => 'id']],
+            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tasks::class,
+            'targetAttribute' => ['task_id' => 'id']],
         ];
     }
 
@@ -44,8 +43,8 @@ class Clips extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id_create' => 'User Id Create',
             'path' => 'Path',
+            'task_id' => 'Task ID',
         ];
     }
 

@@ -12,8 +12,6 @@
         <meta charset="<?= Yii::$app->charset ?>">
         <?php $this->registerCsrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/style.css">
         <?php $this->head() ?>
     </head>
     <body>
@@ -74,14 +72,20 @@
                     </div>
                     <div class="header__nav">
                         <ul class="header-nav__list site-list">
-                            <li class="site-list__item">
+                            <li class="site-list__item
+                                <?= \Yii::$app->request->pathInfo == 'tasks' ? 'site-list__item--active' : '' ?>
+                            ">
                                 <a href="<?= Url::to(['tasks/index']) ?>">Задания</a>
                             </li>
-                            <li class="site-list__item">
-                                <a href="<?= Url::to(['users/index']) ?>"">Исполнители</a>
+                            <li class="site-list__item
+                                <?= \Yii::$app->request->pathInfo == 'users' ? 'site-list__item--active' : '' ?>
+                            ">
+                                <a href="<?= Url::to(['users/index']) ?>">Исполнители</a>
                             </li>
-                            <li class="site-list__item">
-                                <a href="#">Создать задание</a>
+                            <li class="site-list__item
+                                <?= Yii::$app->request->pathInfo == 'create' ? 'site-list__item--active' : '' ?>
+                            ">
+                                <a href="<?= Url::to(['create/index']) ?>">Создать задание</a>
                             </li>
                             <li class="site-list__item">
                                 <a href="#">Мой профиль</a>
@@ -212,8 +216,32 @@
             Dropzone.autoDiscover = false;
 
             var dropzone = new Dropzone(".dropzone", {
-                url: window.location.href, maxFiles: 6, uploadMultiple: true,
-                acceptedFiles: 'image/*', previewTemplate: '<a href="#"><img data-dz-thumbnail alt="Фото работы"></a>'
+                // url: window.location.href, //адрес отправки файлов
+                url: "create/upload",
+
+                paramName: "clips",
+                uploadMultiple: true,
+                dictDefaultMessage: '<span class="dz-message" style="position: relative; top: 0px;">Добавить новый файл</span>',
+
+                acceptedFiles: 'image/*',
+
+                addRemoveLinks: true,
+                dictRemoveFile: 'Удалить',
+                dictRemoveFileConfirmation: 'Вы уверены что хотете удалить файл?',
+
+                maxFiles: 3,
+                dictMaxFilesExceeded: "Достигут max лимит фалов, разрешено {{maxFiles}}",
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        if (this.files.length > 3) {
+                            this.removeFile(this.files[0]);
+                        }
+                    });
+                },
+
+                parallelUploads: 100
+
+                // previewTemplate: '<a href="#"><img data-dz-thumbnail alt="Фото работы"></a>',
             });
         </script>
     <?php $this->endBody() ?>

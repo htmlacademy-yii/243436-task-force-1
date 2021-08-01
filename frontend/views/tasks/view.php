@@ -18,7 +18,7 @@
             </span>
             </div>
             <b class="new-task__price new-task__price--clean content-view-price">
-                <?= Html::encode($tasks->budget); ?><b> ₽</b>
+                <?= Html::encode($tasks->budget) != null ? Html::encode($tasks->budget).'<b>₽</b>' : '' ?>
             </b>
             <div class="new-task__icon new-task__icon--<?= Html::encode($tasks->category->icon); ?> content-view-icon">
             </div>
@@ -31,7 +31,7 @@
             <h3 class="content-view__h3">Вложения</h3>
             <?php if(!empty($clips)) : ?>
                 <?php foreach($clips as $clip) : ?>
-                    <a href="<?= Url::to("@web/img/{$clip['path']}"); ?>"><?= $clip['path']; ?></a>
+                    <a href="<?= Url::to("@web/uploads/{$clip['path']}"); ?>"><?= $clip['path']; ?></a>
                 <?php endforeach; ?>
             <?php else : ?>
                 <p>Отсутствуют</p>

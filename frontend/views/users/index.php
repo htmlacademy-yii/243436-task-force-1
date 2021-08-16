@@ -2,6 +2,7 @@
     use yii\widgets\ActiveForm;
     use yii\helpers\Html;
     use yii\helpers\Url;
+    use yii\widgets\LinkPager;
 ?>
 
 <section class="user__search">
@@ -106,18 +107,20 @@
             </div>
         <?php endforeach; ?>
     </div>
+
     <div>
         <div class="new-task__pagination">
-            <ul class="new-task__pagination-list">
-            <li class="pagination__item"><a href="#"></a></li>
-            <li class="pagination__item pagination__item--current">
-                <a>1</a></li>
-            <li class="pagination__item"><a href="#">2</a></li>
-            <li class="pagination__item"><a href="#">3</a></li>
-            <li class="pagination__item"><a href="#"></a></li>
-            </ul>
+            <?= LinkPager::widget([
+                'pagination' => $pages,
+                'options' => ['class' => 'new-task__pagination-list'], //задает класс для контейнера пагинации ul
+                'linkContainerOptions' => ['class'=>'pagination__item'], //задает класс для элемента li
+                'activePageCssClass' => 'pagination__item--current', //задает класс для активной кнопки
+                'prevPageLabel' => '', //класс (значение) для кнопки назад
+                'nextPageLabel' => '' //класс (значение) для кнопки вперед
+            ]) ?>
         </div>
     </div>
+
 </section>
 
 

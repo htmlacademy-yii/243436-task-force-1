@@ -4,18 +4,12 @@ namespace Taskforce\BusinessLogic;
 
 class RefuseAction extends Action
 {
-
     public function getNameAction() : string
     {
         return 'Отказаться';
     }
 
-    public function getInsideAction() : string
-    {
-        return 'refuse';
-    }
-
-    public function isCompareID(int $currentID, ?int $executorID, ?int $customerID) : bool
+    public function isCompareID(int $currentID, ?int $executorID, ?int $creatorID) : bool
     {
         return $currentID === $executorID;
     }

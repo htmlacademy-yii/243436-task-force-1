@@ -11,7 +11,10 @@ use Yii;
  * @property string $message
  * @property int|null $user_id_create
  * @property int|null $user_id_executor
+ * @property int|null $task_id
+ * @property string|null $date_add
  *
+ * @property Tasks $task
  * @property Users $userIdCreate
  * @property Users $userIdExecutor
  */
@@ -30,14 +33,34 @@ class Messages extends \yii\db\ActiveRecord
      */
     public function rules()
     {
+        $task = Tasks::find()
+            ->where(['tasks.id' => \Yii::$app->request->get('id')])
+            ->one();
+
+        $creatorID = null;
+        $executorID = null;
+
+        if (\Yii::$app->user->getId() === $task->user_id_create) {
+            $creatorID = $task->user_id_create;
+        } else {
+            $executorID = \Yii::$app->user->getId();
+        }
+
         return [
             [['message'], 'required'],
             [['message'], 'string'],
-            [['user_id_create', 'user_id_executor'], 'integer'],
-            [['user_id_create'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' =>
-            ['user_id_create' => 'id']],
-            [['user_id_executor'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' =>
-            ['user_id_executor' => 'id']],
+            [['user_id_create', 'user_id_executor', 'task_id'], 'integer'],
+            [['date_add'], 'safe'],
+            [['user_id_create'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class,
+            'targetAttribute' => ['user_id_create' => 'id']],
+            [['user_id_executor'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class,
+            'targetAttribute' => ['user_id_executor' => 'id']],
+            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tasks::class,
+            'targetAttribute' => ['task_id' => 'id']],
+            ['date_add', 'default', 'value' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd H:m:s')],
+            ['task_id', 'default', 'value' => \Yii::$app->request->get('id')],
+            ['user_id_executor', 'default', 'value' => $executorID],
+            ['user_id_create', 'default', 'value' => $creatorID],
         ];
     }
 
@@ -48,10 +71,22 @@ class Messages extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'message' => 'Message',
+            'message' => 'Текст сообщения',
             'user_id_create' => 'User Id Create',
             'user_id_executor' => 'User Id Executor',
+            'task_id' => 'Task ID',
+            'date_add' => 'Date Add',
         ];
+    }
+
+    /**
+     * Gets query for [[Task]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTask()
+    {
+        return $this->hasOne(Tasks::class, ['id' => 'task_id']);
     }
 
     /**
@@ -69,7 +104,7 @@ class Messages extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getExecutor()
+    public function getExcecutor()
     {
         return $this->hasOne(Users::class, ['id' => 'user_id_executor']);
     }

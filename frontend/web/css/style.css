@@ -930,7 +930,7 @@ footer {
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
-          align-items: center;
+          align-items: stretch;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -942,7 +942,10 @@ footer {
 
 .pagination__item a {
   color: #ffffff;
-  text-decoration: none; }
+  text-decoration: none;
+  padding-top: 10px;
+  width: 100%;
+  text-align: center; }
 
 .new-task__pagination-list li:first-child,
 .new-task__pagination-list li:last-child {
@@ -1092,7 +1095,7 @@ footer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: 27px 20px; }
+  padding: 27px 15px; }
 
 .content-view__feedback h2 {
   font-weight: 700;
@@ -2499,7 +2502,7 @@ footer {
     font-size: 20px;
     margin-top: 17px;
     margin-bottom: 16px; }
-  .form-modal div, p {
+  .form-modal div {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -2668,4 +2671,8 @@ footer {
 
 .dz-filename span {
   color: #000000;
+}
+
+.form-modal div.end {
+  flex-direction: row;
 }

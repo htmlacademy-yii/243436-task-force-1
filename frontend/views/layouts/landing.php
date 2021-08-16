@@ -184,7 +184,7 @@
                                 <a href="<?= Url::to(['signup/index']) ?>">Регистрация</a>
                             </li>
                             <li class="links__item">
-                                <a href="">Создать задание</a>
+                                <a href="<?= Url::to(['create/index']) ?>">Создать задание</a>
                             </li>
                             <li class="links__item">
                                 <a href="">Справка</a>

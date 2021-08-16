@@ -6,7 +6,6 @@ use frontend\models\Cities;
 use yii\web\Controller;
 use frontend\models\Users;
 
-
 class SignupController extends Controller
 {
     public function actionIndex()

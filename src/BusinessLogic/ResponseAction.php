@@ -9,12 +9,7 @@ class ResponseAction extends Action
         return 'Откликнуться';
     }
 
-    public function getInsideAction() : string
-    {
-        return 'response';
-    }
-
-    public function isCompareID(int $currentID, ?int $executorID, ?int $customerID) : bool
+    public function isCompareID(int $currentID, ?int $executorID, ?int $creatorID) : bool
     {
         return $currentID === $executorID;
     }

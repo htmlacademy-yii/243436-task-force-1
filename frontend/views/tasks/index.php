@@ -3,6 +3,7 @@
     use yii\helpers\Html;
     use yii\helpers\Url;
     use yii\helpers\StringHelper;
+    use yii\widgets\LinkPager;
 ?>
 
 <section class="new-task">
@@ -37,15 +38,16 @@
     </div>
 
     <div class="new-task__pagination">
-        <ul class="new-task__pagination-list">
-        <li class="pagination__item"><a href="#"></a></li>
-        <li class="pagination__item pagination__item--current">
-            <a>1</a></li>
-        <li class="pagination__item"><a href="#">2</a></li>
-        <li class="pagination__item"><a href="#">3</a></li>
-        <li class="pagination__item"><a href="#"></a></li>
-        </ul>
+        <?= LinkPager::widget([
+            'pagination' => $pages,
+            'options' => ['class' => 'new-task__pagination-list'], //задает класс для контейнера пагинации ul
+            'linkContainerOptions' => ['class'=>'pagination__item'], //задает класс для элемента li
+            'activePageCssClass' => 'pagination__item--current', //задает класс для активной кнопки
+            'prevPageLabel' => '', //класс (значение) для кнопки назад
+            'nextPageLabel' => '' //класс (значение) для кнопки вперед
+        ]) ?>
     </div>
+
 </section>
 <section class="search-task">
     <div class="search-task__wrapper">
@@ -90,7 +92,7 @@
                             return "
                             <label class='checkbox__legend'>
                                 <input class='visually-hidden checkbox__input' type='checkbox' name='{$name}'
-                                value='{$value}' {$checked}>
+                                value='{$value}'>
                                 <span>{$label}</span>
                             </label>";
                         }

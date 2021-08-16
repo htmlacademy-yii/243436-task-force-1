@@ -98,7 +98,7 @@
             <div class="content-view__headline
             user__card-bookmark user__card-bookmark<?= $favorite ? '--current':'' ?>">
                 <span>Был на сайте <?= Yii::$app->formatter->asRelativeTime(Html::encode($users->date_visit)); ?></span>
-                <a href="<?= $favorite_link;  ?>"><b></b></a>
+                <a href="<?= $favorite_link; ?>"><b></b></a>
             </div>
         </div>
         <div class="content-view__description">

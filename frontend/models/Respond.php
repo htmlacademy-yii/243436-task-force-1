@@ -33,14 +33,18 @@ class Respond extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['task_id', 'user_id_executor'], 'required'],
+            [['comment', 'budget'], 'required'],
             [['task_id', 'user_id_executor', 'budget'], 'integer'],
             [['comment'], 'string'],
             [['date'], 'safe'],
+            [['status'], 'string', 'max' => 15],
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tasks::class,
             'targetAttribute' => ['task_id' => 'id']],
             [['user_id_executor'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class,
             'targetAttribute' => ['user_id_executor' => 'id']],
+            ['user_id_executor', 'default', 'value' => \Yii::$app->user->getId()],
+            ['task_id', 'default', 'value' => \Yii::$app->request->get('id')],
+            ['date', 'default', 'value' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd H:m:s')],
         ];
     }
 
@@ -53,9 +57,10 @@ class Respond extends \yii\db\ActiveRecord
             'id' => 'ID',
             'task_id' => 'Task ID',
             'user_id_executor' => 'User Id Executor',
-            'comment' => 'Comment',
+            'comment' => 'Комментарий',
             'date' => 'Date',
-            'budget' => 'Budget',
+            'budget' => 'Ваша цена',
+            'status' => 'Status',
         ];
     }
 

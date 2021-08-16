@@ -37,6 +37,7 @@ class CreateController extends Controller
 
     public function actionIndex()
     {
+
         $this->view->title = 'Создание задания';
 
         $tasks_form = new Tasks();

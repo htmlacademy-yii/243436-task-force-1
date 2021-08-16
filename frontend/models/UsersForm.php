@@ -17,6 +17,9 @@ class UsersForm extends Model
     const REVIEWS = 'Есть отзывы';
     const FAVORITES = 'В избранном';
 
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
@@ -24,6 +27,9 @@ class UsersForm extends Model
         ];
     }
 
+    /**
+     * @return array возвращает фильтрацию по исполниетлю
+     */
     public function moreList()
     {
         return [

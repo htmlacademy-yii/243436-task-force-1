@@ -12,9 +12,10 @@ use frontend\models\Reviews;
 use frontend\models\TasksForm;
 use yii\web\NotFoundHttpException;
 use Taskforce\BusinessLogic\Task;
+use Taskforce\BusinessLogic\Email;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
-use yii\data\Pagination;
+use yii\data\ActiveDataProvider;
 
 class TasksController extends SecuredController
 {
@@ -69,23 +70,26 @@ class TasksController extends SecuredController
             $tasks->andWhere(['like', 'tasks.name', $tasksForm->search]);
         }
 
-        $pages = new Pagination([
-            'totalCount' => $tasks->count(),
-            'pageSize' => 4,
-            'forcePageParam' => false,
-            'pageSizeParam' => false,
+        $dataProvider = new ActiveDataProvider([
+            'query' => $tasks,
+            'pagination' => [
+                'pageSize' => 5,
+                'pageSizeParam' => false
+            ]
         ]);
 
-        $tasks = $tasks->offset($pages->offset)->limit($pages->limit)->all();
-
-        return $this->render('index', compact('tasks', 'tasksForm', 'categories', 'pages'));
+        return $this->render('index', compact('tasksForm', 'categories', 'dataProvider'));
     }
 
     public function actionView($id)
     {
+        $email = new Email();
+
         $tasks = Tasks::find()
             ->where(['tasks.id' => $id])
             ->one();
+
+        \Yii::$app->params['task_current'] = $tasks;
 
         if (empty($tasks)) {
             throw new NotFoundHttpException('Страница не найдена...');
@@ -105,16 +109,7 @@ class TasksController extends SecuredController
                 $tasks->status = task::STATUS_FAILED;
                 if ($tasks->save()) {
 
-                    try {
-                        \Yii::$app->mailer->compose('failed', ['task' => $tasks->name, 'task_id' => $tasks->id])
-                            ->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->params['senderName']])
-                            ->setTo([$tasks->creator->email, \Yii::$app->params['adminEmail']])
-                            ->setSubject('Отказ от задания')
-                            ->send();
-                    } catch (\Swift_TransportException $e) {
-                        debug($e);
-                        die();
-                    }
+                    $email->failedAction();
 
                     $this->redirect(['tasks/index']);
                 }
@@ -179,17 +174,7 @@ class TasksController extends SecuredController
                         ->joinWith(['executor'])
                         ->one();
 
-                    try {
-                        \Yii::$app->mailer->compose('win', ['task' => $tasks->name, 'create' => $tasks->creator->name,
-                        'task_id' => $tasks->id])
-                            ->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->params['senderName']])
-                            ->setTo([$selectUser->executor->email, \Yii::$app->params['adminEmail']])
-                            ->setSubject('Подтверждение отклика')
-                            ->send();
-                    } catch (\Swift_TransportException $e) {
-                        debug($e);
-                        die();
-                    }
+                    $email->winAction();
 
                     $tasks->user_id_executor = $selectUser->user_id_executor;
                     $tasks->status = task::STATUS_WORK;
@@ -202,8 +187,6 @@ class TasksController extends SecuredController
 
         $respond = new Respond();
 
-        $respondForMail = '';
-
         if (\Yii::$app->request->getIsPost()) {
             $respond->load(\Yii::$app->request->post());
             if (\Yii::$app->request->isAjax) {
@@ -213,16 +196,7 @@ class TasksController extends SecuredController
             if ($respond->validate()) {
                 $respond->save(false);
 
-                try {
-                    \Yii::$app->mailer->compose('respond', ['task' => $tasks->name, 'task_id' => $tasks->id])
-                        ->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->params['senderName']])
-                        ->setTo([$tasks->creator->email, \Yii::$app->params['adminEmail']])
-                        ->setSubject('Новый отклик по задаче')
-                        ->send();
-                } catch (\Swift_TransportException $e) {
-                    debug($e);
-                    die();
-                }
+                $email->respondAction();
 
                 $this->redirect(['tasks/view', 'id' => \Yii::$app->request->get('id')]);
             }
@@ -238,11 +212,11 @@ class TasksController extends SecuredController
             ->where(['id' => $currentID])
             ->one();
 
-        if ($user->role === 'Исполнитель') {
+        if ($user->role === Task::EXECUTOR) {
             $executorID = $user->id;
         }
 
-        if ($user->role === 'Заказчик') {
+        if ($user->role === Task::CREATOR) {
             $creatorID = $user->id;
         }
 
@@ -263,22 +237,7 @@ class TasksController extends SecuredController
                         $tasks->status = task::STATUS_FAILED;
                     }
 
-                    $respondForMail = Respond::find()
-                        ->where(['task_id' => $id, 'status' => 'Подтверждено'])
-                        ->joinWith(['executor'])
-                        ->all();
-
-                    try {
-                        \Yii::$app->mailer->compose('end', ['task' => $tasks->name, 'create' => $tasks->creator->name,
-                        'task_id' => $tasks->id])
-                            ->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->params['senderName']])
-                            ->setTo([$respondForMail[0]->executor->email, \Yii::$app->params['adminEmail']])
-                            ->setSubject('Завершение задачи')
-                            ->send();
-                    } catch (\Swift_TransportException $e) {
-                        debug($e);
-                        die();
-                    }
+                    $email->endAction();
 
                     if($tasks->save()) {
                         $this->redirect(['tasks/index']);
@@ -289,44 +248,24 @@ class TasksController extends SecuredController
 
         $messagesForm = new Messages();
 
-        $send_email = '';
-
-        $messages = '';
-
         if (\Yii::$app->request->getIsPost()) {
             $messagesForm->load(\Yii::$app->request->post());
 
             if ($messagesForm->validate()) {
                 if($messagesForm->save()) {
 
-                    $messages = Messages::find()
-                        ->where(['task_id' => $id])
-                        ->orderBy('date_add DESC')
-                        ->limit(1)
-                        ->all();
-
-
-                    if (!$messages[0]->user_id_create) {
-                        $send_email = $tasks->creator->email;
-                    } else {
-                        $send_email = $tasks->executor->email;
-                    }
-
-                    try {
-                        \Yii::$app->mailer->compose('message', ['task' => $tasks->name, 'task_id' => $tasks->id])
-                            ->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->params['senderName']])
-                            ->setTo([$send_email, \Yii::$app->params['adminEmail']])
-                            ->setSubject('Новое сообщение по задаче')
-                            ->send();
-                    } catch (\Swift_TransportException $e) {
-                        debug($e);
-                        die();
-                    }
+                    $email->messageAction();
 
                     $this->redirect(['tasks/view', 'id' => \Yii::$app->request->get('id')]);
                 }
             }
         }
+
+        $messages = Messages::find()
+            ->where(['task_id' => $id])
+            ->orderBy('date_add DESC')
+            ->limit(1)
+            ->all();
 
         $messages = Messages::find()
             ->where(['task_id' => $id])

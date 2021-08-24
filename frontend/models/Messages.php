@@ -33,17 +33,13 @@ class Messages extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        $task = Tasks::find()
-            ->where(['tasks.id' => \Yii::$app->request->get('id')])
-            ->one();
-
         $creatorID = null;
         $executorID = null;
 
-        if (\Yii::$app->user->getId() === $task->user_id_create) {
-            $creatorID = $task->user_id_create;
+        if (\Yii::$app->user->getId() === Yii::$app->params['task_current']->user_id_create) {
+            $creatorID = Yii::$app->params['task_current']->user_id_create;
         } else {
-            $executorID = \Yii::$app->user->getId();
+            $executorID = Yii::$app->user->getId();
         }
 
         return [
@@ -58,7 +54,7 @@ class Messages extends \yii\db\ActiveRecord
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tasks::class,
             'targetAttribute' => ['task_id' => 'id']],
             ['date_add', 'default', 'value' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd H:m:s')],
-            ['task_id', 'default', 'value' => \Yii::$app->request->get('id')],
+            ['task_id', 'default', 'value' => Yii::$app->params['task_current']->id],
             ['user_id_executor', 'default', 'value' => $executorID],
             ['user_id_create', 'default', 'value' => $creatorID],
         ];

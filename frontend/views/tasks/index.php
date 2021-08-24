@@ -9,7 +9,7 @@
 <section class="new-task">
     <div class="new-task__wrapper">
         <h1>Новые задания</h1>
-        <?php foreach($tasks as $task) : ?>
+        <?php foreach($dataProvider->getModels() as $task) : ?>
             <div class="new-task__card">
                 <div class="new-task__title">
                 <a href="<?= Url::to(['tasks/view', 'id' => $task['id']]) ?>" class="link-regular">
@@ -38,13 +38,13 @@
     </div>
 
     <div class="new-task__pagination">
-        <?= LinkPager::widget([
-            'pagination' => $pages,
-            'options' => ['class' => 'new-task__pagination-list'], //задает класс для контейнера пагинации ul
-            'linkContainerOptions' => ['class'=>'pagination__item'], //задает класс для элемента li
-            'activePageCssClass' => 'pagination__item--current', //задает класс для активной кнопки
-            'prevPageLabel' => '', //класс (значение) для кнопки назад
-            'nextPageLabel' => '' //класс (значение) для кнопки вперед
+      <?= LinkPager::widget([
+            'pagination' => $dataProvider->pagination,
+            'options' => ['class' => 'new-task__pagination-list'],
+            'linkContainerOptions' => ['class'=>'pagination__item'],
+            'activePageCssClass' => 'pagination__item--current',
+            'prevPageLabel' => '',
+            'nextPageLabel' => ''
         ]) ?>
     </div>
 

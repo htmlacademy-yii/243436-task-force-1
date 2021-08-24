@@ -43,7 +43,7 @@ class Respond extends \yii\db\ActiveRecord
             [['user_id_executor'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class,
             'targetAttribute' => ['user_id_executor' => 'id']],
             ['user_id_executor', 'default', 'value' => \Yii::$app->user->getId()],
-            ['task_id', 'default', 'value' => \Yii::$app->request->get('id')],
+            ['task_id', 'default', 'value' => Yii::$app->params['task_current']->id ?? ''],
             ['date', 'default', 'value' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd H:m:s')],
         ];
     }

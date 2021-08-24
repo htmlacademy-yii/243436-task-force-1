@@ -54,15 +54,15 @@
                 </div>
             </div>
         </div>
-        <?php if ((($user->role === 'Заказчик'
+        <?php if ((($user->role === Task::CREATOR
         && $tasks->user_id_create === $currentID)
-        || (($user->role === 'Исполнитель'
+        || (($user->role === Task::EXECUTOR
         && empty($oneRespond))
-        || ($user->role === 'Исполнитель'
+        || ($user->role === Task::EXECUTOR
         && $oneRespond[0]->status === 'Подтверждено')))
-        && $tasks->status !== task::STATUS_CANCEL
-        && $tasks->status !== task::STATUS_FAILED
-        && $tasks->status !== task::STATUS_PERFORMED) : ?>
+        && $tasks->status !== Task::STATUS_CANCEL
+        && $tasks->status !== Task::STATUS_FAILED
+        && $tasks->status !== Task::STATUS_PERFORMED) : ?>
             <div class="content-view__action-buttons">
                 <?php if ($task->getAvailableActions($tasks->status)[0]
                 ->isCompareID($currentID, $executorID, $creatorID)
@@ -250,9 +250,9 @@
         </div>
     </div>
 
-    <?php if ($user->role === 'Заказчик'
+    <?php if ($user->role === Task::CREATOR
     && $tasks->user_id_create === $currentID
-    || $user->role === 'Исполнитель') : ?>
+    || $user->role === Task::EXECUTOR) : ?>
         <div id="chat-container">
             <!--добавьте сюда атрибут task с указанием в нем id текущего задания-->
             <div class="connect-desk__chat">
@@ -270,15 +270,15 @@
                         </p>
                     <?php endforeach; ?>
                 </div>
-                <?php if ($user->role === 'Заказчик'
+                <?php if ($user->role === Task::CREATOR
                 && $tasks->user_id_create === $currentID
-                && $tasks->status !== task::STATUS_CANCEL
-                && $tasks->status !== task::STATUS_FAILED
-                && $tasks->status !== task::STATUS_PERFORMED
-                ||$user->role === 'Исполнитель'
-                && $tasks->status !== task::STATUS_FAILED
-                && $tasks->status !== task::STATUS_PERFORMED
-                && $tasks->status !== task::STATUS_CANCEL
+                && $tasks->status !== Task::STATUS_CANCEL
+                && $tasks->status !== Task::STATUS_FAILED
+                && $tasks->status !== Task::STATUS_PERFORMED
+                ||$user->role === Task::EXECUTOR
+                && $tasks->status !== Task::STATUS_FAILED
+                && $tasks->status !== Task::STATUS_PERFORMED
+                && $tasks->status !== Task::STATUS_CANCEL
                 && (!empty($oneRespond) && $oneRespond[0]->status !== 'Отклонено')) : ?>
                     <p class="chat__your-message">Ваше сообщение</p>
 

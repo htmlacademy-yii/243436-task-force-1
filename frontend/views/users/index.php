@@ -8,7 +8,7 @@
 <section class="user__search">
     <div class="new-user__wrapper">
         <h1>Исполнители</h1>
-        <?php foreach($users as $user) : ?>
+        <?php foreach($dataProvider->getModels() as $user) : ?>
             <div class="content-view__feedback-card user__search-wrapper">
                 <div class="feedback-card__top">
                     <div class="user__search-icon">
@@ -111,12 +111,12 @@
     <div>
         <div class="new-task__pagination">
             <?= LinkPager::widget([
-                'pagination' => $pages,
-                'options' => ['class' => 'new-task__pagination-list'], //задает класс для контейнера пагинации ul
-                'linkContainerOptions' => ['class'=>'pagination__item'], //задает класс для элемента li
-                'activePageCssClass' => 'pagination__item--current', //задает класс для активной кнопки
-                'prevPageLabel' => '', //класс (значение) для кнопки назад
-                'nextPageLabel' => '' //класс (значение) для кнопки вперед
+                'pagination' => $dataProvider->pagination,
+                'options' => ['class' => 'new-task__pagination-list'],
+                'linkContainerOptions' => ['class'=>'pagination__item'],
+                'activePageCssClass' => 'pagination__item--current',
+                'prevPageLabel' => '',
+                'nextPageLabel' => ''
             ]) ?>
         </div>
     </div>

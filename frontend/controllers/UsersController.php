@@ -10,7 +10,7 @@ use frontend\models\PhotoWork;
 use frontend\models\Reviews;
 use yii\web\NotFoundHttpException;
 use yii\helpers\Url;
-use yii\data\Pagination;
+use yii\data\ActiveDataProvider;
 
 class UsersController extends SecuredController
 {
@@ -62,16 +62,15 @@ class UsersController extends SecuredController
             $users->andWhere(['like', 'users.name', $usersForm->search]);
         }
 
-        $pages = new Pagination([
-            'totalCount' => $users->count(),
-            'pageSize' => 4,
-            'forcePageParam' => false,
-            'pageSizeParam' => false,
+        $dataProvider = new ActiveDataProvider([
+            'query' => $users,
+            'pagination' => [
+                'pageSize' => 5,
+                'pageSizeParam' => false
+            ]
         ]);
 
-        $users = $users->offset($pages->offset)->limit($pages->limit)->all();
-
-        return $this->render('index', compact('users', 'usersForm', 'categories', 'pages'));
+        return $this->render('index', compact('usersForm', 'categories', 'dataProvider'));
     }
 
     public function actionUser($id)

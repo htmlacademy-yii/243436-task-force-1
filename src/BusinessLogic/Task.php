@@ -16,6 +16,9 @@ class Task
     const ACTION_PERFORMED = 'Завершить';
     const ACTION_CANCEL = 'Отменить';
 
+    const EXECUTOR = 'Исполнитель';
+    const CREATOR = 'Заказчик';
+
     public function checkStatus (string $status) : void
     {
         $statusList = ['Новое', 'В работе', 'Провалено', 'Выполнено', 'Отменено'];

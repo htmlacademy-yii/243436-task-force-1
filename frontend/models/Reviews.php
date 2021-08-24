@@ -31,10 +31,6 @@ class Reviews extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        $task = Tasks::find()
-            ->where(['tasks.id' => \Yii::$app->request->get('id')])
-            ->one();
-
         return [
             [['description'], 'string'],
             ['description','required'],
@@ -48,9 +44,9 @@ class Reviews extends \yii\db\ActiveRecord
             'targetAttribute' => ['user_id_create' => 'id']],
             [['user_id_executor'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class,
             'targetAttribute' => ['user_id_executor' => 'id']],
-            ['task_id', 'default', 'value' => \Yii::$app->request->get('id')],
-            ['user_id_executor', 'default', 'value' => $task->user_id_executor ?? ''],
-            ['user_id_create', 'default', 'value' => $task->user_id_create ?? ''],
+            ['task_id', 'default', 'value' => Yii::$app->params['task_current']->id ?? ''],
+            ['user_id_executor', 'default', 'value' => Yii::$app->params['task_current']->user_id_executor ?? ''],
+            ['user_id_create', 'default', 'value' => Yii::$app->params['task_current']->user_id_create ?? ''],
         ];
     }
 

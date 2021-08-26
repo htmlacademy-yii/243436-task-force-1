@@ -26,7 +26,7 @@ return [
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'baseUrl' => '',
-            'enableCsrfValidation'=>false,
+            'enableCsrfValidation' => false,
         ],
         'user' => [
             'identityClass' => 'frontend\models\Users',
@@ -55,6 +55,8 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
+                'tasks/page/<page:\d+>' => 'tasks/index',
+                'users/page/<page:\d+>' => 'users/index',
                 'create' => 'create/index',
                 'signup' => 'signup/index',
                 'tasks' => 'tasks/index',

@@ -32,13 +32,21 @@ class Reviews extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['review', 'rating', 'user_id_create', 'user_id_executor'], 'required'],
-            [['review'], 'string'],
-            [['rating', 'user_id_create', 'user_id_executor'], 'integer'],
-            [['user_id_create'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' =>
-            ['user_id_create' => 'id']],
-            [['user_id_executor'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' =>
-            ['user_id_executor' => 'id']],
+            [['description'], 'string'],
+            ['description','required'],
+            ['status', 'required', 'message' => 'Необходимо выбрать статус задания'],
+            ['rating', 'required', 'message' => 'Необходимо поставить оценку исполнителю'],
+            [['rating', 'user_id_create', 'user_id_executor', 'task_id'], 'integer'],
+            [['status'], 'string', 'max' => 20],
+            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tasks::class,
+            'targetAttribute' => ['task_id' => 'id']],
+            [['user_id_create'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class,
+            'targetAttribute' => ['user_id_create' => 'id']],
+            [['user_id_executor'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class,
+            'targetAttribute' => ['user_id_executor' => 'id']],
+            ['task_id', 'default', 'value' => Yii::$app->params['task_current']->id ?? ''],
+            ['user_id_executor', 'default', 'value' => Yii::$app->params['task_current']->user_id_executor ?? ''],
+            ['user_id_create', 'default', 'value' => Yii::$app->params['task_current']->user_id_create ?? ''],
         ];
     }
 
@@ -49,10 +57,12 @@ class Reviews extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'review' => 'Review',
-            'rating' => 'Rating',
+            'description' => 'Комментарий',
+            'rating' => 'Оценка',
             'user_id_create' => 'User Id Create',
             'user_id_executor' => 'User Id Executor',
+            'task_id' => 'Task ID',
+            'status' => 'Status',
         ];
     }
 

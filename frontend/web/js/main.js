@@ -29,8 +29,11 @@ for (var j = 0; j < closeModalLinks.length; j++) {
 }
 
 document.getElementById('close-modal').addEventListener("click", closeModal);
+document.getElementById('close-modal1').addEventListener("click", closeModal);
 
 var starRating = document.getElementsByClassName("completion-form-star");
+
+
 
 if (starRating.length) {
   starRating = starRating[0];
@@ -57,15 +60,17 @@ if (starRating.length) {
   });
 }
 
-var cityDropdown = document.getElementsByClassName('town-select');
+// var stars = document.querySelectorAll('.completion-form-star .star-disabled');
 
-if (cityDropdown.length) {
-  cityDropdown = cityDropdown[0];
+// var cityDropdown = document.getElementsByClassName('town-select');
 
-  cityDropdown.addEventListener('change', function(event) {
-    var selectedCity = event.target.value;
+// if (cityDropdown.length) {
+//   cityDropdown = cityDropdown[0];
 
-    window.location = '/site/city?city=' + selectedCity;
-  });
-}
+//   cityDropdown.addEventListener('change', function(event) {
+//     var selectedCity = event.target.value;
+
+//     window.location = '/site/city?city=' + selectedCity;
+//   });
+// }
 

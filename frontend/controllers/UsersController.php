@@ -8,9 +8,9 @@ use frontend\models\Categories;
 use frontend\models\Favorites;
 use frontend\models\PhotoWork;
 use frontend\models\Reviews;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\helpers\Url;
+use yii\data\ActiveDataProvider;
 
 class UsersController extends SecuredController
 {
@@ -29,6 +29,7 @@ class UsersController extends SecuredController
         $users = Users::find()
             ->where(['role' => 'Исполнитель'])
             ->joinWith(['tasksExecutor', 'categories', 'reviewsExecutor', 'favorites'])
+            ->distinct()
             ->orderBy('date_visit DESC');
 
         if ($usersForm->category) {
@@ -61,9 +62,15 @@ class UsersController extends SecuredController
             $users->andWhere(['like', 'users.name', $usersForm->search]);
         }
 
-        $users = $users->all();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $users,
+            'pagination' => [
+                'pageSize' => 5,
+                'pageSizeParam' => false
+            ]
+        ]);
 
-        return $this->render('index', compact('users', 'usersForm', 'categories'));
+        return $this->render('index', compact('usersForm', 'categories', 'dataProvider'));
     }
 
     public function actionUser($id)

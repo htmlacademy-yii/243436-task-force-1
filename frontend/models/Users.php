@@ -320,4 +320,20 @@ class Users extends ActiveRecord implements IdentityInterface
 
         return $executor;
     }
+
+    private $_user;
+
+    /**
+     * Возвращает пользователя из БД по email
+     *
+     * @return object данные пользователя по email
+     */
+    public function getUser()
+    {
+        if ($this->_user === null) {
+            $this->_user = Users::findOne(['email' => $this->email]);
+        }
+
+        return $this->_user;
+    }
 }

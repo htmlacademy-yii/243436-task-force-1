@@ -62,9 +62,9 @@ class Tasks extends \yii\db\ActiveRecord
             ['user_id_create' => 'id']],
             [['user_id_executor'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' =>
             ['user_id_executor' => 'id']],
-            ['date_add', 'default', 'value' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd H:m:s')], //значение по умолчанию
-            ['user_id_create', 'default', 'value' => \Yii::$app->user->getId()], //значение по умолчанию
-            ['status', 'default', 'value' => 'Новое'], //значение по умолчанию
+            ['date_add', 'default', 'value' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd H:m:s')],
+            ['user_id_create', 'default', 'value' => \Yii::$app->user->getId()],
+            ['status', 'default', 'value' => 'Новое'],
         ];
     }
 
@@ -130,5 +130,45 @@ class Tasks extends \yii\db\ActiveRecord
     public function getExecutor()
     {
         return $this->hasOne(Users::class, ['id' => 'user_id_executor']);
+    }
+
+    /**
+     * Gets query for [[Responds]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getResponds()
+    {
+        return $this->hasMany(Respond::class, ['task_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Clips]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getClips()
+    {
+        return $this->hasMany(Clips::class, ['task_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Messages]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMessages()
+    {
+        return $this->hasMany(Messages::class, ['task_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Reviews]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReviews()
+    {
+        return $this->hasMany(Reviews::class, ['task_id' => 'id']);
     }
 }

@@ -2,6 +2,8 @@
     use yii\helpers\Html;
     use yii\helpers\Url;
     use frontend\assets\AppAsset;
+    use yii\widgets\ActiveForm;
+    use Taskforce\BusinessLogic\Task;
 
     AppAsset::register($this);
 ?>
@@ -121,10 +123,12 @@
                         <div class="header__account">
                             <a class="header__account-photo">
                                 <?php
-                                    $avatar = Html::encode(\Yii::$app->user->identity->path);
-                                    echo Html::img("@web/{$avatar}", [
-                                        'width' => 43, 'height' => 44, 'alt' => 'Аватар пользователя'
-                                        ])
+                                    if (\Yii::$app->user->identity->path) {
+                                        $avatar = Html::encode(\Yii::$app->user->identity->path);
+                                        echo Html::img("@web/{$avatar}", [
+                                            'width' => 43, 'height' => 44, 'alt' => 'Аватар пользователя'
+                                        ]);
+                                    }
                                 ?>
                             </a>
                             <span class="header__account-name">
@@ -167,19 +171,19 @@
                     <div class="page-footer__links">
                         <ul class="links__list">
                             <li class="links__item">
-                                <a href="browse.html">Задания</a>
+                                <a href="<?= Url::to(['tasks/index']) ?>">Задания</a>
                             </li>
                             <li class="links__item">
                                 <a href="account.html">Мой профиль</a>
                             </li>
                             <li class="links__item">
-                                <a href="users.html">Исполнители</a>
+                                <a href="<?= Url::to(['users/index']) ?>">Исполнители</a>
                             </li>
                             <li class="links__item">
-                                <a href="signup.html">Регистрация</a>
+                                <a href="<?= Url::to(['signup/index']) ?>">Регистрация</a>
                             </li>
                             <li class="links__item">
-                                <a href="create.html">Создать задание</a>
+                                <a href="<?= Url::to(['create/index']) ?>">Создать задание</a>
                             </li>
                             <li class="links__item">
                                 <a href="">Справка</a>
@@ -210,7 +214,178 @@
                     <?php endif; ?>
                 </div>
             </footer>
+            <section class="modal response-form form-modal" id="response-form">
+                <h2>Отклик на задание</h2>
+
+                <?php $form = ActiveForm::begin([
+                    'fieldConfig' => [
+                        'options' => ['tag' => 'div'],
+                        'template' => "
+                            {label}\n{input}\n
+                            <span style='color: #FF116E; position: relative; top: -10px;'>{error}</span>
+                        ",
+                        'labelOptions' => ['class' => 'form-modal-description'],
+                    ],
+                    'enableAjaxValidation' => true,
+                ]); ?>
+
+                    <?= $form->field(\Yii::$app->params['respond'], 'budget')
+                        ->textInput([
+                            'class' => 'response-form-payment input input-middle input-money',
+                            'id' => 'response-payment',
+                        ])
+                        ->label('Ваша цена', ['class' => 'form-modal-description', 'for' => 'response-payment']);
+                    ?>
+
+                    <?= $form->field(\Yii::$app->params['respond'], 'comment')
+                        ->textarea([
+                            'class' => 'input textarea',
+                            'rows' => 4,
+                            'id' => 'response-comment',
+                            'placeholder' => 'Напишите ваш комментарий'
+                        ])
+                        ->label('Комментарий', ['class' => 'form-modal-description', 'for' => 'response-comment']);
+                    ?>
+
+                    <?= Html::submitButton('Отправить', ['class' => 'button modal-button']) ?>
+                <?php ActiveForm::end(); ?>
+
+                <button class="form-modal-close" type="button">Закрыть</button>
+            </section>
+            <section class="modal completion-form form-modal" id="complete-form">
+                <h2>Завершение задания</h2>
+                <p class="form-modal-description">Задание выполнено?</p>
+
+                <?php $form = ActiveForm::begin([
+                    'fieldConfig' => [
+                        'template' => "
+                            {input}\n
+                            <span style='color: #FF116E; position: relative; top: 0px;'>{error}</span>
+                        ",
+                        'labelOptions' => ['class' => 'form-modal-description'],
+                    ],
+                    'enableAjaxValidation' => true
+                ]); ?>
+
+                    <?= $form->field(\Yii::$app->params['review'], 'status', [
+                            'template' => "{input}\n
+                            <span style='color: #FF116E; position: relative; top: -10px;'>{error}</span>",
+                        ])
+                        ->radioList(['Да', 'Возникли проблемы'], [
+                            'class' => 'end',
+                            'item' => function ($index, $label, $name, $checked, $value) {
+                                $checked = $checked ? 'checked' : '';
+
+                                if ($label === 'Да') {
+                                    $value = 'Да';
+
+                                    return "<input class='visually-hidden completion-input completion-input--yes'
+                                    type='radio' id='completion-radio--yes' name='{$name}' value='{$value}' {$checked}>
+                                    <label class='completion-label completion-label--yes' for='completion-radio--yes'>
+                                        {$label}
+                                    </label>";
+                                }
+
+                                if ($label === 'Возникли проблемы') {
+                                    $value = 'Возникли проблемы';
+
+                                    return "<input class='visually-hidden completion-input completion-input--difficult'
+                                    type='radio' id='completion-radio--yet' name='{$name}' value='{$value}'>
+                                    <label class='completion-label completion-label--difficult'
+                                    for='completion-radio--yet'>
+                                        Возникли проблемы
+                                    </label>";
+                                }
+
+                            }
+                        ])
+                    ?>
+
+                    <?= $form->field(\Yii::$app->params['review'], 'description', [
+                            'template' => "{label}\n{input}\n
+                            <span style='color: #FF116E; position: relative; top: -10px;'>{error}</span>"
+                        ])
+                        ->textarea([
+                            'class' => 'input textarea',
+                            'rows' => 4,
+                            'id' => 'completion-comment',
+                            'placeholder' => 'Напишите ваш комментарий'
+                        ])
+                        ->label('Комментарий', ['class' => 'form-modal-description','for' => 'completion-comment'])
+                    ?>
+
+                    <p class="form-modal-description">Оценка</p>
+                    <p class="feedback-card__top--name completion-form-star">
+                        <span class="star-disabled"></span>
+                        <span class="star-disabled"></span>
+                        <span class="star-disabled"></span>
+                        <span class="star-disabled"></span>
+                        <span class="star-disabled"></span>
+                    </p>
+                    <p></p>
+
+                    <?= $form->field(\Yii::$app->params['review'], 'rating', [
+                            'template' => "{input}\n
+                            <span style='color: #FF116E; position: relative; top: -25px;'>{error}</span>",
+                        ])
+                        ->hiddenInput(['value' => '', 'id' => 'rating'])
+                        ->label(false);
+                    ?>
+
+                    <?= Html::submitButton('Отправить', ['class' => 'button modal-button']) ?>
+                <?php ActiveForm::end(); ?>
+
+                <button class="form-modal-close" type="button">Закрыть</button>
+            </section>
+            <section class="modal form-modal refusal-form" id="refuse-form">
+                <h2>Отказ от задания</h2>
+                <p>
+                Вы собираетесь отказаться от выполнения задания.
+                Это действие приведёт к снижению вашего рейтинга.
+                Вы уверены?
+                </p>
+                <button class="button__form-modal button" id="close-modal"
+                        type="button">Отмена
+                </button>
+
+                <?php $form = ActiveForm::begin(); ?>
+
+                    <?= $form->field(\Yii::$app->params['task'], 'status')
+                        ->hiddenInput(['value' => task::STATUS_FAILED])
+                        ->label(false);
+                    ?>
+
+                    <?= Html::submitButton('Отказаться', ['class' => 'button__form-modal refusal-button button']) ?>
+
+                <?php ActiveForm::end(); ?>
+
+                <button class="form-modal-close" type="button">Закрыть</button>
+            </section>
+            <section class="modal form-modal refusal-form" id="cancel-form">
+                <h2>Отмена задания</h2>
+                <p>
+                Вы собираетесь отменить задание.
+                Вы уверены?
+                </p>
+                <button class="button__form-modal button" id="close-modal1"
+                        type="button">Отмена
+                </button>
+
+                <?php $form = ActiveForm::begin(); ?>
+
+                    <?= $form->field(\Yii::$app->params['task'], 'status')
+                        ->hiddenInput(['value' => task::STATUS_CANCEL])
+                        ->label(false);
+                    ?>
+
+                    <?= Html::submitButton('Да', ['class' => 'button__form-modal refusal-button button']) ?>
+
+                <?php ActiveForm::end(); ?>
+
+                <button class="form-modal-close" type="button">Закрыть</button>
+            </section>
         </div>
+        <div class="overlay"></div>
         <script src="js/dropzone.js"></script>
         <script>
             Dropzone.autoDiscover = false;

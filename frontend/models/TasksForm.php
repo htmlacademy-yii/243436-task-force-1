@@ -20,6 +20,9 @@ class TasksForm extends Model
     const WEEK = 'week';
     const MONTH = 'month';
 
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
@@ -27,11 +30,17 @@ class TasksForm extends Model
         ];
     }
 
+    /**
+     * @return array возвращает период
+     */
     public function periodList()
     {
         return [self::DAY => 'За день', self::WEEK => 'За неделю', self::MONTH => 'За месяц'];
     }
 
+    /**
+     * @return array возвращает фильтрацию по исполнителю
+     */
     public function moreList()
     {
         return [self::NOT_EXECUTOR => 'Без исполнителя', self::DISTANT_WORK => 'Удаленная работа'];

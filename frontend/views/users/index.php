@@ -2,12 +2,13 @@
     use yii\widgets\ActiveForm;
     use yii\helpers\Html;
     use yii\helpers\Url;
+    use yii\widgets\LinkPager;
 ?>
 
 <section class="user__search">
     <div class="new-user__wrapper">
         <h1>Исполнители</h1>
-        <?php foreach($users as $user) : ?>
+        <?php foreach($dataProvider->getModels() as $user) : ?>
             <div class="content-view__feedback-card user__search-wrapper">
                 <div class="feedback-card__top">
                     <div class="user__search-icon">
@@ -106,18 +107,20 @@
             </div>
         <?php endforeach; ?>
     </div>
+
     <div>
         <div class="new-task__pagination">
-            <ul class="new-task__pagination-list">
-            <li class="pagination__item"><a href="#"></a></li>
-            <li class="pagination__item pagination__item--current">
-                <a>1</a></li>
-            <li class="pagination__item"><a href="#">2</a></li>
-            <li class="pagination__item"><a href="#">3</a></li>
-            <li class="pagination__item"><a href="#"></a></li>
-            </ul>
+            <?= LinkPager::widget([
+                'pagination' => $dataProvider->pagination,
+                'options' => ['class' => 'new-task__pagination-list'],
+                'linkContainerOptions' => ['class'=>'pagination__item'],
+                'activePageCssClass' => 'pagination__item--current',
+                'prevPageLabel' => '',
+                'nextPageLabel' => ''
+            ]) ?>
         </div>
     </div>
+
 </section>
 
 

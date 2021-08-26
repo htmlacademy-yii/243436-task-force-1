@@ -3,12 +3,13 @@
     use yii\helpers\Html;
     use yii\helpers\Url;
     use yii\helpers\StringHelper;
+    use yii\widgets\LinkPager;
 ?>
 
 <section class="new-task">
     <div class="new-task__wrapper">
         <h1>Новые задания</h1>
-        <?php foreach($tasks as $task) : ?>
+        <?php foreach($dataProvider->getModels() as $task) : ?>
             <div class="new-task__card">
                 <div class="new-task__title">
                 <a href="<?= Url::to(['tasks/view', 'id' => $task['id']]) ?>" class="link-regular">
@@ -37,15 +38,16 @@
     </div>
 
     <div class="new-task__pagination">
-        <ul class="new-task__pagination-list">
-        <li class="pagination__item"><a href="#"></a></li>
-        <li class="pagination__item pagination__item--current">
-            <a>1</a></li>
-        <li class="pagination__item"><a href="#">2</a></li>
-        <li class="pagination__item"><a href="#">3</a></li>
-        <li class="pagination__item"><a href="#"></a></li>
-        </ul>
+      <?= LinkPager::widget([
+            'pagination' => $dataProvider->pagination,
+            'options' => ['class' => 'new-task__pagination-list'],
+            'linkContainerOptions' => ['class'=>'pagination__item'],
+            'activePageCssClass' => 'pagination__item--current',
+            'prevPageLabel' => '',
+            'nextPageLabel' => ''
+        ]) ?>
     </div>
+
 </section>
 <section class="search-task">
     <div class="search-task__wrapper">
@@ -90,7 +92,7 @@
                             return "
                             <label class='checkbox__legend'>
                                 <input class='visually-hidden checkbox__input' type='checkbox' name='{$name}'
-                                value='{$value}' {$checked}>
+                                value='{$value}'>
                                 <span>{$label}</span>
                             </label>";
                         }

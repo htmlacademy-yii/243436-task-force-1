@@ -58,6 +58,8 @@ class CreateController extends Controller
             if ($tasks_form->validate()) {
                 $tasks_form->save();
                 $task_id = $tasks_form->id;
+                $task_lat = $tasks_form->lat;
+                $task_lon = $tasks_form->lon;
 
                 if (isset($session['images']) && !empty($session['images'])) {
                     foreach($session['images'] as $image) {
@@ -72,7 +74,7 @@ class CreateController extends Controller
                     $session->remove('images');
                 }
 
-                $this->redirect(['tasks/view', 'id' => $task_id]);
+                $this->redirect(['tasks/view', 'id' => $task_id, 'lat' => $task_lat, 'lon' => $task_lon]);
             }
         }
 

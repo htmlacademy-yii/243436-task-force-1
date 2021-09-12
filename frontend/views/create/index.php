@@ -54,16 +54,41 @@
                 </div>
             </div>
 
-            <?= $form->field($tasks_form, 'city_id')
+            <?= $form->field($tasks_form, 'address')
                 ->textInput([
                     'class' => 'input-navigation input-middle input',
-                    'id' => 13,
+                    'id' => 'autoComplete',
                     'placeholder' => 'Санкт-Петербург, Калининский район',
-                    'name' => 'q',
-                    'type' => 'search'
+                    'type' => 'search',
+                    'dir' => 'ltr',
+                    'spellcheck' => false,
+                    'autocorrect' => 'off',
+                    'autocomplete' => 'off',
+                    'autocapitalize' => 'off',
                 ])
                 ->label('Локация', ['for' => 13])
                 ->hint('Укажите адрес исполнения, если задание требует присутствия');
+            ?>
+
+            <?= $form->field($tasks_form, 'lat')
+                ->hiddenInput([
+                    'id' => 'lat',
+                ])
+                ->label(false);
+            ?>
+
+            <?= $form->field($tasks_form, 'lon')
+                ->hiddenInput([
+                    'id' => 'lon',
+                ])
+                ->label(false);
+            ?>
+
+            <?= $form->field($tasks_form, 'city_id')
+                ->hiddenInput([
+                    'id' => 'city_id',
+                ])
+                ->label(false);
             ?>
 
             <div class="create__price-time">

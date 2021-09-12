@@ -97,7 +97,6 @@ class TasksController extends SecuredController
 
         $this->view->title = $tasks['name'];
 
-
         if (\Yii::$app->request->getIsPost() && \Yii::$app->request->post('Tasks')) {
             if (\Yii::$app->request->post('Tasks')['status'] === task::STATUS_CANCEL) {
                 $tasks->status = task::STATUS_CANCEL;

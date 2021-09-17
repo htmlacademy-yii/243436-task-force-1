@@ -96,17 +96,17 @@ class Tasks extends \yii\db\ActiveRecord
     }
 
     /**
-     * Проверяет пользователя по email в БД
+     * Проверяет город из БД
      *
      * @param mixed $attribute
      * @param mixed $params
      *
-     * @return array ошибки валидации email
+     * @return array ошибки валидации адреса
      */
     public function validateAddress($attribute, $params)
     {
         $address = Cities::find()
-            ->where(['name' => \Yii::$app->request->post('Tasks')['address']])
+            ->where(['name' => $this->address])
             ->one();
 
         if (!$address) {

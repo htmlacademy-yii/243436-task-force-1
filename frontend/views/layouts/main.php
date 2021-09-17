@@ -15,17 +15,6 @@
         <?php $this->registerCsrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
-        <script src="https://api-maps.yandex.ru/2.1/?apikey=e666f398-c983-4bde-8f14-e3fec900592a&lang=ru_RU"
-        type="text/javascript"></script>
-        <script>
-            ymaps.ready(init);
-            function init(){
-                var myMap = new ymaps.Map("map", {
-                    center: [<?= \Yii::$app->request->get('lat') ?>, <?= \Yii::$app->request->get('lon') ?>],
-                    zoom: 15
-                });
-            }
-        </script>
     </head>
     <body>
     <?php $this->beginBody() ?>

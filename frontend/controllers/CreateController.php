@@ -74,7 +74,7 @@ class CreateController extends Controller
                     $session->remove('images');
                 }
 
-                $this->redirect(['tasks/view', 'id' => $task_id, 'lat' => $task_lat, 'lon' => $task_lon]);
+                $this->redirect(['tasks/view', 'id' => $task_id]);
             }
         }
 

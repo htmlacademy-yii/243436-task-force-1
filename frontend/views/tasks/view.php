@@ -302,3 +302,14 @@
         </div>
     <?php endif; ?>
 </section>
+
+<script src="https://api-maps.yandex.ru/2.1/?apikey=<?= \Yii::$app->params['apikey']; ?>&lang=ru_RU"></script>
+<script>
+    ymaps.ready(init);
+    function init(){
+        var myMap = new ymaps.Map("map", {
+            center: [<?= $tasks->lat; ?>, <?= $tasks->lon; ?>],
+            zoom: 15
+        });
+    }
+</script>

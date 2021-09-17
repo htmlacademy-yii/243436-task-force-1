@@ -8,5 +8,5 @@ return [
     'respond' => new Respond(),
     'task' => new Tasks(),
     'review' => new Reviews(),
-    'apiKey' => '03f3297485ba43a150bb49b883e5affa'
+    'apikey' => 'e666f398-c983-4bde-8f14-e3fec900592a'
 ];

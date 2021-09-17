@@ -12,9 +12,7 @@
         <?php foreach($dataProvider->getModels() as $task) : ?>
             <div class="new-task__card">
                 <div class="new-task__title">
-                <a href="<?= Url::to([
-                    'tasks/view', 'id' => $task['id'], 'lat' => $task['lat'], 'lon' => $task['lon']
-                ]) ?>" class="link-regular">
+                <a href="<?= Url::to(['tasks/view', 'id' => $task['id']]) ?>" class="link-regular">
                     <h2><?= Html::encode($task->name); ?></h2>
                 </a>
                 <a class="new-task__type link-regular"

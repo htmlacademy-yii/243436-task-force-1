@@ -20,7 +20,8 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "codemix/yii2-localeurls": "^1.7",
         "kartik-v/yii2-widget-fileinput": "@dev",
-        "perminder-klair/yii2-dropzone": "dev-master"
+        "perminder-klair/yii2-dropzone": "dev-master",
+        "guzzlehttp/guzzle": "^7.3"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

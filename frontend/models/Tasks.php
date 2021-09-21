@@ -31,6 +31,8 @@ use Yii;
  */
 class Tasks extends \yii\db\ActiveRecord
 {
+
+
     /**
      * {@inheritdoc}
      */
@@ -54,6 +56,7 @@ class Tasks extends \yii\db\ActiveRecord
             [['path', 'status'], 'string', 'max' => 100],
             [['name'], 'string', 'min' => 10, 'max' => 255],
             [['address'], 'string', 'max' => 700],
+            [['address'], 'validateAddress'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::class, 'targetAttribute' =>
             ['category_id' => 'id']],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cities::class, 'targetAttribute' =>
@@ -81,15 +84,35 @@ class Tasks extends \yii\db\ActiveRecord
             'description' => 'Подробности задания',
             'expire' => 'Сроки исполнения',
             'name' => 'Мне нужно',
-            'address' => 'Address',
+            'address' => 'Локация',
             'budget' => 'Бюджет',
             'lat' => 'Lat',
             'lon' => 'Lon',
-            'city_id' => 'Локация',
+            'city_id' => 'Сity_id',
             'user_id_create' => 'User Id Create',
             'user_id_executor' => 'User Id Executor',
             'status' => 'Status',
         ];
+    }
+
+    /**
+     * Проверяет город из БД
+     *
+     * @param mixed $attribute
+     * @param mixed $params
+     *
+     * @return array ошибки валидации адреса
+     */
+    public function validateAddress($attribute, $params)
+    {
+        $address = Cities::find()
+            ->where(['name' => $this->address])
+            ->one();
+
+        if (!$address) {
+            $this->addError($attribute, 'Сервис не работает в данном регионе');
+        }
+
     }
 
     /**

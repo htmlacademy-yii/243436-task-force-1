@@ -657,6 +657,7 @@ footer {
           user-select: none;
   padding-left: 26px; }
 
+.autoComplete_wrapper > .input,
 .input {
   color: #8F9BB2;
   border: 1px solid #e4e9f2;
@@ -664,7 +665,8 @@ footer {
   background-color: #f7f9fc;
   cursor: pointer; }
   .input:hover {
-    background-color: #e4e9f2; }
+    background-color: rgba(143, 155, 178, 0.1);
+ }
   .input:disabled {
     background-color: #FCFDFE;
     cursor: default;
@@ -672,7 +674,8 @@ footer {
     .input:disabled::-webkit-input-placeholder {
       color: #D4D9E2; }
 
-.input-middle {
+.autoComplete_wrapper > .input-middle,
+.input-middle{
   padding-top: 14px;
   padding-bottom: 14px;
   padding-right: 16px;
@@ -699,7 +702,8 @@ footer {
   background-position: 230px 20px;
   background-repeat: no-repeat; }
 
-.input-navigation {
+  .autoComplete_wrapper > .input-navigation,
+  .input-navigation {
   background-image: url("../img/navigation.png");
   background-position: 480px 10px;
   background-repeat: no-repeat;

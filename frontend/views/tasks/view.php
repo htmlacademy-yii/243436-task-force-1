@@ -42,14 +42,11 @@
             <div class="content-view__location">
                 <h3 class="content-view__h3">Расположение</h3>
                 <div class="content-view__location-wrapper">
-                <div class="content-view__map">
-                    <a href="#"><img src="../img/map.jpg" width="361" height="292"
-                                    alt="Москва, Новый арбат, 23 к. 1"></a>
-                </div>
+                <div class="content-view__map" id="map" style="width: 361px; height: 292px;"></div>
                 <div class="content-view__address">
-                    <span class="address__town">Москва</span><br>
-                    <span>Новый арбат, 23 к. 1</span>
-                    <p>Вход под арку, код домофона 1122</p>
+                    <span class="address__town"><?= $tasks->address; ?></span><br>
+                    <!-- <span>Новый арбат, 23 к. 1</span>
+                    <p>Вход под арку, код домофона 1122</p> -->
                 </div>
                 </div>
             </div>
@@ -305,3 +302,14 @@
         </div>
     <?php endif; ?>
 </section>
+
+<script src="https://api-maps.yandex.ru/2.1/?apikey=<?= \Yii::$app->params['apikey']; ?>&lang=ru_RU"></script>
+<script>
+    ymaps.ready(init);
+    function init(){
+        var myMap = new ymaps.Map("map", {
+            center: [<?= $tasks->lat; ?>, <?= $tasks->lon; ?>],
+            zoom: 15
+        });
+    }
+</script>

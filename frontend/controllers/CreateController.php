@@ -58,6 +58,8 @@ class CreateController extends Controller
             if ($tasks_form->validate()) {
                 $tasks_form->save();
                 $task_id = $tasks_form->id;
+                $task_lat = $tasks_form->lat;
+                $task_lon = $tasks_form->lon;
 
                 if (isset($session['images']) && !empty($session['images'])) {
                     foreach($session['images'] as $image) {

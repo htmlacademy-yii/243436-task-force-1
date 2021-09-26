@@ -18,11 +18,9 @@ class AppAsset extends AssetBundle
         'css/normalize.css',
     ];
     public $js = [
-        'https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.6/dist/autoComplete.min.js',
-        'js/main.js',
-        'js/dropzone.js',
         'js/messenger.js',
         'js/vue.js',
+        'js/main.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

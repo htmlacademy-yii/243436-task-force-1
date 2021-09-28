@@ -12,7 +12,7 @@ class m210326_125822_add_path_column_to_users_table extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('{{%users}}', 'path', $this->char());
+        $this->addColumn('{{%users}}', 'path', $this->string(700));
     }
 
     /**

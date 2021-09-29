@@ -15,7 +15,7 @@ class m210928_121338_add_task_id_column_to_messages_table extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('{{%messages}}', 'task_id', $this->integer()->notNull()->unsigned());
+        $this->addColumn('{{%messages}}', 'task_id', $this->integer()->unsigned());
 
         // creates index for column `task_id`
         $this->createIndex(

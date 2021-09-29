@@ -15,7 +15,7 @@ class m210621_150600_add_task_id_column_to_reviews_table extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('{{%reviews}}', 'task_id', $this->integer()->notNull()->unsigned());
+        $this->addColumn('{{%reviews}}', 'task_id', $this->integer()->unsigned());
 
         // creates index for column `task_id`
         $this->createIndex(

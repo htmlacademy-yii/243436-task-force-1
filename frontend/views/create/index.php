@@ -244,18 +244,18 @@
 
     city.addEventListener('focusout', () => {
         async function addCity() {
-            const city = document.getElementById('autoComplete').value; //1. Получаю значение города из поля формы
+            const city = document.getElementById('autoComplete').value;
 
             let formData = new FormData();
 
             formData.append('q', city);
 
-            let response = await fetch('./geo', { //2. Отправляю данные в GeoController
+            let response = await fetch('./geo', {
             method: 'POST',
             body: formData
             });
 
-            const data = await response.json(); //3. Получаю ответ от GeoController и записываю данные из ответа в скрытые поля
+            const data = await response.json();
 
             document.getElementById('lat').value = data.lat;
             document.getElementById('lon').value = data.lon;

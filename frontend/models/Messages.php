@@ -33,15 +33,6 @@ class Messages extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        // $creatorID = null;
-        // $executorID = null;
-
-        // if (\Yii::$app->user->getId() === Yii::$app->params['task_current']->user_id_create) {
-        //     $creatorID = Yii::$app->params['task_current']->user_id_create;
-        // } else {
-        //     $executorID = Yii::$app->user->getId();
-        // }
-
         return [
             [['message'], 'required'],
             [['message'], 'string'],
@@ -54,9 +45,6 @@ class Messages extends \yii\db\ActiveRecord
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tasks::class,
             'targetAttribute' => ['task_id' => 'id']],
             ['date_add', 'default', 'value' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd H:m:s')],
-            // ['task_id', 'default', 'value' => Yii::$app->params['task_current']->id],
-            // ['user_id_executor', 'default', 'value' => $executorID],
-            // ['user_id_create', 'default', 'value' => $creatorID],
         ];
     }
 
@@ -74,6 +62,21 @@ class Messages extends \yii\db\ActiveRecord
             'date_add' => 'Date Add',
         ];
     }
+
+public function fields()
+{
+    return [
+        'id',
+        'message',
+        'user_id_create',
+        'user_id_executor',
+        'task_id',
+        'published_at' => 'date_add',
+        'is_mine' => function () {
+            return $this->user_id_create === Yii::$app->user->id || $this->user_id_executor === Yii::$app->user->id;
+        },
+    ];
+}
 
     /**
      * Gets query for [[Task]].

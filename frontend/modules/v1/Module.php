@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\modules\api;
+namespace frontend\modules\v1;
 
 use yii\filters\AccessControl;
 
@@ -27,7 +27,7 @@ class Module extends \yii\base\Module
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'frontend\modules\api\controllers';
+    public $controllerNamespace = 'frontend\modules\v1\controllers';
 
     /**
      * {@inheritdoc}

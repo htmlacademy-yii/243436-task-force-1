@@ -253,9 +253,9 @@
     || $user->role === Task::EXECUTOR) : ?>
         <div id="chat-container">
             <!--добавьте сюда атрибут task с указанием в нем id текущего задания-->
-            <div class="connect-desk__chat" task="<?= $tasks->id; ?>">
+            <chat class="connect-desk__chat" task="<?= $tasks->id; ?>">
 
-            </div>
+            </chat>
         </div>
     <?php endif; ?>
 </section>

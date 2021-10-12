@@ -14,8 +14,8 @@ return [
     'bootstrap' => 'log',
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
-        'api' => [
-            'class' => 'frontend\modules\api\Module',
+        'v1' => [
+            'class' => 'frontend\modules\v1\Module',
         ],
     ],
     'components' => [
@@ -70,7 +70,12 @@ return [
                 'tasks' => 'tasks/index',
                 'users' => 'users/index',
                 '/' => 'landing/index',
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/messages']
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/message'],
+                    'prefix' => 'api',
+                    'pluralize' => false,
+                ]
             ],
         ],
     ],

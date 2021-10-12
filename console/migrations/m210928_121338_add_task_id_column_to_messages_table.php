@@ -3,31 +3,31 @@
 use yii\db\Migration;
 
 /**
- * Handles adding columns to table `{{%reviews}}`.
+ * Handles adding columns to table `{{%messages}}`.
  * Has foreign keys to the tables:
  *
  * - `{{%tasks}}`
  */
-class m210621_150600_add_task_id_column_to_reviews_table extends Migration
+class m210928_121338_add_task_id_column_to_messages_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->addColumn('{{%reviews}}', 'task_id', $this->integer()->unsigned());
+        $this->addColumn('{{%messages}}', 'task_id', $this->integer()->unsigned());
 
         // creates index for column `task_id`
         $this->createIndex(
-            '{{%idx-reviews-task_id}}',
-            '{{%reviews}}',
+            '{{%idx-messages-task_id}}',
+            '{{%messages}}',
             'task_id'
         );
 
         // add foreign key for table `{{%tasks}}`
         $this->addForeignKey(
-            '{{%fk-reviews-task_id}}',
-            '{{%reviews}}',
+            '{{%fk-messages-task_id}}',
+            '{{%messages}}',
             'task_id',
             '{{%tasks}}',
             'id',
@@ -42,16 +42,16 @@ class m210621_150600_add_task_id_column_to_reviews_table extends Migration
     {
         // drops foreign key for table `{{%tasks}}`
         $this->dropForeignKey(
-            '{{%fk-reviews-task_id}}',
-            '{{%reviews}}'
+            '{{%fk-messages-task_id}}',
+            '{{%messages}}'
         );
 
         // drops index for column `task_id`
         $this->dropIndex(
-            '{{%idx-reviews-task_id}}',
-            '{{%reviews}}'
+            '{{%idx-messages-task_id}}',
+            '{{%messages}}'
         );
 
-        $this->dropColumn('{{%reviews}}', 'task_id');
+        $this->dropColumn('{{%messages}}', 'task_id');
     }
 }

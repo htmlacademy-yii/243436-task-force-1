@@ -3,6 +3,7 @@
 namespace Taskforce\BusinessLogic;
 use frontend\models\Respond;
 use frontend\models\Messages;
+use frontend\models\Tasks;
 
 class Email
 {
@@ -93,10 +94,14 @@ class Email
     /**
      * Отправка email исполнителю/заказчику о новом сообщении по задаче
      */
-    public function messageAction()
+    public function messageAction($task_id)
     {
+        $tasks = Tasks::find()
+            ->where(['tasks.id' => $task_id])
+            ->one();
+
         $messages = Messages::find()
-            ->where(['task_id' => \Yii::$app->request->get('id')])
+            ->where(['task_id' => $task_id])
             ->orderBy('date_add DESC')
             ->limit(1)
             ->all();
@@ -108,8 +113,8 @@ class Email
         }
 
         try {
-            \Yii::$app->mailer->compose('message', ['task' => \Yii::$app->params['task_current']->name,
-            'task_id' => \Yii::$app->params['task_current']->id])
+            \Yii::$app->mailer->compose('message', ['task' => $tasks->name,
+            'task_id' => $tasks->id])
                 ->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->params['senderName']])
                 ->setTo([$send_email, \Yii::$app->params['adminEmail']])
                 ->setSubject('Новое сообщение по задаче')

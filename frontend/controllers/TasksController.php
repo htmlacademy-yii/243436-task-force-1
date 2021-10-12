@@ -245,31 +245,6 @@ class TasksController extends SecuredController
             }
         }
 
-        $messagesForm = new Messages();
-
-        if (\Yii::$app->request->getIsPost()) {
-            $messagesForm->load(\Yii::$app->request->post());
-
-            if ($messagesForm->validate()) {
-                if($messagesForm->save()) {
-
-                    $email->messageAction();
-
-                    $this->redirect(['tasks/view', 'id' => \Yii::$app->request->get('id')]);
-                }
-            }
-        }
-
-        $messages = Messages::find()
-            ->where(['task_id' => $id])
-            ->orderBy('date_add DESC')
-            ->limit(1)
-            ->all();
-
-        $messages = Messages::find()
-            ->where(['task_id' => $id])
-            ->all();
-
         return $this->render(
             'view',
             compact(
@@ -285,8 +260,6 @@ class TasksController extends SecuredController
                 'creatorID',
                 'oneRespond',
                 'user',
-                'messagesForm',
-                'messages'
             )
         );
     }

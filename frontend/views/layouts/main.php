@@ -15,6 +15,7 @@
         <?php $this->registerCsrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
+        <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.6/dist/autoComplete.min.js"></script>
     </head>
     <body>
     <?php $this->beginBody() ?>
@@ -386,39 +387,6 @@
             </section>
         </div>
         <div class="overlay"></div>
-        <script src="js/dropzone.js"></script>
-        <script>
-            Dropzone.autoDiscover = false;
-
-            var dropzone = new Dropzone(".dropzone", {
-                // url: window.location.href, //адрес отправки файлов
-                url: "create/upload",
-
-                paramName: "clips",
-                uploadMultiple: true,
-                dictDefaultMessage: '<span class="dz-message" style="position: relative; top: 0px;">Добавить новый файл</span>',
-
-                acceptedFiles: 'image/*',
-
-                addRemoveLinks: true,
-                dictRemoveFile: 'Удалить',
-                dictRemoveFileConfirmation: 'Вы уверены что хотете удалить файл?',
-
-                maxFiles: 3,
-                dictMaxFilesExceeded: "Достигут max лимит фалов, разрешено {{maxFiles}}",
-                init: function() {
-                    this.on('addedfile', function(file) {
-                        if (this.files.length > 3) {
-                            this.removeFile(this.files[0]);
-                        }
-                    });
-                },
-
-                parallelUploads: 100
-
-                // previewTemplate: '<a href="#"><img data-dz-thumbnail alt="Фото работы"></a>',
-            });
-        </script>
     <?php $this->endBody() ?>
     </body>
     </html>

@@ -165,6 +165,7 @@
                         </div>
                         <?php if (\Yii::$app->user->getId() == $tasks->user_id_create
                         && $respond->status !== 'Отклонено'
+                        && $respond->status !== 'Подтверждено'
                         && $tasks->user_id_executor == null
                         && $tasks->status !== task::STATUS_CANCEL) : ?>
                             <div class="feedback-card__actions">
@@ -252,53 +253,9 @@
     || $user->role === Task::EXECUTOR) : ?>
         <div id="chat-container">
             <!--добавьте сюда атрибут task с указанием в нем id текущего задания-->
-            <div class="connect-desk__chat">
-                <h3>Переписка</h3>
-                <div class="chat__overflow">
-                    <?php foreach($messages as $message) : ?>
-                        <p>
-                            <span style="font-size: 10px; color: #333438;">
-                                (<?= Html::encode(Yii::$app->formatter->asDatetime($message->date_add)); ?>)
-                            </span><br>
+            <chat class="connect-desk__chat" task="<?= $tasks->id; ?>">
 
-                            <b <?= $message->user_id_create ? 'style="color: #ff3d71;"' : 'style="color: #3366ff;"' ?>>
-                            <?= Html::encode($message->creator->name ?? $message->excecutor->name); ?></b>:
-                            <span style="color: #333438;"><?= Html::encode($message->message); ?></span>
-                        </p>
-                    <?php endforeach; ?>
-                </div>
-                <?php if ($user->role === Task::CREATOR
-                && $tasks->user_id_create === $currentID
-                && $tasks->status !== Task::STATUS_CANCEL
-                && $tasks->status !== Task::STATUS_FAILED
-                && $tasks->status !== Task::STATUS_PERFORMED
-                ||$user->role === Task::EXECUTOR
-                && $tasks->status !== Task::STATUS_FAILED
-                && $tasks->status !== Task::STATUS_PERFORMED
-                && $tasks->status !== Task::STATUS_CANCEL
-                && (!empty($oneRespond) && $oneRespond[0]->status !== 'Отклонено')) : ?>
-                    <p class="chat__your-message">Ваше сообщение</p>
-
-                    <?php $form = ActiveForm::begin([
-                        'options' => ['class' => 'chat__form'],
-                        'fieldConfig' => [
-                            'template' => "{input}",
-                        ]
-                    ]); ?>
-
-                        <?= $form->field($messagesForm, 'message', ['options' => ['tag' => false]])
-                            ->textarea([
-                                'class' => 'input textarea textarea-chat',
-                                'rows' => 2,
-                                'placeholder' => 'Текст сообщения'
-                            ])
-                        ?>
-
-                        <?= Html::submitButton('Отправить', ['class' => 'button chat__button']) ?>
-
-                    <?php ActiveForm::end(); ?>
-                <?php endif; ?>
-            </div>
+            </chat>
         </div>
     <?php endif; ?>
 </section>
@@ -313,3 +270,4 @@
         });
     }
 </script>
+

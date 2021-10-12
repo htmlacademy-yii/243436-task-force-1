@@ -12,7 +12,7 @@ class m210327_065100_add_skype_column_to_users_table extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('{{%users}}', 'skype', $this->char());
+        $this->addColumn('{{%users}}', 'skype', $this->string(100));
     }
 
     /**

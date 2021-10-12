@@ -95,6 +95,30 @@ class Tasks extends \yii\db\ActiveRecord
         ];
     }
 
+    public function fields()
+    {
+        return [
+            'id',
+            'published_at' => 'date_add',
+            'category_id',
+            'path',
+            'description',
+            'expire',
+            'title' => 'name',
+            'address',
+            'budget',
+            'lat',
+            'lon',
+            'city_id',
+            'author_name' => 'user_id_create',
+            'user_id_executor',
+            'status',
+            'new_messages' => function () {
+                return Messages::find()->where(['task_id' => $this->id])->count();
+            },
+        ];
+    }
+
     /**
      * Проверяет город из БД
      *

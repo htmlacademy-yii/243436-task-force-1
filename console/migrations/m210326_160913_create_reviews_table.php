@@ -18,7 +18,7 @@ class m210326_160913_create_reviews_table extends Migration
     {
         $this->createTable('{{%reviews}}', [
             'id' => $this->primaryKey()->unsigned(),
-            'review' => $this->text(800)->notNull(),
+            'description' => $this->text(800)->notNull(),
             'rating' => $this->integer()->notNull()->unsigned(),
             'user_id_create' => $this->integer()->notNull()->unsigned(),
             'user_id_executor' => $this->integer()->notNull()->unsigned(),

@@ -13,6 +13,11 @@ return [
     'charset' => 'utf-8',
     'bootstrap' => 'log',
     'controllerNamespace' => 'frontend\controllers',
+    'modules' => [
+        'v1' => [
+            'class' => 'frontend\modules\v1\Module',
+        ],
+    ],
     'components' => [
         'i18n' => [
             'translations' => [
@@ -27,6 +32,9 @@ return [
             'csrfParam' => '_csrf-frontend',
             'baseUrl' => '',
             'enableCsrfValidation' => false,
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'user' => [
             'identityClass' => 'frontend\models\Users',
@@ -62,6 +70,12 @@ return [
                 'tasks' => 'tasks/index',
                 'users' => 'users/index',
                 '/' => 'landing/index',
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/message'],
+                    'prefix' => 'api',
+                    'pluralize' => false,
+                ]
             ],
         ],
     ],

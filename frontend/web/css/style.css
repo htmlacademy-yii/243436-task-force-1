@@ -188,6 +188,11 @@ footer {
   width: 30px;
   height: 30px; }
 
+.header__lightbulb.active {
+  background-image: url("../img/lightbulb-white.png");
+  width: 30px;
+  height: 30px; }
+
 .header__lightbulb:hover + .lightbulb__pop-up {
   display: block; }
 
@@ -195,7 +200,7 @@ footer {
   display: none;
   position: absolute;
   top: 83px;
-  right: 106px;
+  right: 130px;
   z-index: 10;
   background-color: #ffffff;
   padding-left: 10px;
@@ -559,7 +564,8 @@ footer {
   position: relative;
   font-weight: 300;
   font-size: 13px;
-  padding-left: 19px; }
+  padding-left: 19px;
+  width: 138px; }
 
 .new-task__card span::before {
   position: absolute;
@@ -673,6 +679,10 @@ footer {
     border-color: #F1F3F8; }
     .input:disabled::-webkit-input-placeholder {
       color: #D4D9E2; }
+
+.multiple-select.input:hover {
+  background-color: #ffffff;
+}
 
 .autoComplete_wrapper > .input-middle,
 .input-middle{
@@ -906,7 +916,7 @@ footer {
   left: 7px; }
 
 .textarea {
-  padding: 14px 15px;
+  padding: 14px 15px !important;
   resize: none;
   margin-bottom: 10px; }
 
@@ -2051,6 +2061,8 @@ footer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  margin-top: 20px;
+  justify-content: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap; }
   .account__redaction label {
@@ -2446,15 +2458,16 @@ footer {
     line-height: 16px;
     color: #9c9b9b;
     margin-top: 0;
-    margin-bottom: 30px; }
+    margin-bottom: 30px;
+    word-wrap: break-word; }
 
 .landing-task-info {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-align: flex-start;
+      -ms-flex-align: flex-start;
+          align-items: flex-start;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -2475,6 +2488,10 @@ footer {
     .landing-task-info span b {
       font-weight: 600;
       font-size: 17px; }
+
+.landing-task-info .task-info-left {
+  max-width: 100px;
+}
 
 .red-button {
   margin: 0 auto;

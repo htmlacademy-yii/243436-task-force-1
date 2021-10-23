@@ -1,6 +1,7 @@
 <?php
     use yii\helpers\Url;
     use yii\helpers\Html;
+    use Taskforce\BusinessLogic\Task;
 ?>
 
 <section class="content-view">
@@ -116,18 +117,26 @@
                     <?php endforeach; ?>
                 </div>
                 <h3 class="content-view__h3">Контакты</h3>
-                <div class="user__card-link">
-                    <a class="user__card-link--tel link-regular" href="#"><?= Html::encode($users->phone); ?></a>
-                    <a class="user__card-link--email link-regular" href="#"><?= Html::encode($users->email); ?></a>
-                    <a class="user__card-link--skype link-regular" href="#"><?= Html::encode($users->skype); ?></a>
-                </div>
+
+                <?php if ((int) $users->show_contacts === 1
+                && $role_current_user->role === Task::CREATOR
+                || (int) $users->show_contacts !== 1
+                || $users->id === $role_current_user->id) : ?>
+                    <div class="user__card-link">
+                        <a class="user__card-link--tel link-regular" href="#"><?= Html::encode($users->phone); ?></a>
+                        <a class="user__card-link--email link-regular" href="#"><?= Html::encode($users->email); ?></a>
+                        <a class="user__card-link--skype link-regular" href="#"><?= Html::encode($users->skype); ?></a>
+                    </div>
+                <?php else : ?>
+                    <p>Пользователь скрыл контакты</p>
+                <?php endif; ?>
             </div>
             <div class="user__card-photo">
                 <h3 class="content-view__h3">Фото работ</h3>
                 <?php if(!empty($photo_work)) : ?>
                     <?php foreach($photo_work as $photo) : ?>
-                        <a href="<?= Url::to("@web/img/{$photo['path']}"); ?>" target="_blank">
-                            <?= Html::img("@web/img/{$photo['path']}",
+                        <a href="<?= Url::to("@web/uploads/{$photo['path']}"); ?>" target="_blank">
+                            <?= Html::img("@web/uploads/{$photo['path']}",
                             ['width' => 85, 'height' => 86, 'alt' => 'Фото работы']) ?>
                         </a>
                     <?php endforeach; ?>

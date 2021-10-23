@@ -33,7 +33,6 @@ class Respond extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['comment', 'budget'], 'required'],
             [['task_id', 'user_id_executor', 'budget'], 'integer'],
             [['comment'], 'string'],
             [['date'], 'safe'],

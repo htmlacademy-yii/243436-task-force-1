@@ -5,14 +5,14 @@ use yii\db\Migration;
 /**
  * Handles adding columns to table `{{%users}}`.
  */
-class m210326_130835_add_date_visit_column_to_users_table extends Migration
+class m211018_152026_add_messeger_column_to_users_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->addColumn('{{%users}}', 'date_visit', $this->integer());
+        $this->addColumn('{{%users}}', 'messeger', $this->string(100));
     }
 
     /**
@@ -20,6 +20,6 @@ class m210326_130835_add_date_visit_column_to_users_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropColumn('{{%users}}', 'date_visit');
+        $this->dropColumn('{{%users}}', 'messeger');
     }
 }

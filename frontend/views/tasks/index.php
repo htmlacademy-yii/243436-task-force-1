@@ -92,7 +92,7 @@
                             return "
                             <label class='checkbox__legend'>
                                 <input class='visually-hidden checkbox__input' type='checkbox' name='{$name}'
-                                value='{$value}'>
+                                value='{$value}' {$checked}>
                                 <span>{$label}</span>
                             </label>";
                         }

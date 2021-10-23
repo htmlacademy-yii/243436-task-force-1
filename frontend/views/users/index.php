@@ -9,102 +9,109 @@
     <div class="new-user__wrapper">
         <h1>Исполнители</h1>
         <?php foreach($dataProvider->getModels() as $user) : ?>
-            <div class="content-view__feedback-card user__search-wrapper">
-                <div class="feedback-card__top">
-                    <div class="user__search-icon">
-                    <a href="<?= Url::to(['users/user', 'id' => $user['id']]) ?>">
-                        <?= Html::img("@web/{$user->path}", ['width' => 65, 'height' => 65]) ?>
-                    </a>
-                    <span>
-                        <?= Yii::t(
-                            'app',
-                            '{n, plural,
-                                =0{# заданий}
-                                =1{# задание}
-                                one{# задание}
-                                few{# задания}
-                                many{# заданий}
-                                other{# задания}}',
-                            ['n' => $user->tasksCount]
-                        ); ?>
-                    </span>
-                    <span>
-                        <?= Yii::t(
-                            'app',
-                            '{n, plural,
-                                =0{# отзывов}
-                                =1{# отзыв}
-                                one{# отзыв}
-                                few{# отзыва}
-                                many{# отзывов}
-                                other{# отзыва}}',
-                            ['n' => $user->reviewsCount]
-                        ); ?>
-                    </span>
-                    </div>
-                    <div class="feedback-card__top--name user__search-card">
-                    <p class="link-name">
-                        <a href="<?= Url::to(['users/user', 'id' => $user['id']]) ?>" class="link-regular">
-                            <?= Html::encode($user->name); ?>
+            <?php if ((int) $user->show_profile !== 1) : ?>
+                <div class="content-view__feedback-card user__search-wrapper">
+                    <div class="feedback-card__top">
+                        <div class="user__search-icon">
+                        <a href="<?= Url::to(['users/user', 'id' => $user['id']]) ?>">
+                            <?= Html::img("@web/{$user->path}", ['width' => 65, 'height' => 65]) ?>
                         </a>
-                    </p>
-                    <?php $average_rating = $user->getAverageRating(); ?>
-                    <?php if ($average_rating >= 1 && $average_rating < 2) : ?>
-                        <span></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                    <?php elseif ($average_rating >= 2 && $average_rating < 3) : ?>
-                        <span></span>
-                        <span></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                    <?php elseif ($average_rating >= 3 && $average_rating < 4) : ?>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                    <?php elseif ($average_rating >= 4 && $average_rating < 5) : ?>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span class="star-disabled"></span>
-                    <?php elseif ($average_rating >= 5) : ?>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    <?php else : ?>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                    <?php endif; ?>
+                        <span>
+                            <?= Yii::t(
+                                'app',
+                                '{n, plural,
+                                    =0{# заданий}
+                                    =1{# задание}
+                                    one{# задание}
+                                    few{# задания}
+                                    many{# заданий}
+                                    other{# задания}}',
+                                ['n' => $user->tasksCount]
+                            ); ?>
+                        </span>
+                        <span>
+                            <?= Yii::t(
+                                'app',
+                                '{n, plural,
+                                    =0{# отзывов}
+                                    =1{# отзыв}
+                                    one{# отзыв}
+                                    few{# отзыва}
+                                    many{# отзывов}
+                                    other{# отзыва}}',
+                                ['n' => $user->reviewsCount]
+                            ); ?>
+                        </span>
+                        </div>
+                        <div class="feedback-card__top--name user__search-card">
+                        <p class="link-name">
+                            <a href="<?= Url::to(['users/user', 'id' => $user['id']]) ?>" class="link-regular">
+                                <?= Html::encode($user->name); ?>
+                            </a>
+                        </p>
+                        <?php $average_rating = $user->getAverageRating(); ?>
+                        <?php if ($average_rating >= 1 && $average_rating < 2) : ?>
+                            <span></span>
+                            <span class="star-disabled"></span>
+                            <span class="star-disabled"></span>
+                            <span class="star-disabled"></span>
+                            <span class="star-disabled"></span>
+                        <?php elseif ($average_rating >= 2 && $average_rating < 3) : ?>
+                            <span></span>
+                            <span></span>
+                            <span class="star-disabled"></span>
+                            <span class="star-disabled"></span>
+                            <span class="star-disabled"></span>
+                        <?php elseif ($average_rating >= 3 && $average_rating < 4) : ?>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span class="star-disabled"></span>
+                            <span class="star-disabled"></span>
+                        <?php elseif ($average_rating >= 4 && $average_rating < 5) : ?>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span class="star-disabled"></span>
+                        <?php elseif ($average_rating >= 5) : ?>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        <?php else : ?>
+                            <span class="star-disabled"></span>
+                            <span class="star-disabled"></span>
+                            <span class="star-disabled"></span>
+                            <span class="star-disabled"></span>
+                            <span class="star-disabled"></span>
+                        <?php endif; ?>
 
 
-                    <b><?= Html::encode($average_rating); ?></b>
-                    <p class="user__search-content"><?= Html::encode($user->about); ?></p>
+                        <b><?= Html::encode($average_rating); ?></b>
+                        <p class="user__search-content"><?= Html::encode($user->about); ?></p>
+                        </div>
+                        <span class="new-task__time">
+                            <?php if (($current_time - $user->date_visit) < 1800 ) : ?>
+                                Сейчас онлайн
+                            <?php else : ?>
+                                Был на сайте
+                                <?= Yii::$app->formatter->asRelativeTime(Html::encode($user->date_visit)); ?>
+                            <?php endif; ?>
+                        </span>
                     </div>
-                    <span class="new-task__time">
-                        Был на сайте <?= Yii::$app->formatter->asRelativeTime(Html::encode($user->date_visit)); ?>
-                    </span>
-                </div>
 
-                <div class="link-specialization user__search-link--bottom">
-                    <?php foreach($user->categories as $category) : ?>
-                        <a href="<?= Url::to(['users/index', 'UsersForm'=>['category' => $category->id]]) ?>"
-                        class="link-regular">
-                            <?= Html::encode($category->name); ?>
-                        </a>
-                    <?php endforeach; ?>
+                    <div class="link-specialization user__search-link--bottom">
+                        <?php foreach($user->categories as $category) : ?>
+                            <a href="<?= Url::to(['users/index', 'UsersForm'=>['category' => $category->id]]) ?>"
+                            class="link-regular">
+                                <?= Html::encode($category->name); ?>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-            </div>
+            <?php endif; ?>
         <?php endforeach; ?>
     </div>
 

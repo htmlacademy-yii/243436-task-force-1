@@ -47,7 +47,7 @@ Vue.component('chat', {
       })
     },
     getMessages: function () {
-      fetch(this.api_url + '?task_id=' + this.task)
+      fetch(this.api_url + '?id=' + this.task)
       .then(result => {
         if (result.status !== 200) {
           return Promise.reject(new Error('Запрошенный ресурс не существует'));

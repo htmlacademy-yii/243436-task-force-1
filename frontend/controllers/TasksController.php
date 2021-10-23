@@ -5,7 +5,6 @@ namespace frontend\controllers;
 use frontend\models\Categories;
 use frontend\models\Tasks;
 use frontend\models\Clips;
-use frontend\models\Messages;
 use frontend\models\Users;
 use frontend\models\Respond;
 use frontend\models\Reviews;
@@ -98,17 +97,24 @@ class TasksController extends SecuredController
         $this->view->title = $tasks['name'];
 
         if (\Yii::$app->request->getIsPost() && \Yii::$app->request->post('Tasks')) {
-            if (\Yii::$app->request->post('Tasks')['status'] === task::STATUS_CANCEL) {
-                $tasks->status = task::STATUS_CANCEL;
+            if (\Yii::$app->request->post('Tasks')['status'] === Task::STATUS_CANCEL) {
+                $tasks->status = Task::STATUS_CANCEL;
                 if ($tasks->save()) {
                     $this->redirect(['tasks/view', 'id' => \Yii::$app->request->get('id')]);
                 }
             }
-            if (\Yii::$app->request->post('Tasks')['status'] === task::STATUS_FAILED) {
-                $tasks->status = task::STATUS_FAILED;
+            if (\Yii::$app->request->post('Tasks')['status'] === Task::STATUS_FAILED) {
+                $tasks->status = Task::STATUS_FAILED;
+                $tasks->read_task_completed = '0';
                 if ($tasks->save()) {
 
-                    $email->failedAction();
+                    $user = Users::find()
+                        ->where(['users.id' => \Yii::$app->user->getId()])
+                        ->one();
+
+                    if ((int) $user->action_task === 1) {
+                        $email->failedAction();
+                    }
 
                     $this->redirect(['tasks/index']);
                 }
@@ -133,7 +139,6 @@ class TasksController extends SecuredController
 
         $responds = "";
 
-
         $allRespond = Respond::find()
             ->where(['task_id' => $id])
             ->joinWith(['executor'])
@@ -157,6 +162,10 @@ class TasksController extends SecuredController
 
         $selectUser = '';
 
+        $user = Users::find()
+            ->where(['users.id' => \Yii::$app->user->getId()])
+            ->one();
+
         foreach ($allRespond as $respond) {
             if (\Yii::$app->request->get($respond->user_id_executor) === 'false') {
                 $respond->status = 'Отклонено';
@@ -173,11 +182,16 @@ class TasksController extends SecuredController
                         ->joinWith(['executor'])
                         ->one();
 
-                    $email->winAction();
-
                     $tasks->user_id_executor = $selectUser->user_id_executor;
                     $tasks->status = task::STATUS_WORK;
-                    if($tasks->save()) {
+                    $tasks->read_selected_executor = '0';
+
+                    if ($tasks->save()) {
+
+                        if ((int) $user->action_task === 1) {
+                            $email->winAction();
+                        }
+
                         $this->redirect(['tasks/view', 'id' => \Yii::$app->request->get('id')]);
                     }
                 }
@@ -193,9 +207,12 @@ class TasksController extends SecuredController
                 return ActiveForm::validate($respond);
             }
             if ($respond->validate()) {
+                $respond->read = '0';
                 $respond->save(false);
 
-                $email->respondAction();
+                if ((int) $user->action_task === 1) {
+                    $email->respondAction();
+                }
 
                 $this->redirect(['tasks/view', 'id' => \Yii::$app->request->get('id')]);
             }
@@ -236,7 +253,11 @@ class TasksController extends SecuredController
                         $tasks->status = task::STATUS_FAILED;
                     }
 
-                    $email->endAction();
+                    if ((int) $user->new_review === 1) {
+                        $email->endAction();
+                    }
+
+                    $tasks->read_task_completed = '0';
 
                     if($tasks->save()) {
                         $this->redirect(['tasks/index']);

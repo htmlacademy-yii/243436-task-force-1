@@ -5,6 +5,7 @@ use frontend\models\Categories;
 use frontend\models\Clips;
 use frontend\models\Tasks;
 use yii\filters\AccessControl;
+use frontend\controllers\behaviors\DateVisitBehavior;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 
@@ -31,7 +32,8 @@ class CreateController extends Controller
                         'roles' => ['@']
                     ]
                 ]
-            ]
+            ],
+            DateVisitBehavior::class
         ];
     }
 
@@ -78,12 +80,21 @@ class CreateController extends Controller
             }
         }
 
+        if (!empty($tasks_form->getErrors())) {
+            \Yii::$app->session['errors'] = $tasks_form->getErrors();
+        } else {
+            \Yii::$app->session->remove('errors');
+        }
+
         return $this->render('index', compact('tasks_form', 'category_list'));
     }
 
     public function actionUpload() {
-
         $images = \Yii::$app->session['images'] ?? [];
+
+        if (isset(\Yii::$app->session['errors'])) {
+            $images = [];
+        }
 
         if ($files = UploadedFile::getInstancesByName('clips')) {
             foreach ($files as $file) {

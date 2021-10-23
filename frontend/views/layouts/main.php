@@ -4,6 +4,8 @@
     use frontend\assets\AppAsset;
     use yii\widgets\ActiveForm;
     use Taskforce\BusinessLogic\Task;
+    use frontend\components\NoticeWidget;
+    use frontend\components\CityWidget;
 
     AppAsset::register($this);
 ?>
@@ -90,37 +92,19 @@
                             ">
                                 <a href="<?= Url::to(['create/index']) ?>">Создать задание</a>
                             </li>
-                            <li class="site-list__item">
-                                <a href="#">Мой профиль</a>
+                            <li class="site-list__item
+                                <?= Yii::$app->request->pathInfo == 'account' ? 'site-list__item--active' : '' ?>
+                            ">
+                                <a href="<?= Url::to(['account/index']) ?>">Мой профиль</a>
                             </li>
                         </ul>
                     </div>
                     <?php if (Yii::$app->request->pathInfo !== 'signup') : ?>
-                        <div class="header__town">
-                            <select class="multiple-select input town-select" size="1" name="town[]">
-                                <option value="Moscow">Москва</option>
-                                <option selected value="SPB">Санкт-Петербург</option>
-                                <option value="Krasnodar">Краснодар</option>
-                                <option value="Irkutsk">Иркутск</option>
-                                <option value="Vladivostok">Владивосток</option>
-                            </select>
-                        </div>
-                        <div class="header__lightbulb"></div>
-                        <div class="lightbulb__pop-up">
-                            <h3>Новые события</h3>
-                            <p class="lightbulb__new-task lightbulb__new-task--message">
-                                Новое сообщение в чате
-                                <a href="#" class="link-regular">«Помочь с курсовой»</a>
-                            </p>
-                            <p class="lightbulb__new-task lightbulb__new-task--executor">
-                                Выбран исполнитель для
-                                <a href="#" class="link-regular">«Помочь с курсовой»</a>
-                            </p>
-                            <p class="lightbulb__new-task lightbulb__new-task--close">
-                                Завершено задание
-                                <a href="#" class="link-regular">«Помочь с курсовой»</a>
-                            </p>
-                        </div>
+
+                        <?= CityWidget::widget() ?>
+
+                        <?= NoticeWidget::widget() ?>
+
                         <div class="header__account">
                             <a class="header__account-photo">
                                 <?php
@@ -139,10 +123,10 @@
                         <div class="account__pop-up">
                             <ul class="account__pop-up-list">
                                 <li>
-                                    <a href="#">Мои задания</a>
+                                    <a href="<?= Url::to(['mylist/index', 'status' => 'new']) ?>">Мои задания</a>
                                 </li>
                                 <li>
-                                    <a href="#">Настройки</a>
+                                    <a href="<?= Url::to(['account/index']) ?>">Настройки</a>
                                 </li>
                                 <li>
                                     <a href="<?= Url::to(['landing/logout']) ?>">Выход</a>
@@ -175,7 +159,7 @@
                                 <a href="<?= Url::to(['tasks/index']) ?>">Задания</a>
                             </li>
                             <li class="links__item">
-                                <a href="account.html">Мой профиль</a>
+                                <a href="<?= Url::to(['account/index']) ?>">Мой профиль</a>
                             </li>
                             <li class="links__item">
                                 <a href="<?= Url::to(['users/index']) ?>">Исполнители</a>

@@ -162,16 +162,19 @@
 
         acceptedFiles: 'image/*',
 
-        addRemoveLinks: true,
+        // addRemoveLinks: true,
         dictRemoveFile: 'Удалить',
         dictRemoveFileConfirmation: 'Вы уверены что хотете удалить файл?',
+
+        clickable: true,
 
         maxFiles: 3,
         dictMaxFilesExceeded: "Достигут max лимит фалов, разрешено {{maxFiles}}",
         init: function() {
             this.on('addedfile', function(file) {
                 if (this.files.length > 3) {
-                    this.removeFile(this.files[0]);
+                    this.removeFile(this.files[3]);
+                    alert("Максимальное количество 3 файла!");
                 }
             });
         },
@@ -208,7 +211,7 @@
 
                 return result;
                 } catch (error) {
-                return error;
+                    return error;
                 }
             }
         },

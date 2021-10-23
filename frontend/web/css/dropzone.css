@@ -192,7 +192,8 @@
       opacity: 0.5; }
   .dropzone .dz-message {
     text-align: center;
-    margin: 2em 0; }
+    /* margin: 2em 0; */
+    margin:auto; }
     .dropzone .dz-message .dz-button {
       background: none;
       color: inherit;

@@ -108,9 +108,15 @@ class Users extends ActiveRecord implements IdentityInterface
             [['email', 'name', 'password'], 'required'],
             [['date_add', 'date_visit', 'birthday'], 'safe'],
             [['city_id'], 'integer'],
+            [['address'], 'string', 'max' => 700],
+            [['new_message', 'action_task', 'new_review', 'show_contacts', 'show_profile'], 'string', 'max' => 10],
+            [['address'], 'validateAddress'],
             [['about'], 'string'],
             [['email'], 'string', 'max' => 72],
-            [['name', 'role', 'phone', 'skype'], 'string', 'max' => 100],
+            [['name', 'role'], 'string', 'max' => 100],
+            [['phone'], 'string', 'min' => 11, 'max' => 11],
+            [['skype'], 'string', 'min' => 3],
+            [['messeger'], 'string', 'min' => 1],
             [['password'], 'string', 'max' => 64],
             [['path'], 'string', 'max' => 255],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cities::class, 'targetAttribute' =>
@@ -118,6 +124,7 @@ class Users extends ActiveRecord implements IdentityInterface
             ['email', 'email'],
             ['email', 'unique'],
             ['date_add', 'default', 'value' => Yii::$app->formatter->asDate('now', 'yyyy-MM-dd H:m:s')],
+            [['avatar'], 'image']
         ];
     }
 
@@ -138,9 +145,37 @@ class Users extends ActiveRecord implements IdentityInterface
             'city_id' => 'Город проживания',
             'birthday' => 'Birthday',
             'about' => 'About',
-            'phone' => 'Phone',
+            'phone' => 'Телефон',
             'skype' => 'Skype',
+            'avatar' => 'Сменить аватар',
+            'address' => 'Локация',
+            'messeger' => 'Другой месседжер',
+            'new_message' => 'Новое сообщение',
+            'action_task' => 'Действия по заданию',
+            'new_review' => 'Новый отзыв',
+            'show_contacts' => 'Показывать мои контакты только заказчику',
+            'show_profile' => 'Не показывать мой профиль'
         ];
+    }
+
+    /**
+     * Проверяет город из БД
+     *
+     * @param mixed $attribute
+     * @param mixed $params
+     *
+     * @return array ошибки валидации адреса
+     */
+    public function validateAddress($attribute, $params)
+    {
+        $address = Cities::find()
+            ->where(['name' => $this->address])
+            ->one();
+
+        if (!$address) {
+            $this->addError($attribute, 'Сервис не работает в данном регионе');
+        }
+
     }
 
     /**
@@ -151,6 +186,16 @@ class Users extends ActiveRecord implements IdentityInterface
     public function getCity()
     {
         return $this->hasOne(Cities::class, ['id' => 'city_id']);
+    }
+
+    /**
+     * Gets query for [[PhotoWorks]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPhotoWorks()
+    {
+        return $this->hasMany(PhotoWork::class, ['user_id' => 'id']);
     }
 
     /**
@@ -245,16 +290,6 @@ class Users extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Gets query for [[Skills]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSkills()
-    {
-        return $this->hasMany(Skills::class, ['id' => 'skill_id'])->viaTable('users_and_skills', ['user_id' => 'id']);
-    }
-
-    /**
      * Gets query for [[Favorites]].
      *
      * @return \yii\db\ActiveQuery
@@ -302,7 +337,11 @@ class Users extends ActiveRecord implements IdentityInterface
     {
         $id = Reviews::find()->select('user_id_executor')->distinct()->column();
 
-        $executor = implode(",", $id);
+        $executor = 0;
+
+        if ($id) {
+            $executor = implode(",", $id);
+        }
 
         return $executor;
     }
@@ -316,7 +355,11 @@ class Users extends ActiveRecord implements IdentityInterface
     {
         $id = Favorites::find()->select('user_id_executor')->distinct()->column();
 
-        $executor = implode(",", $id);
+        $executor = 0;
+
+        if ($id) {
+            $executor = implode(",", $id);
+        }
 
         return $executor;
     }
@@ -335,5 +378,21 @@ class Users extends ActiveRecord implements IdentityInterface
         }
 
         return $this->_user;
+    }
+
+    public $avatar;
+
+    /**
+     * Сохраняет файл в нужную директорию и присваивает имя файлу в данной модели
+     */
+    public function upload()
+    {
+        if ($this->avatar && $this->validate()) {
+            $newname = uniqid('upload') . '.' . $this->avatar->getExtension();
+
+            $this->avatar->saveAs('@webroot/uploads/' . $newname, false);
+
+            $this->path = 'uploads/'.$newname;
+        }
     }
 }

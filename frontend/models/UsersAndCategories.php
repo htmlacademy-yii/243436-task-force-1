@@ -68,4 +68,22 @@ class UsersAndCategories extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Users::class, ['id' => 'user_id']);
     }
+
+    /**
+     * @return array возвращает список категорий
+     */
+    public function UsersAndCategoriesList($id)
+    {
+        $user_id_list = [];
+
+        $categories = UsersAndCategories::find()->select('category_id')->where(['user_id' => $id])->asArray()->all();
+
+        if ($categories) {
+            foreach($categories as $key => $category) {
+                $user_id_list[$key] = $category['category_id'];
+            }
+        }
+
+        return $user_id_list;
+    }
 }

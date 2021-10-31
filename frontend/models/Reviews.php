@@ -33,7 +33,6 @@ class Reviews extends \yii\db\ActiveRecord
     {
         return [
             [['description'], 'string'],
-            ['description','required'],
             ['status', 'required', 'message' => 'Необходимо выбрать статус задания'],
             ['rating', 'required', 'message' => 'Необходимо поставить оценку исполнителю'],
             [['rating', 'user_id_create', 'user_id_executor', 'task_id'], 'integer'],

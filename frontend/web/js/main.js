@@ -60,6 +60,11 @@ if (starRating.length) {
   });
 }
 
+var lightbulb = document.getElementsByClassName('header__lightbulb')[0];
+lightbulb.addEventListener('mouseover', function () {
+  fetch('/events/index');
+});
+
 // var stars = document.querySelectorAll('.completion-form-star .star-disabled');
 
 // var cityDropdown = document.getElementsByClassName('town-select');

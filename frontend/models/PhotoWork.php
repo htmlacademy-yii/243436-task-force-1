@@ -29,11 +29,11 @@ class PhotoWork extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id'], 'required'],
             [['user_id'], 'integer'],
             [['path'], 'string', 'max' => 100],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class,
             'targetAttribute' => ['user_id' => 'id']],
+            ['user_id', 'default', 'value' => \Yii::$app->user->getId()],
         ];
     }
 

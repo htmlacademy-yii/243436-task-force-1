@@ -65,10 +65,13 @@ return [
             'rules' => [
                 'tasks/page/<page:\d+>' => 'tasks/index',
                 'users/page/<page:\d+>' => 'users/index',
+                'mylist/page/<page:\d+>' => 'mylist/index',
                 'create' => 'create/index',
                 'signup' => 'signup/index',
                 'tasks' => 'tasks/index',
                 'users' => 'users/index',
+                'mylist' => 'mylist/index',
+                'account' => 'account/index',
                 '/' => 'landing/index',
                 [
                     'class' => 'yii\rest\UrlRule',

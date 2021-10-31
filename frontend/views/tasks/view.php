@@ -2,7 +2,6 @@
     use yii\helpers\Url;
     use yii\helpers\Html;
     use Taskforce\BusinessLogic\Task;
-    use yii\widgets\ActiveForm;
 ?>
 
 <section class="content-view">
@@ -250,7 +249,13 @@
 
     <?php if ($user->role === Task::CREATOR
     && $tasks->user_id_create === $currentID
-    || $user->role === Task::EXECUTOR) : ?>
+    && ($tasks->status === Task::STATUS_WORK
+    || $tasks->status === Task::STATUS_PERFORMED
+    || $tasks->status === Task::STATUS_FAILED)
+    || $user->role === Task::EXECUTOR
+    && ($tasks->status === Task::STATUS_WORK
+    || $tasks->status === Task::STATUS_PERFORMED
+    || $tasks->status === Task::STATUS_FAILED)) : ?>
         <div id="chat-container">
             <!--добавьте сюда атрибут task с указанием в нем id текущего задания-->
             <chat class="connect-desk__chat" task="<?= $tasks->id; ?>">

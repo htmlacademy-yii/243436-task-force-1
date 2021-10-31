@@ -52,7 +52,7 @@ class Tasks extends \yii\db\ActiveRecord
             [['category_id', 'city_id', 'user_id_create', 'user_id_executor'], 'integer'],
             ['budget', 'integer', 'min' => 0],
             [['description'], 'string', 'min' => 30],
-            [['lat', 'lon'], 'number'],
+            [['lat', 'lon', 'new_messages'], 'number'],
             [['path', 'status'], 'string', 'max' => 100],
             [['name'], 'string', 'min' => 10, 'max' => 255],
             [['address'], 'string', 'max' => 700],
@@ -92,6 +92,7 @@ class Tasks extends \yii\db\ActiveRecord
             'user_id_create' => 'User Id Create',
             'user_id_executor' => 'User Id Executor',
             'status' => 'Status',
+            'new_messages' => 'new_messages'
         ];
     }
 
@@ -113,9 +114,7 @@ class Tasks extends \yii\db\ActiveRecord
             'author_name' => 'user_id_create',
             'user_id_executor',
             'status',
-            'new_messages' => function () {
-                return Messages::find()->where(['task_id' => $this->id])->count();
-            },
+            'new_messages'
         ];
     }
 

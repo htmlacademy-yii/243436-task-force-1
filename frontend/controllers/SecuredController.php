@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use frontend\controllers\behaviors\DateVisitBehavior;
 
 abstract class SecuredController extends Controller
 {
@@ -17,7 +18,8 @@ abstract class SecuredController extends Controller
                         'roles' => ['@']
                     ]
                 ]
-            ]
+            ],
+            DateVisitBehavior::class
         ];
     }
 }

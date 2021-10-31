@@ -175,7 +175,7 @@
                                 <a href="<?= Url::to(['tasks/index']) ?>">Задания</a>
                             </li>
                             <li class="links__item">
-                                <a href="">Мой профиль</a>
+                                <a href="<?= Url::to(['account/index']) ?>">Мой профиль</a>
                             </li>
                             <li class="links__item">
                                 <a href="<?= Url::to(['users/index']) ?>">Исполнители</a>
@@ -187,7 +187,7 @@
                                 <a href="<?= Url::to(['create/index']) ?>">Создать задание</a>
                             </li>
                             <li class="links__item">
-                                <a href="">Справка</a>
+                                <a href="<?= Url::to(['account/index']) ?>">Справка</a>
                             </li>
                         </ul>
                     </div>

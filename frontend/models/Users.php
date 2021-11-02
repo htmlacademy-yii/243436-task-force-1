@@ -116,7 +116,7 @@ class Users extends ActiveRecord implements IdentityInterface
             [['name', 'role'], 'string', 'max' => 100],
             [['phone'], 'string', 'min' => 11, 'max' => 11],
             [['skype'], 'string', 'min' => 3],
-            [['messeger'], 'string', 'min' => 1],
+            [['messenger'], 'string', 'min' => 1],
             [['password'], 'string', 'max' => 64],
             [['path'], 'string', 'max' => 255],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cities::class, 'targetAttribute' =>
@@ -149,7 +149,7 @@ class Users extends ActiveRecord implements IdentityInterface
             'skype' => 'Skype',
             'avatar' => 'Сменить аватар',
             'address' => 'Локация',
-            'messeger' => 'Другой месседжер',
+            'messenger' => 'Другой месседжер',
             'new_message' => 'Новое сообщение',
             'action_task' => 'Действия по заданию',
             'new_review' => 'Новый отзыв',
@@ -176,6 +176,16 @@ class Users extends ActiveRecord implements IdentityInterface
             $this->addError($attribute, 'Сервис не работает в данном регионе');
         }
 
+    }
+
+    /**
+     * Gets query for [[Auths]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAuths()
+    {
+        return $this->hasMany(Auth::class, ['user_id' => 'id']);
     }
 
     /**

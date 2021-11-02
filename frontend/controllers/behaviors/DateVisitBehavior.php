@@ -17,12 +17,14 @@ class DateVisitBehavior extends Behavior
 
     public function currentDate()
     {
-        $user = Users::find()->where(['id' => \Yii::$app->user->getId()])->one();
+        if (!\Yii::$app->user->isGuest) {
+            $user = Users::find()->where(['id' => \Yii::$app->user->getId()])->one();
 
-        $user->date_visit = \Yii::$app->formatter->asTimestamp('now');
+            $user->date_visit = \Yii::$app->formatter->asTimestamp('now');
 
-        $user->save();
+            $user->save();
 
-        return $user;
+            return $user;
+        }
     }
 }

@@ -33,6 +33,10 @@ class TasksController extends SecuredController
             ->joinWith(['category', 'city', 'creator', 'executor'])
             ->orderBy('date_add DESC');
 
+        if (\Yii::$app->request->get('city')) {
+            $tasks->andWhere(['tasks.city_id' => \Yii::$app->request->get('city')]);
+        }
+
         if ($tasksForm->category) {
             $tasks->andWhere(['category_id' => $tasksForm->category]);
         }

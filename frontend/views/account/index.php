@@ -230,14 +230,14 @@
                     ->label('Skype', ['for' => 214]);
                 ?>
 
-                <?= $form->field($user, 'messeger', [
+                <?= $form->field($user, 'messenger', [
                         'options' => ['class' => 'field-container account__input']
                     ])
                     ->textInput([
                         'class' => 'input textarea',
                         'id' => 215,
                         'placeholder' => '@DenisT',
-                        'value' =>  $user->messeger ?? ''
+                        'value' =>  $user->messenger ?? ''
                     ])
                     ->label('Другой мессенджер', ['for' => 215]);
                 ?>

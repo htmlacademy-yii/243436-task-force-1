@@ -222,6 +222,11 @@
 
                     <?= Html::submitButton('Войти', ['class' => 'button']) ?>
 
+                    <button class="button" style="margin-top: 20px;"
+                    onclick="document.location='<?= Url::to(['auth/auth', 'authclient' => 'vkontakte']) ?>'">
+                        Войти через VK
+                    </button>
+
                 <?php ActiveForm::end(); ?>
 
                 <button class="form-modal-close" type="button">Закрыть</button>

@@ -8,7 +8,7 @@ use yii\db\Migration;
  *
  * - `{{%users}}`
  */
-class m211101_161801_create_auth_table extends Migration
+class m211105_132448_create_auth_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class m211101_161801_create_auth_table extends Migration
         $this->createTable('{{%auth}}', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer()->notNull()->unsigned(),
-            'source' => $this->char(),
-            'source_id' => $this->char(),
+            'source' => $this->string(),
+            'source_id' => $this->string(),
         ]);
 
         // creates index for column `user_id`

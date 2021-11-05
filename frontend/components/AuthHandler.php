@@ -7,6 +7,9 @@ use frontend\models\Cities;
 use Taskforce\BusinessLogic\Task;
 use Yii;
 
+/**
+ * AuthHandler обрабатывает успешную аутентификацию через компонент аутентификации Yii
+ */
 class AuthHandler
 {
     private $client;
@@ -34,16 +37,18 @@ class AuthHandler
         if (!$auth) {
             $user = $this->createAccount($attributes);
 
-            // $user = Users::findOne(['email' => 'test@mail.ru']); //то создаем новый аккаунт
-
-            return Yii::$app->user->login($user);
+            if (!$user) {
+                return;
+            } else {
+                return Yii::$app->user->login($user);
+            }
         }
     }
 
     /**
      * Поиск пользователя в таблице auth по id аккаунта провайдера VKontakte
      *
-     * $param array $attribute
+     * @param mixed $attribute
      * @return Auth
      */
     private function findAuth($attributes)
@@ -61,8 +66,8 @@ class AuthHandler
     /**
      * Поиск пользователя в таблице auth по id аккаунта провайдера VKontakte
      *
-     * $param array $attribute
-     * @return Auth
+     * @param mixed $attribute
+     * @return User|null
      */
     private function createAccount($attributes)
     {
@@ -84,8 +89,8 @@ class AuthHandler
         if ($user->save()) {
 
             $user = $user->getUser();
-
             $auth = $this->createAuth($user->id, $user_id);
+
             if ($auth->save()) {
                 $transaction->commit();
                 return $user;
@@ -94,6 +99,15 @@ class AuthHandler
         $transaction->rollBack();
     }
 
+    /**
+     * Создание объекта пользователя
+     *
+     * @param string $first_name
+     * @param string $city
+     * @param string $email
+     *
+     * @return object объект данных пользователя
+     */
     private function createUser($first_name, $city, $email)
     {
         $city_id = Cities::find()->where(['name' => $city])->one();
@@ -113,6 +127,14 @@ class AuthHandler
         ]);
     }
 
+    /**
+     * Создание объекта пользователя
+     *
+     * @param string $userId
+     * @param string $sourceId
+     *
+     * @return object объект данных пользователя из VK
+     */
     private function createAuth($userId, $sourceId)
     {
         return new Auth([

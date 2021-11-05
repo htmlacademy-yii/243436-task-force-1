@@ -12,7 +12,7 @@ class AuthController extends Controller
         return [
             'auth' => [
                 'class' => 'yii\authclient\AuthAction',
-                'successCallback' => [$this, 'onAuthSuccess'], //После того как VKontakte отвечает, мы передаем управление на метод onAuthSuccess($client)
+                'successCallback' => [$this, 'onAuthSuccess'],
             ],
         ];
     }
@@ -22,4 +22,3 @@ class AuthController extends Controller
         (new AuthHandler($client))->handle();
     }
 }
-

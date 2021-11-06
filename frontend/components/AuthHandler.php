@@ -49,7 +49,7 @@ class AuthHandler
      * Поиск пользователя в таблице auth по id аккаунта провайдера VKontakte
      *
      * @param mixed $attribute
-     * @return Auth
+     * @return object
      */
     private function findAuth($attributes)
     {
@@ -67,7 +67,7 @@ class AuthHandler
      * Поиск пользователя в таблице auth по id аккаунта провайдера VKontakte
      *
      * @param mixed $attribute
-     * @return User|null
+     * @return object|null
      */
     private function createAccount($attributes)
     {

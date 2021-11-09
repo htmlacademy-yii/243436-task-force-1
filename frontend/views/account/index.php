@@ -412,6 +412,11 @@
         async function addCity() {
             const city = document.getElementById('autoComplete').value;
 
+            if (!city) {
+                document.getElementById('city_id').value = null;
+                return;
+            }
+
             let formData = new FormData();
 
             formData.append('q', city);
@@ -426,7 +431,7 @@
             document.getElementById('city_id').value = data.city_id;
 
             console.log(data.message);
-        }
+        };
 
         addCity();
     });

@@ -48,8 +48,8 @@ class AuthHandler
     /**
      * Поиск пользователя в таблице auth по id аккаунта провайдера VKontakte
      *
-     * @param mixed $attribute
-     * @return object
+     * @param array $attribute
+     * @return Auth|null
      */
     private function findAuth($attributes)
     {
@@ -66,8 +66,8 @@ class AuthHandler
     /**
      * Поиск пользователя в таблице auth по id аккаунта провайдера VKontakte
      *
-     * @param mixed $attribute
-     * @return object|null
+     * @param array $attribute
+     * @return Users|null
      */
     private function createAccount($attributes)
     {
@@ -88,7 +88,6 @@ class AuthHandler
         $transaction = \Yii::$app->getDb()->beginTransaction();
         if ($user->save()) {
 
-            $user = $user->getUser();
             $auth = $this->createAuth($user->id, $user_id);
 
             if ($auth->save()) {
@@ -106,7 +105,7 @@ class AuthHandler
      * @param string $city
      * @param string $email
      *
-     * @return object объект данных пользователя
+     * @return Users объект данных пользователя
      */
     private function createUser($first_name, $city, $email)
     {
@@ -133,7 +132,7 @@ class AuthHandler
      * @param string $userId
      * @param string $sourceId
      *
-     * @return object объект данных пользователя из VK
+     * @return Auth объект данных пользователя из VK
      */
     private function createAuth($userId, $sourceId)
     {

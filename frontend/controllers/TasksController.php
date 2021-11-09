@@ -28,13 +28,24 @@ class TasksController extends SecuredController
 
         $tasksForm->load(\Yii::$app->request->get());
 
+        $user = Users::find()->where(['id' => \Yii::$app->user->getId()])->one();
+
+        $session = \Yii::$app->session;
+
+        if (\Yii::$app->request->get('city')) {
+            $session['city_id'] = \Yii::$app->request->get('city');
+        }
+
         $tasks = Tasks::find()
             ->where(['status' => 'Новое'])
             ->joinWith(['category', 'city', 'creator', 'executor'])
             ->orderBy('date_add DESC');
 
-        if (\Yii::$app->request->get('city')) {
-            $tasks->andWhere(['tasks.city_id' => \Yii::$app->request->get('city')]);
+        if (\Yii::$app->request->get('city') || $session['city_id']) {
+            $tasks->andWhere(
+                "tasks.city_id is null or tasks.city_id = :city_id",
+                [":city_id" => $session['city_id'] ?? $user['city_id']]
+            );
         }
 
         if ($tasksForm->category) {

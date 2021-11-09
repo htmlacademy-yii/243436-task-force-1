@@ -6,6 +6,11 @@
                 <?= $city['id'] === (int) \Yii::$app->request->get('city') ? 'selected' : '' ?>>
                     <?= $city['name'] ?>
                 </option>
+            <?php elseif ($session['city_id']) : ?>
+                <option value="<?= $city['id'] ?>"
+                <?= $city['id'] === (int) $session['city_id'] ? 'selected' : '' ?>>
+                    <?= $city['name'] ?>
+                </option>
             <?php else : ?>
                 <option value="<?= $city['id'] ?>"
                 <?= $city['id'] === $user->city_id ? 'selected' : '' ?>>

@@ -81,6 +81,16 @@ return [
                 ]
             ],
         ],
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'vkontakte' => [
+                    'class' => 'yii\authclient\clients\VKontakte',
+                    'clientId' => '7990259',
+                    'clientSecret' => '9vMvtjYNKlVGdTwUMDkK',
+                ],
+            ],
+        ]
     ],
     'params' => $params,
 ];

@@ -14,6 +14,8 @@ class CityWidget extends Widget
 
         $user = Users::find()->where(['id' => \Yii::$app->user->getId()])->one();
 
-        return $this->render('city', compact('cities', 'user'));
+        $session = \Yii::$app->session;
+
+        return $this->render('city', compact('cities', 'user', 'session'));
     }
 }

@@ -230,14 +230,14 @@
                     ->label('Skype', ['for' => 214]);
                 ?>
 
-                <?= $form->field($user, 'messeger', [
+                <?= $form->field($user, 'messenger', [
                         'options' => ['class' => 'field-container account__input']
                     ])
                     ->textInput([
                         'class' => 'input textarea',
                         'id' => 215,
                         'placeholder' => '@DenisT',
-                        'value' =>  $user->messeger ?? ''
+                        'value' =>  $user->messenger ?? ''
                     ])
                     ->label('Другой мессенджер', ['for' => 215]);
                 ?>
@@ -412,6 +412,11 @@
         async function addCity() {
             const city = document.getElementById('autoComplete').value;
 
+            if (!city) {
+                document.getElementById('city_id').value = null;
+                return;
+            }
+
             let formData = new FormData();
 
             formData.append('q', city);
@@ -426,7 +431,7 @@
             document.getElementById('city_id').value = data.city_id;
 
             console.log(data.message);
-        }
+        };
 
         addCity();
     });

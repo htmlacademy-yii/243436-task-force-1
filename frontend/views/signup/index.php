@@ -1,6 +1,7 @@
 <?php
     use yii\widgets\ActiveForm;
     use yii\helpers\Html;
+    use yii\helpers\Url;
 ?>
 
 <section class="registration__user">
@@ -33,6 +34,12 @@
 
             <?= Html::submitButton('Создать аккаунт', ['class' => 'button button__registration']) ?>
 
+            <button class="button button__registration"
+            onclick="document.location='<?= Url::to(['auth/auth', 'authclient' => 'vkontakte']) ?>'">
+                Создать аккаунт через VK
+            </button>
         <?php ActiveForm::end(); ?>
     </div>
+
 </section>
+

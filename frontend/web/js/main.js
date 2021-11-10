@@ -67,17 +67,21 @@ lightbulb.addEventListener('mouseover', function () {
 
 // var stars = document.querySelectorAll('.completion-form-star .star-disabled');
 
-// var cityDropdown = document.getElementsByClassName('town-select');
+var cityDropdown = document.getElementsByClassName('town-select');
 
-// if (cityDropdown.length) {
-//   cityDropdown = cityDropdown[0];
+if (cityDropdown.length) {
+  cityDropdown = cityDropdown[0];
 
-//   cityDropdown.addEventListener('change', function(event) {
-//     var selectedCity = event.target.value;
+  cityDropdown.addEventListener('change', function(event) {
+    var selectedCity = event.target.value;
 
-//     window.location = '/site/city?city=' + selectedCity;
-//   });
-// }
+    // window.location = '/site/city?city=' + selectedCity;
+
+    window.location = '/tasks?city=' + selectedCity;
+  });
+}
+
+
 
 
 

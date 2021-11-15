@@ -17,7 +17,7 @@ class GeoController extends Controller
 
             $city = \Yii::$app->request->post('q');
 
-            $cach_city = \Yii::$app->cache->get($city);
+            $cach_city = \Yii::$app->cache->get(md5($city));
 
             if ($cach_city) {
                 return json_encode($cach_city);
@@ -84,7 +84,7 @@ class GeoController extends Controller
                 ];
 
                 \Yii::$app->cache->set(
-                    \Yii::$app->request->post('q'), $res, 86400, new TagDependency(['tags' => 'geo'])
+                    md5(\Yii::$app->request->post('q')), $res, 86400, new TagDependency(['tags' => 'geo'])
                 );
 
                 return json_encode($res);

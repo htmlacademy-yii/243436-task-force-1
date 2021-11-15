@@ -7,13 +7,21 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\BadResponseException;
 use frontend\models\Cities;
+use yii\caching\TagDependency;
 
 class GeoController extends Controller
 {
     public function actionIndex()
     {
         if (\Yii::$app->request->post('q')) {
+
             $city = \Yii::$app->request->post('q');
+
+            $cach_city = \Yii::$app->cache->get($city);
+
+            if ($cach_city) {
+                return json_encode($cach_city);
+            }
 
             $city_id = Cities::find()
                 ->select('id')
@@ -31,6 +39,7 @@ class GeoController extends Controller
 
 
             $request = new Request('GET', '1.x');
+
 
 
             $response = $client->send($request, [
@@ -55,7 +64,7 @@ class GeoController extends Controller
                     $response_data['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point']['pos']
                 );
 
-                $lat = $result[1]; 
+                $lat = $result[1];
                 $lon = $result[0];
 
                 if (isset($response_data['response']['GeoObjectCollection']['metaDataProperty']
@@ -74,7 +83,11 @@ class GeoController extends Controller
                     "city_id" => $city_id['id']
                 ];
 
-                echo json_encode($res);
+                \Yii::$app->cache->set(
+                    \Yii::$app->request->post('q'), $res, 86400, new TagDependency(['tags' => 'geo'])
+                );
+
+                return json_encode($res);
             }
         }
     }

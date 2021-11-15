@@ -213,7 +213,7 @@
                 } catch (error) {
                     return error;
                 }
-            }
+            },
         },
         resultsList: {
             element: (list, data) => {
@@ -254,8 +254,8 @@
             formData.append('q', city);
 
             let response = await fetch('./geo', {
-            method: 'POST',
-            body: formData
+                method: 'POST',
+                body: formData
             });
 
             const data = await response.json();

@@ -1,5 +1,4 @@
 <?php
-
 namespace Taskforce\Importer;
 
 use SplFileObject;
@@ -9,9 +8,9 @@ use Taskforce\Exception\RuntimeException;
 
 class ImporterSpl
 {
-    private  $filename;
+    private $filename;
     private $columns;
-    private  $fileObject;
+    private $fileObject;
 
     private $result = [];
 
@@ -21,6 +20,9 @@ class ImporterSpl
         $this->columns = $columns;
     }
 
+    /**
+     * @return void Проверка файла на корректность
+     */
     public function import() : void
     {
         if (!$this->validateColumns($this->columns)) {
@@ -48,6 +50,11 @@ class ImporterSpl
         }
     }
 
+    /**
+     * @param array $columns колонки файла
+     *
+     * @return bool Валидация колонок файла
+     */
     private function validateColumns(array $columns) : bool
     {
         $result = true;
@@ -61,6 +68,9 @@ class ImporterSpl
         return $result;
     }
 
+    /**
+     * @return array|null Заголовки таблицы
+     */
     private function getHeaderData() : ?array
     {
         $this->fileObject->rewind();
@@ -69,6 +79,9 @@ class ImporterSpl
         return $data;
     }
 
+    /**
+     * @return iterable|null Объект файла
+     */
     private function getNextLine() : ?iterable
     {
         $result = null;
@@ -80,28 +93,37 @@ class ImporterSpl
         return $result;
     }
 
+    /**
+     * @return array Данные таблицы
+     */
     public function getData() : array
     {
         return $this->result;
     }
 
+    /**
+     * @param string $name имя таблицы
+     * @param string $file имя файла
+     *
+     * Создает запись в SQL-файле
+     */
     public function SQLFormat(string $name, string $file)
     {
         $columns = implode(', ', $this->columns);
 
         $data = '';
 
-        foreach($this->getData() as $key => $value){
+        foreach ($this->getData() as $key => $value) {
             $a =  '(';
-                $b = '';
-                foreach($value as $val) {
-                    if(preg_match('/[A-Za-zА-Яа-я.,-]|([0-9]){10,}/', $val)) {
-                        $c = "'".$val."'".', ';
-                    } else {
-                        $c = $val.', ';
-                    }
-                    $b .= $c;
+            $b = '';
+            foreach ($value as $val) {
+                if (preg_match('/[A-Za-zА-Яа-я.,-]|([0-9]){10,}/', $val)) {
+                    $c = "'".$val."'".', ';
+                } else {
+                    $c = $val.', ';
                 }
+                $b .= $c;
+            }
                 $b = mb_substr($b, 0, -2);
             $d = '), ';
 

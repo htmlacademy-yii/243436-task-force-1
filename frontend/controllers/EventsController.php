@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\controllers;
 
 use frontend\models\Users;
@@ -10,6 +9,11 @@ use frontend\models\Respond;
 
 class EventsController extends SecuredController
 {
+    /**
+     * Рендерит страницу index
+     *
+     * @return mixed
+     */
     public function actionIndex()
     {
         $user = Users::find()->where(['id' => \Yii::$app->user->getId()])->one();

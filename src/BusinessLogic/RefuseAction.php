@@ -4,11 +4,21 @@ namespace Taskforce\BusinessLogic;
 
 class RefuseAction extends Action
 {
+    /**
+     * @return string Возвращает действие отказа
+     */
     public function getNameAction() : string
     {
         return 'Отказаться';
     }
 
+    /**
+     * @param integer $currentID id текущего пользователя
+     * @param integer $executorID id пользователя исполнителя
+     * @param integer $creatorID id пользователя создателя
+     *
+     * @return bool Возвращает true или false, если id текущего пользователя равено id пользователя создателя
+     */
     public function isCompareID(int $currentID, ?int $executorID, ?int $creatorID) : bool
     {
         return $currentID === $executorID;

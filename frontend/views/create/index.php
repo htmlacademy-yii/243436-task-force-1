@@ -21,14 +21,12 @@
             <?= $form->field($tasks_form, 'name')
                 ->textInput(['class' => 'input textarea', 'id' => 10, 'placeholder' => 'Повесить полку'])
                 ->label('Мне нужно', ['for' => 10])
-                ->hint('Кратко опишите суть работы');
-            ?>
+                ->hint('Кратко опишите суть работы'); ?>
 
             <?= $form->field($tasks_form, 'description')
                 ->textarea(['class' => 'input textarea', 'rows' => 7, 'id' => 11, 'placeholder' => 'Опишите задание'])
                 ->label('Подробности задания', ['for' => 11])
-                ->hint('Укажите все пожелания и детали, чтобы исполнителям было проще соориентироваться');
-            ?>
+                ->hint('Укажите все пожелания и детали, чтобы исполнителям было проще соориентироваться'); ?>
 
             <?= $form->field($tasks_form, 'category_id', [
                     'template' => "{label}\n
@@ -43,8 +41,7 @@
                     'id' => 12,
                     'size' => 1,
                 ])
-                ->hint('Выберите категорию');
-            ?>
+                ->hint('Выберите категорию'); ?>
 
             <div class="field-container">
                 <label>Файлы</label>
@@ -67,29 +64,25 @@
                     'autocapitalize' => 'off',
                 ])
                 ->label('Локация', ['for' => 13])
-                ->hint('Укажите адрес исполнения, если задание требует присутствия');
-            ?>
+                ->hint('Укажите адрес исполнения, если задание требует присутствия'); ?>
 
             <?= $form->field($tasks_form, 'lat')
                 ->hiddenInput([
                     'id' => 'lat',
                 ])
-                ->label(false);
-            ?>
+                ->label(false); ?>
 
             <?= $form->field($tasks_form, 'lon')
                 ->hiddenInput([
                     'id' => 'lon',
                 ])
-                ->label(false);
-            ?>
+                ->label(false); ?>
 
             <?= $form->field($tasks_form, 'city_id')
                 ->hiddenInput([
                     'id' => 'city_id',
                 ])
-                ->label(false);
-            ?>
+                ->label(false); ?>
 
             <div class="create__price-time">
                 <?= $form->field($tasks_form, 'budget', [
@@ -101,8 +94,7 @@
                         'placeholder' => '1000',
                     ])
                     ->label('Бюджет', ['for' => 14])
-                    ->hint('Не заполняйте для оценки исполнителем');
-                ?>
+                    ->hint('Не заполняйте для оценки исполнителем'); ?>
 
                 <?= $form->field($tasks_form, 'expire', [
                         'options' => ['tag' => 'div', 'class' => 'field-container create__price-time--wrapper']
@@ -114,8 +106,7 @@
                         'type' => 'date'
                     ])
                     ->label('Сроки исполнения', ['for' => 15])
-                    ->hint('Укажите крайний срок исполнения');
-                ?>
+                    ->hint('Укажите крайний срок исполнения'); ?>
             </div>
 
         <?php ActiveForm::end(); ?>
@@ -136,7 +127,7 @@
             <?php if (!empty($tasks_form->getErrors())) : ?>
                 <div class="warning-item warning-item--error">
                     <h2>Ошибки заполнения формы</h2>
-                    <?php foreach($tasks_form->getErrors() as $key=>$value) : ?>
+                    <?php foreach ($tasks_form->getErrors() as $key => $value) : ?>
                         <h3>Поле «<?= $tasks_form->attributeLabels()[$key] ?>»</h3>
                         <p><?= $value[0]; ?></p>
                     <?php endforeach; ?>

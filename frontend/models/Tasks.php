@@ -1,9 +1,7 @@
 <?php
-
 namespace frontend\models;
 
 use Yii;
-
 
 /**
  * This is the model class for table "tasks".
@@ -31,8 +29,6 @@ use Yii;
  */
 class Tasks extends \yii\db\ActiveRecord
 {
-
-
     /**
      * {@inheritdoc}
      */
@@ -96,6 +92,9 @@ class Tasks extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function fields()
     {
         return [
@@ -135,7 +134,6 @@ class Tasks extends \yii\db\ActiveRecord
         if (!$address) {
             $this->addError($attribute, 'Сервис не работает в данном регионе');
         }
-
     }
 
     /**

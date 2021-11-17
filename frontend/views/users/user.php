@@ -13,57 +13,57 @@
                 <p>
                     <?= Html::encode($users->city->name); ?>,
                     <?= Yii::t(
-                            'app',
-                            '{n, plural,
-                                =0{# лет}
-                                =1{# год}
-                                one{# год}
-                                few{# года}
-                                many{# лет}
-                                other{# года}}',
-                            ['n' => $years_old]
-                        );
+                        'app',
+                        '{n, plural,
+                            =0{# лет}
+                            =1{# год}
+                            one{# год}
+                            few{# года}
+                            many{# лет}
+                            other{# года}}',
+                        ['n' => $years_old]
+                    );
                     ?>
                 </p>
                 <div class="profile-mini__name five-stars__rate">
                 <?php $average_rating = $users->getAverageRating(); ?>
                 <?php if ($average_rating >= 1 && $average_rating < 2) : ?>
-                        <span></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                    <?php elseif ($average_rating >= 2 && $average_rating < 3) : ?>
-                        <span></span>
-                        <span></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                    <?php elseif ($average_rating >= 3 && $average_rating < 4) : ?>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                    <?php elseif ($average_rating >= 4 && $average_rating < 5) : ?>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span class="star-disabled"></span>
-                    <?php elseif ($average_rating >= 5) : ?>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    <?php else : ?>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                        <span class="star-disabled"></span>
-                    <?php endif; ?>
+                    <span></span>
+                    <span class="star-disabled"></span>
+                    <span class="star-disabled"></span>
+                    <span class="star-disabled"></span>
+                    <span class="star-disabled"></span>
+                <?php elseif ($average_rating >= 2 && $average_rating < 3) : ?>
+                    <span></span>
+                    <span></span>
+                    <span class="star-disabled"></span>
+                    <span class="star-disabled"></span>
+                    <span class="star-disabled"></span>
+                <?php elseif ($average_rating >= 3 && $average_rating < 4) : ?>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span class="star-disabled"></span>
+                    <span class="star-disabled"></span>
+                <?php elseif ($average_rating >= 4 && $average_rating < 5) : ?>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span class="star-disabled"></span>
+                <?php elseif ($average_rating >= 5) : ?>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                <?php else : ?>
+                    <span class="star-disabled"></span>
+                    <span class="star-disabled"></span>
+                    <span class="star-disabled"></span>
+                    <span class="star-disabled"></span>
+                    <span class="star-disabled"></span>
+                <?php endif; ?>
 
                     <b><?= Html::encode($average_rating); ?></b>
                 </div>
@@ -109,7 +109,7 @@
             <div class="user__card-info">
                 <h3 class="content-view__h3">Специализации</h3>
                 <div class="link-specialization">
-                    <?php foreach($users->categories as $category) : ?>
+                    <?php foreach ($users->categories as $category) : ?>
                         <a href="<?= Url::to(['users/index', 'UsersForm'=>['category' => $category->id]]) ?>"
                         class="link-regular">
                             <?= Html::encode($category->name); ?>
@@ -133,11 +133,13 @@
             </div>
             <div class="user__card-photo">
                 <h3 class="content-view__h3">Фото работ</h3>
-                <?php if(!empty($photo_work)) : ?>
-                    <?php foreach($photo_work as $photo) : ?>
+                <?php if (!empty($photo_work)) : ?>
+                    <?php foreach ($photo_work as $photo) : ?>
                         <a href="<?= Url::to("@web/uploads/{$photo['path']}"); ?>" target="_blank">
-                            <?= Html::img("@web/uploads/{$photo['path']}",
-                            ['width' => 85, 'height' => 86, 'alt' => 'Фото работы']) ?>
+                            <?= Html::img(
+                                "@web/uploads/{$photo['path']}",
+                                ['width' => 85, 'height' => 86, 'alt' => 'Фото работы']
+                            ) ?>
                         </a>
                     <?php endforeach; ?>
                 <?php else : ?>
@@ -146,11 +148,11 @@
             </div>
         </div>
     </div>
-    <?php if(!empty($reviews)) : ?>
+    <?php if (!empty($reviews)) : ?>
         <div class="content-view__feedback">
             <h2>Отзывы<span>(<?= count($reviews); ?>)</span></h2>
             <div class="content-view__feedback-wrapper reviews-wrapper">
-                <?php foreach($reviews as $review) : ?>
+                <?php foreach ($reviews as $review) : ?>
                     <div class="feedback-card__reviews">
                         <p class="link-task link">
                             Задание

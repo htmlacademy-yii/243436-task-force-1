@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\models;
 
 use Yii;
@@ -63,20 +62,23 @@ class Messages extends \yii\db\ActiveRecord
         ];
     }
 
-public function fields()
-{
-    return [
-        'id',
-        'message',
-        'user_id_create',
-        'user_id_executor',
-        'task_id',
-        'published_at' => 'date_add',
-        'is_mine' => function () {
-            return $this->user_id_create === Yii::$app->user->id || $this->user_id_executor === Yii::$app->user->id;
-        },
-    ];
-}
+    /**
+     * {@inheritdoc}
+     */
+    public function fields()
+    {
+        return [
+            'id',
+            'message',
+            'user_id_create',
+            'user_id_executor',
+            'task_id',
+            'published_at' => 'date_add',
+            'is_mine' => function () {
+                return $this->user_id_create === Yii::$app->user->id || $this->user_id_executor === Yii::$app->user->id;
+            },
+        ];
+    }
 
     /**
      * Gets query for [[Task]].

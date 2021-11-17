@@ -7,7 +7,7 @@
 <div class="landing-bottom">
     <div class="landing-bottom-container">
         <h2>Последние задания на сайте</h2>
-        <?php foreach($tasks as $task) : ?>
+        <?php foreach ($tasks as $task) : ?>
             <div class="landing-task">
                 <div class="landing-task-top task-<?= Html::encode($task->category->icon); ?>"></div>
                 <div class="landing-task-description">

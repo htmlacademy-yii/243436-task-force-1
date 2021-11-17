@@ -4,17 +4,18 @@ namespace frontend\controllers;
 use yii\web\Controller;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\BadResponseException;
 use frontend\models\Cities;
 use yii\caching\TagDependency;
 
 class GeoController extends Controller
 {
+    /**
+     * Получение данных по API Яндекс.Карт
+     */
     public function actionIndex()
     {
         if (\Yii::$app->request->post('q')) {
-
             $city = \Yii::$app->request->post('q');
 
             $cach_city = \Yii::$app->cache->get(md5($city));
@@ -84,7 +85,10 @@ class GeoController extends Controller
                 ];
 
                 \Yii::$app->cache->set(
-                    md5(\Yii::$app->request->post('q')), $res, 86400, new TagDependency(['tags' => 'geo'])
+                    md5(\Yii::$app->request->post('q')),
+                    $res,
+                    86400,
+                    new TagDependency(['tags' => 'geo'])
                 );
 
                 return json_encode($res);

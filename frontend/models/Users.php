@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\models;
 
 use Yii;
@@ -175,7 +174,6 @@ class Users extends ActiveRecord implements IdentityInterface
         if (!$address) {
             $this->addError($attribute, 'Сервис не работает в данном регионе');
         }
-
     }
 
     /**
@@ -323,7 +321,7 @@ class Users extends ActiveRecord implements IdentityInterface
         $rating = [];
         $i = 0;
 
-        foreach($reviews as $review) {
+        foreach ($reviews as $review) {
             $rating[$i] = $review['rating'];
             $i++;
         }
@@ -332,7 +330,7 @@ class Users extends ActiveRecord implements IdentityInterface
 
         $average_rating = '';
 
-        if((int) $sum_reviews >= 1) {
+        if ((int) $sum_reviews >= 1) {
             $average_rating = number_format($sum_reviews/$count_reviews, 2, '.', '');
         }
         return $average_rating;

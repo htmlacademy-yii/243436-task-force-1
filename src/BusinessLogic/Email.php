@@ -1,6 +1,6 @@
 <?php
-
 namespace Taskforce\BusinessLogic;
+
 use frontend\models\Respond;
 use frontend\models\Messages;
 use frontend\models\Tasks;
@@ -20,7 +20,7 @@ class Email
                 ->setSubject('Отказ от задания')
                 ->send();
         } catch (\Swift_TransportException $e) {
-            debug($e);
+            print_r($e);
             die();
         }
     }
@@ -44,7 +44,7 @@ class Email
                 ->setSubject('Подтверждение отклика')
                 ->send();
         } catch (\Swift_TransportException $e) {
-            debug($e);
+            print_r($e);
             die();
         }
     }
@@ -62,7 +62,7 @@ class Email
                 ->setSubject('Новый отклик по задаче')
                 ->send();
         } catch (\Swift_TransportException $e) {
-            debug($e);
+            print_r($e);
             die();
         }
     }
@@ -86,7 +86,7 @@ class Email
                 ->setSubject('Завершение задачи')
                 ->send();
         } catch (\Swift_TransportException $e) {
-            debug($e);
+            print_r($e);
             die();
         }
     }
@@ -120,7 +120,7 @@ class Email
                 ->setSubject('Новое сообщение по задаче')
                 ->send();
         } catch (\Swift_TransportException $e) {
-            debug($e);
+            print_r($e);
             die();
         }
     }

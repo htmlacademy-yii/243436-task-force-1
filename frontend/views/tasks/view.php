@@ -30,8 +30,8 @@
             </div>
             <div class="content-view__attach">
                 <h3 class="content-view__h3">Вложения</h3>
-                <?php if(!empty($clips)) : ?>
-                    <?php foreach($clips as $clip) : ?>
+                <?php if (!empty($clips)) : ?>
+                    <?php foreach ($clips as $clip) : ?>
                         <a href="<?= Url::to("@web/uploads/{$clip['path']}"); ?>"><?= $clip['path']; ?></a>
                     <?php endforeach; ?>
                 <?php else : ?>
@@ -100,7 +100,7 @@
             <h2>Отклики <span>(<?= count($responds); ?>)</span></h2>
 
             <div class="content-view__feedback-wrapper">
-                <?php foreach($responds as $respond) : ?>
+                <?php foreach ($responds as $respond) : ?>
                     <div class="content-view__feedback-card">
                         <div class="feedback-card__top">
                             <a href="<?= Url::to(['users/user', 'id' => $respond->executor->id]) ?>">
@@ -193,8 +193,7 @@
             <?= Html::img("@web/{$tasks->creator->path}", [
                     'width' => 55, 'height' => 55,
                     'alt' => 'Аватар заказчика'
-                ])
-            ?>
+                ])?>
             <div class="profile-mini__name five-stars__rate">
             <p><?= Html::encode($tasks->creator->name); ?></p>
             </div>
@@ -215,31 +214,31 @@
         </span>
         <span class="last-">
             <?php
-                if ($result_time < 365) {
-                    echo Yii::t(
-                        'app',
-                        '{n, plural,
-                            =0{# дней}
-                            =1{# день}
-                            one{# день}
-                            few{# дня}
-                            many{# дней}
-                            other{# дня}}',
-                        ['n' => $result_time]
-                    );
-                } elseif ($result_time > 364) {
-                    echo Yii::t(
-                        'app',
-                        '{n, plural,
-                            =0{# лет}
-                            =1{# год}
-                            one{# год}
-                            few{# года}
-                            many{# лет}
-                            other{# года}}',
-                        ['n' => floor($result_time/365)]
-                    );
-                }
+            if ($result_time < 365) {
+                echo Yii::t(
+                    'app',
+                    '{n, plural,
+                        =0{# дней}
+                        =1{# день}
+                        one{# день}
+                        few{# дня}
+                        many{# дней}
+                        other{# дня}}',
+                    ['n' => $result_time]
+                );
+            } elseif ($result_time > 364) {
+                echo Yii::t(
+                    'app',
+                    '{n, plural,
+                        =0{# лет}
+                        =1{# год}
+                        one{# год}
+                        few{# года}
+                        many{# лет}
+                        other{# года}}',
+                    ['n' => floor($result_time/365)]
+                );
+            }
             ?>
             на сайте
         </span></p>

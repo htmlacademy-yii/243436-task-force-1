@@ -28,8 +28,7 @@
                     'class' => 'multiple-select input town-select registration-town',
                     'id' => 18,
                     'size' => 1,
-                ])
-            ?>
+                ]) ?>
             <?= $form->field($user_form, 'password')->passwordInput(['placeholder' => 'Пароль']); ?>
 
             <?= Html::submitButton('Создать аккаунт', ['class' => 'button button__registration']) ?>

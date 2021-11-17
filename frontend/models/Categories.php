@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\models;
 
 use Yii;
@@ -77,7 +76,7 @@ class Categories extends \yii\db\ActiveRecord
 
         $categories = Categories::find()->select('id, name')->indexBy('id')->asArray()->all();
 
-        foreach($categories as $key => $category) {
+        foreach ($categories as $key => $category) {
             $category_list[$key] = $category['name'];
         }
 

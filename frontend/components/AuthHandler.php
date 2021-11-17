@@ -19,6 +19,9 @@ class AuthHandler
         $this->client = $client;
     }
 
+    /**
+     * Авторизация/регистрация пользователя
+     */
     public function handle()
     {
         if (!Yii::$app->user->isGuest) {
@@ -86,8 +89,8 @@ class AuthHandler
         $user = $this->createUser($first_name, $city, $email);
 
         $transaction = \Yii::$app->getDb()->beginTransaction();
-        if ($user->save()) {
 
+        if ($user->save()) {
             $auth = $this->createAuth($user->id, $user_id);
 
             if ($auth->save()) {

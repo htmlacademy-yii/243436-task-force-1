@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\controllers;
 
 use frontend\models\Categories;
@@ -18,6 +17,11 @@ use yii\data\ActiveDataProvider;
 
 class TasksController extends SecuredController
 {
+    /**
+     * Рендерит страницу index
+     *
+     * @return mixed
+     */
     public function actionIndex()
     {
         $this->view->title = 'Новый задания';
@@ -53,7 +57,6 @@ class TasksController extends SecuredController
         }
 
         if (is_array($tasksForm->more)) {
-
             $conditions = [];
 
             if (in_array($tasksForm::NOT_EXECUTOR, $tasksForm->more)) {
@@ -95,6 +98,11 @@ class TasksController extends SecuredController
         return $this->render('index', compact('tasksForm', 'categories', 'dataProvider'));
     }
 
+    /**
+     * Рендерит страницу view
+     *
+     * @return mixed
+     */
     public function actionView($id)
     {
         $email = new Email();
@@ -122,7 +130,6 @@ class TasksController extends SecuredController
                 $tasks->status = Task::STATUS_FAILED;
                 $tasks->read_task_completed = '0';
                 if ($tasks->save()) {
-
                     $user = Users::find()
                         ->where(['users.id' => \Yii::$app->user->getId()])
                         ->one();
@@ -184,14 +191,13 @@ class TasksController extends SecuredController
         foreach ($allRespond as $respond) {
             if (\Yii::$app->request->get($respond->user_id_executor) === 'false') {
                 $respond->status = 'Отклонено';
-                if($respond->save()) {
+                if ($respond->save()) {
                     $this->redirect(['tasks/view', 'id' => \Yii::$app->request->get('id')]);
                 }
             }
             if (\Yii::$app->request->get($respond->user_id_executor) === 'true') {
                 $respond->status = 'Подтверждено';
                 if ($respond->save()) {
-
                     $selectUser = Respond::find()
                         ->where(['task_id' => $id, 'status' => 'Подтверждено'])
                         ->joinWith(['executor'])
@@ -202,7 +208,6 @@ class TasksController extends SecuredController
                     $tasks->read_selected_executor = '0';
 
                     if ($tasks->save()) {
-
                         if ((int) $user->action_task === 1) {
                             $email->winAction();
                         }
@@ -274,7 +279,7 @@ class TasksController extends SecuredController
 
                     $tasks->read_task_completed = '0';
 
-                    if($tasks->save()) {
+                    if ($tasks->save()) {
                         $this->redirect(['tasks/index']);
                     }
                 }

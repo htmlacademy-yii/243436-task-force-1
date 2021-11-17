@@ -1,5 +1,4 @@
 <?php
-
 namespace Taskforce\BusinessLogic;
 
 abstract class Action

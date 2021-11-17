@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\controllers;
 
 use frontend\models\Tasks;
@@ -8,6 +7,11 @@ use Taskforce\BusinessLogic\Task;
 
 class MylistController extends SecuredController
 {
+    /**
+     * Рендерит страницу index
+     *
+     * @return mixed
+     */
     public function actionIndex($status)
     {
         $this->view->title = 'Мои задания';

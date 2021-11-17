@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\components;
 
 use yii\base\Widget;
@@ -71,7 +70,8 @@ class NoticeWidget extends Widget
         }
 
         return $this->render(
-            'notice', compact('user', 'messages', 'tasks_work', 'tasks_completed', 'tasks_failed', 'responds')
+            'notice',
+            compact('user', 'messages', 'tasks_work', 'tasks_completed', 'tasks_failed', 'responds')
         );
     }
 }

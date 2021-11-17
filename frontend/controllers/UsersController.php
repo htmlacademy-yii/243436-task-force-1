@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\controllers;
 
 use frontend\models\Users;
@@ -15,6 +14,11 @@ use Taskforce\BusinessLogic\Task;
 
 class UsersController extends SecuredController
 {
+    /**
+     * Рендерит страницу index
+     *
+     * @return mixed
+     */
     public function actionIndex()
     {
         $this->view->title = 'Исполнители';
@@ -38,7 +42,6 @@ class UsersController extends SecuredController
         }
 
         if (is_array($usersForm->more)) {
-
             $conditions = [];
 
             if (in_array($usersForm::FREE, $usersForm->more)) {
@@ -76,6 +79,11 @@ class UsersController extends SecuredController
         return $this->render('index', compact('usersForm', 'categories', 'dataProvider', 'current_time'));
     }
 
+    /**
+     * Рендерит страницу user
+     *
+     * @return mixed
+     */
     public function actionUser($id)
     {
         $users = Users::find()
@@ -121,14 +129,14 @@ class UsersController extends SecuredController
             if ($favorite === null) {
                 $favorite_link = Url::to(['users/user', 'id' => \Yii::$app->request->get('id'), 'favorite' => 'true']);
                 if (\Yii::$app->request->get('favorite') === 'true') {
-                    if($favorites->save()) {
+                    if ($favorites->save()) {
                         $this->redirect(['users/user', 'id' => \Yii::$app->request->get('id'), 'favorite' => 'true']);
                     }
                 }
             } else {
                 $favorite_link = Url::to(['users/user', 'id' => \Yii::$app->request->get('id'), 'favorite' => 'false']);
                 if (\Yii::$app->request->get('favorite') === 'false') {
-                    if($favorite->delete()) {
+                    if ($favorite->delete()) {
                         $this->redirect(['users/user', 'id' => \Yii::$app->request->get('id'), 'favorite' => 'false']);
                     }
                 }
@@ -136,7 +144,8 @@ class UsersController extends SecuredController
         }
 
         return $this->render(
-            'user', compact(
+            'user',
+            compact(
                 'users',
                 'years_old',
                 'photo_work',
@@ -148,4 +157,3 @@ class UsersController extends SecuredController
         );
     }
 }
-

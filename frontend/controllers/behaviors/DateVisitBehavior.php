@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\controllers\behaviors;
 
 use frontend\models\Users;
@@ -8,6 +7,9 @@ use Yii\web\Controller;
 
 class DateVisitBehavior extends Behavior
 {
+    /**
+     * Вызывает метод записи даты активности пользователя до action
+     */
     public function events()
     {
         return [
@@ -15,6 +17,9 @@ class DateVisitBehavior extends Behavior
         ];
     }
 
+    /**
+     * @return users Записывает в БД дату автивности пользователя
+     */
     public function currentDate()
     {
         if (!\Yii::$app->user->isGuest) {

@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\modules\v1\controllers;
 
 use frontend\models\Messages;
@@ -8,12 +7,15 @@ use frontend\models\Users;
 use yii\rest\ActiveController;
 use Taskforce\BusinessLogic\Email;
 
-
 class MessageController extends ActiveController
 {
     public $modelClass = Messages::class;
 
-    public function behaviors() {
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
         return [
             'contentNegotiator' => [
                 'class' => \yii\filters\ContentNegotiator::class,
@@ -26,6 +28,9 @@ class MessageController extends ActiveController
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function actions()
     {
         $actions = parent::actions();
@@ -34,6 +39,11 @@ class MessageController extends ActiveController
         return $actions;
     }
 
+    /**
+     * Запись переписки в БД
+     *
+     * @return messages
+     */
     public function actionCreate()
     {
         $email = new Email();
@@ -80,12 +90,16 @@ class MessageController extends ActiveController
             $tasks->new_messages = $message_count;
 
             $tasks->save();
-
         }
 
         return $model;
     }
 
+    /**
+     * Получение переписки из БД
+     *
+     * @return messages
+     */
     public function actionIndex()
     {
         $messages = $this->modelClass::find()

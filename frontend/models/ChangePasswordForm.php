@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\models;
 
 use yii\base\Model;
@@ -71,7 +70,6 @@ class ChangePasswordForm extends Model
     public function validatePasswordOne($attribute, $params)
     {
         if (!$this->hasErrors()) {
-
             if ($this->password_repeat !== $this->password_new) {
                 $this->addError($attribute, 'Повтор пароля не совпадает');
             }
@@ -89,7 +87,6 @@ class ChangePasswordForm extends Model
     public function validatePasswordTwo($attribute, $params)
     {
         if (!$this->hasErrors()) {
-
             if (!$this->password
             && ($this->password_new
             && $this->password_repeat
@@ -97,7 +94,6 @@ class ChangePasswordForm extends Model
             || $this->password_repeat)) {
                 $this->addError($attribute, 'Не указан текущий пароль');
             }
-
         }
     }
 
@@ -112,13 +108,11 @@ class ChangePasswordForm extends Model
     public function validatePasswordThree($attribute, $params)
     {
         if (!$this->hasErrors()) {
-
             if ($this->password
             && $this->password_new
             && !$this->password_repeat) {
                 $this->addError($attribute, 'Не указан повтор нового пароля');
             }
-
         }
     }
 
@@ -133,13 +127,11 @@ class ChangePasswordForm extends Model
     public function validatePasswordFour($attribute, $params)
     {
         if (!$this->hasErrors()) {
-
             if ($this->password
             && !$this->password_new
             && $this->password_repeat) {
                 $this->addError($attribute, 'Не указан новый пароль');
             }
-
         }
     }
 
@@ -154,13 +146,11 @@ class ChangePasswordForm extends Model
     public function validatePasswordFive($attribute, $params)
     {
         if (!$this->hasErrors()) {
-
             if ($this->password
             && !$this->password_new
             && !$this->password_repeat) {
                 $this->addError($attribute, 'Не указан новый пароль');
             }
-
         }
     }
 

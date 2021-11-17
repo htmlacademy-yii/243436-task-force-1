@@ -9,7 +9,7 @@
 <section class="new-task">
     <div class="new-task__wrapper">
         <h1>Новые задания</h1>
-        <?php foreach($dataProvider->getModels() as $task) : ?>
+        <?php foreach ($dataProvider->getModels() as $task) : ?>
             <div class="new-task__card">
                 <div class="new-task__title">
                 <a href="<?= Url::to(['tasks/view', 'id' => $task['id']]) ?>" class="link-regular">
@@ -75,8 +75,7 @@
                                 <span>{$label}</span>
                             </label>";
                         }
-                    ])
-                ?>
+                    ]) ?>
             </fieldset>
 
             <fieldset class="search-task__categories">
@@ -96,8 +95,7 @@
                                 <span>{$label}</span>
                             </label>";
                         }
-                    ])
-                ?>
+                    ]) ?>
             </fieldset>
 
             <div class="field-container">
@@ -114,8 +112,7 @@
                 ->label('Период', [
                     'class' => 'search-task__name',
                     'for' => 8
-                    ])
-                ?>
+                    ]) ?>
             </div>
 
             <div class="field-container">
@@ -131,8 +128,7 @@
                 ->label('Поиск по названию', [
                     'class' => 'search-task__name',
                     'for' => 9
-                    ])
-                ?>
+                    ]) ?>
             </div>
 
             <?= Html::submitButton('Искать', ['class' => 'button']) ?>

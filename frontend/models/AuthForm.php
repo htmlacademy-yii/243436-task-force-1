@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\models;
 
 use yii\base\Model;
@@ -53,7 +52,6 @@ class AuthForm extends Model
             if (!$user) {
                 $this->addError($attribute, 'Неправильный email');
             }
-
         }
     }
 
@@ -73,7 +71,6 @@ class AuthForm extends Model
             if (!$user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Неправильный пароль');
             }
-
         }
     }
 

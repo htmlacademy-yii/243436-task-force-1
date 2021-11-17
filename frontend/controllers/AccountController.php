@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\controllers;
 
 use frontend\models\Users;
@@ -13,6 +12,11 @@ use Taskforce\BusinessLogic\Task;
 
 class AccountController extends SecuredController
 {
+    /**
+     * Рендерит страницу index
+     *
+     * @return mixed
+     */
     public function actionIndex()
     {
         $this->view->title = 'Настройки профиля';
@@ -63,7 +67,7 @@ class AccountController extends SecuredController
                 $user->save();
 
                 if (!empty($tasksForm->category)) {
-                    foreach($tasksForm->category as $category) {
+                    foreach ($tasksForm->category as $category) {
                         $categories_list = Categories::find()->where(['id' => $category])->one();
 
                         if (!in_array($category, $usersAndCategoriesList)) {
@@ -80,7 +84,6 @@ class AccountController extends SecuredController
                 }
 
                 if (isset($session['images']) && !empty($session['images'])) {
-
                     $photoWorkCount = PhotoWork::find()->where(['user_id' => \Yii::$app->user->getId()])->count();
 
                     if ($photoWorkCount) {
@@ -89,7 +92,7 @@ class AccountController extends SecuredController
                         }
                     }
 
-                    foreach($session['images'] as $image) {
+                    foreach ($session['images'] as $image) {
                         $photoWork = new PhotoWork();
 
                         $photoWork->path = $image;
@@ -116,7 +119,11 @@ class AccountController extends SecuredController
         return $this->render('index', compact('user', 'categories', 'tasksForm', 'changePassword', 'photoWorkList'));
     }
 
-    public function actionUpload() {
+    /**
+     * Загрузка картинок в папку upload
+     */
+    public function actionUpload()
+    {
         $images = \Yii::$app->session['images'] ?? [];
 
         if (isset(\Yii::$app->session['errors']) || isset(\Yii::$app->session['errors'])) {

@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\controllers;
 
 use yii\web\Controller;
@@ -12,6 +11,11 @@ class LandingController extends Controller
 {
     public $layout = 'landing';
 
+    /**
+     * Рендерит страницу index
+     *
+     * @return mixed
+     */
     public function actionIndex()
     {
         if (!\Yii::$app->user->isGuest) {
@@ -47,10 +51,13 @@ class LandingController extends Controller
         return $this->render('index', compact('tasks'));
     }
 
-    public function actionLogout() {
+    /**
+     * Разлогирование пользователя
+     */
+    public function actionLogout()
+    {
         \Yii::$app->user->logout();
 
         return $this->goHome();
     }
 }
-

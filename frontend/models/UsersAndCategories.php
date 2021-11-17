@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\models;
 
 use Yii;
@@ -72,14 +71,14 @@ class UsersAndCategories extends \yii\db\ActiveRecord
     /**
      * @return array возвращает список категорий
      */
-    public function UsersAndCategoriesList($id)
+    public function usersAndCategoriesList($id)
     {
         $user_id_list = [];
 
         $categories = UsersAndCategories::find()->select('category_id')->where(['user_id' => $id])->asArray()->all();
 
         if ($categories) {
-            foreach($categories as $key => $category) {
+            foreach ($categories as $key => $category) {
                 $user_id_list[$key] = $category['category_id'];
             }
         }

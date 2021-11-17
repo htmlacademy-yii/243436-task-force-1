@@ -4,7 +4,6 @@
     use frontend\models\UsersAndCategories;
 ?>
 
-
 <section class="account__redaction-wrapper">
     <h1>Редактирование настроек профиля</h1>
 
@@ -36,8 +35,7 @@
                         ->label('Сменить аватар', [
                             'for' => 'upload-avatar',
                             'class' => 'link-regular'
-                        ])
-                    ?>
+                        ]) ?>
                 </div>
 
                 <div class="account__redaction">
@@ -50,8 +48,7 @@
                             'placeholder' => 'Титов Денис',
                             'value' => $user->name ?? ''
                         ])
-                        ->label('Ваше имя', ['for' => 200]);
-                    ?>
+                        ->label('Ваше имя', ['for' => 200]); ?>
 
                     <?= $form->field($user, 'email', [
                             'options' => ['class' => 'field-container account__input account__input--email']
@@ -62,8 +59,7 @@
                             'placeholder' => 'DenisT@bk.ru',
                             'value' => $user->email ?? ''
                         ])
-                        ->label('email', ['for' => 201]);
-                    ?>
+                        ->label('email', ['for' => 201]); ?>
 
                     <?= $form->field($user, 'address', [
                         'options' => ['class' => 'field-container account__input account__input--address']
@@ -80,15 +76,13 @@
                             'autocapitalize' => 'off',
                             'value' => $user->address ?? ''
                         ])
-                        ->label('Локация');
-                    ?>
+                        ->label('Локация'); ?>
 
                     <?= $form->field($user, 'city_id')
                         ->hiddenInput([
                             'id' => 'city_id',
                         ])
-                        ->label(false);
-                    ?>
+                        ->label(false); ?>
 
                     <?= $form->field($user, 'birthday', [
                             'options' => ['class' => 'field-container account__input account__input--date']
@@ -100,8 +94,7 @@
                             'type' => 'date',
                             'value' =>  Yii::$app->formatter->asDate($user->birthday, 'YYYY-MM-dd') ?? ''
                         ])
-                        ->label('День рождения', ['for' => 203]);
-                    ?>
+                        ->label('День рождения', ['for' => 203]); ?>
 
                     <?= $form->field($user, 'about', [
                         'options' => ['class' => 'field-container account__input account__input--info']
@@ -114,8 +107,7 @@
                             'value' =>  $user->about ?? ''
 
                         ])
-                        ->label('Информация о себе', ['for' => 204]);
-                    ?>
+                        ->label('Информация о себе', ['for' => 204]); ?>
 
 
                 </div>
@@ -134,7 +126,7 @@
                                 if (in_array(
                                     $value,
                                     $usersAndCategories->usersAndCategoriesList(\Yii::$app->user->getId())
-                                    )) {
+                                )) {
                                     $checked = 'checked';
                                 }
 
@@ -145,8 +137,7 @@
                                     <span>{$label}</span>
                                 </label>";
                             }
-                        ])
-                    ?>
+                        ]) ?>
 
                 </div>
             </div>
@@ -162,8 +153,7 @@
                         'id' => '2121',
                         'autocomplete' => 'on'
                     ])
-                    ->label('Текущий пароль', ['for' => 2121]);
-                ?>
+                    ->label('Текущий пароль', ['for' => 2121]); ?>
 
                 <?= $form->field($changePassword, 'password_new', [
                         'options' => ['class' => 'field-container account__input'],
@@ -173,8 +163,7 @@
                         'id' => '211',
                         'autocomplete' => 'on'
                     ])
-                    ->label('Новый пароль', ['for' => 211]);
-                ?>
+                    ->label('Новый пароль', ['for' => 211]); ?>
 
                 <?= $form->field($changePassword, 'password_repeat', [
                         'options' => ['class' => 'field-container account__input'],
@@ -184,17 +173,18 @@
                         'id' => '212',
                         'autocomplete' => 'on'
                     ])
-                    ->label('Повтор пароля', ['for' => 212]);
-                ?>
+                    ->label('Повтор пароля', ['for' => 212]); ?>
             </div>
 
             <h3 class="div-line">Фото работ</h3>
 
             <div class="user__card-photo">
-                <?php if(!empty($photoWorkList)) : ?>
-                    <?php foreach($photoWorkList as $photo) : ?>
-                        <?= Html::img("@web/uploads/{$photo['path']}",
-                        ['width' => 100, 'height' => 101, 'alt' => 'Фото работы']) ?>
+                <?php if (!empty($photoWorkList)) : ?>
+                    <?php foreach ($photoWorkList as $photo) : ?>
+                        <?= Html::img(
+                            "@web/uploads/{$photo['path']}",
+                            ['width' => 100, 'height' => 101, 'alt' => 'Фото работы']
+                        ) ?>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
@@ -215,8 +205,7 @@
                         'type' => 'tel',
                         'value' =>  $user->phone ?? ''
                     ])
-                    ->label('Телефон', ['for' => 213]);
-                ?>
+                    ->label('Телефон', ['for' => 213]); ?>
 
                 <?= $form->field($user, 'skype', [
                         'options' => ['class' => 'field-container account__input']
@@ -227,8 +216,7 @@
                         'placeholder' => 'DenisT',
                         'value' =>  $user->skype ?? ''
                     ])
-                    ->label('Skype', ['for' => 214]);
-                ?>
+                    ->label('Skype', ['for' => 214]); ?>
 
                 <?= $form->field($user, 'messenger', [
                         'options' => ['class' => 'field-container account__input']
@@ -239,8 +227,7 @@
                         'placeholder' => '@DenisT',
                         'value' =>  $user->messenger ?? ''
                     ])
-                    ->label('Другой мессенджер', ['for' => 215]);
-                ?>
+                    ->label('Другой мессенджер', ['for' => 215]); ?>
             </div>
 
             <h3 class="div-line">Настройки сайта</h3>
@@ -255,8 +242,7 @@
                             'class' => 'visually-hidden checkbox__input',
                             'label' => '<span>Новое сообщение</span>',
                             'checked' => (int) $user->new_message !== 1 ? false:true
-                        ]);
-                    ?>
+                        ]); ?>
 
                     <?= $form->field($user, 'action_task', [
                         'options' => ['tag' => false]
@@ -266,8 +252,7 @@
                             'class' => 'visually-hidden checkbox__input',
                             'label' => '<span>Действия по заданию</span>',
                             'checked' => (int) $user->action_task !== 1 ? false:true
-                        ]);
-                    ?>
+                        ]); ?>
 
                     <?= $form->field($user, 'new_review', [
                         'options' => ['tag' => false]
@@ -277,8 +262,7 @@
                             'class' => 'visually-hidden checkbox__input',
                             'label' => '<span>Новый отзыв</span>',
                             'checked' => (int) $user->new_review !== 1 ? false:true
-                        ]);
-                    ?>
+                        ]); ?>
                 </div>
 
                 <div class="search-task__categories account_checkbox account_checkbox--secrecy">
@@ -290,8 +274,7 @@
                             'class' => 'visually-hidden checkbox__input',
                             'label' => '<span>Показывать мои контакты только заказчику</span>',
                             'checked' => (int) $user->show_contacts !== 1 ? false:true
-                        ]);
-                    ?>
+                        ]); ?>
 
                     <?= $form->field($user, 'show_profile', [
                         'options' => ['tag' => false]
@@ -301,8 +284,7 @@
                             'class' => 'visually-hidden checkbox__input',
                             'label' => '<span>Не показывать мой профиль</span>',
                             'checked' => (int) $user->show_profile !== 1 ? false:true
-                        ]);
-                    ?>
+                        ]); ?>
                 </div>
             </div>
         </div>

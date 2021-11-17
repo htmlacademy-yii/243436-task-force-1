@@ -1,6 +1,6 @@
 <?php
-
 namespace Taskforce\BusinessLogic;
+
 use Taskforce\Exception\StatusException;
 
 class Task
@@ -19,7 +19,12 @@ class Task
     const EXECUTOR = 'Исполнитель';
     const CREATOR = 'Заказчик';
 
-    public function checkStatus (string $status) : void
+    /**
+     * @param string $status статус задания
+     *
+     * @return void Возвращает статус или ошибку
+     */
+    public function checkStatus(string $status) : void
     {
         $statusList = ['Новое', 'В работе', 'Провалено', 'Выполнено', 'Отменено'];
 
@@ -28,6 +33,11 @@ class Task
         }
     }
 
+    /**
+     * @param string $status статус задания
+     *
+     * @return object Возвращает объект действия
+     */
     public function getAvailableActions(string $status)
     {
         $this->checkStatus($status);

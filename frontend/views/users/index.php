@@ -8,7 +8,7 @@
 <section class="user__search">
     <div class="new-user__wrapper">
         <h1>Исполнители</h1>
-        <?php foreach($dataProvider->getModels() as $user) : ?>
+        <?php foreach ($dataProvider->getModels() as $user) : ?>
             <?php if ((int) $user->show_profile !== 1) : ?>
                 <div class="content-view__feedback-card user__search-wrapper">
                     <div class="feedback-card__top">
@@ -93,7 +93,7 @@
                         <p class="user__search-content"><?= Html::encode($user->about); ?></p>
                         </div>
                         <span class="new-task__time">
-                            <?php if (($current_time - $user->date_visit) < 1800 ) : ?>
+                            <?php if (($current_time - $user->date_visit) < 1800) : ?>
                                 Сейчас онлайн
                             <?php else : ?>
                                 Был на сайте
@@ -103,7 +103,7 @@
                     </div>
 
                     <div class="link-specialization user__search-link--bottom">
-                        <?php foreach($user->categories as $category) : ?>
+                        <?php foreach ($user->categories as $category) : ?>
                             <a href="<?= Url::to(['users/index', 'UsersForm'=>['category' => $category->id]]) ?>"
                             class="link-regular">
                                 <?= Html::encode($category->name); ?>
@@ -158,8 +158,7 @@
                                 <span>{$label}</span>
                             </label>";
                         }
-                    ])
-                ?>
+                    ]) ?>
             </fieldset>
 
             <fieldset class="search-task__categories">
@@ -179,8 +178,7 @@
                                 <span>{$label}</span>
                             </label>";
                         }
-                    ])
-                ?>
+                    ]) ?>
             </fieldset>
 
             <?= $form->field($usersForm, 'search', [
@@ -196,8 +194,7 @@
                 ->label('Поиск по имени', [
                     'class' => 'search-task__name',
                     'for' => 9
-                    ])
-            ?>
+                    ]) ?>
 
             <?= Html::submitButton('Искать', ['class' => 'button']) ?>
 

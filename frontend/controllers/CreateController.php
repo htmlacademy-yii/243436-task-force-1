@@ -11,6 +11,9 @@ use yii\web\UploadedFile;
 
 class CreateController extends Controller
 {
+    /**
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -37,6 +40,11 @@ class CreateController extends Controller
         ];
     }
 
+    /**
+     * Рендерит страницу index
+     *
+     * @return mixed
+     */
     public function actionIndex()
     {
 
@@ -54,7 +62,7 @@ class CreateController extends Controller
 
         $clips = '';
 
-        if(\Yii::$app->request->getIsPost()) {
+        if (\Yii::$app->request->getIsPost()) {
             $tasks_form->load(\Yii::$app->request->post());
 
             if ($tasks_form->validate()) {
@@ -64,7 +72,7 @@ class CreateController extends Controller
                 $task_lon = $tasks_form->lon;
 
                 if (isset($session['images']) && !empty($session['images'])) {
-                    foreach($session['images'] as $image) {
+                    foreach ($session['images'] as $image) {
                         $clips = new Clips();
 
                         $clips->path = $image;
@@ -89,7 +97,11 @@ class CreateController extends Controller
         return $this->render('index', compact('tasks_form', 'category_list'));
     }
 
-    public function actionUpload() {
+    /**
+     * Загрузка картинок в папку upload
+     */
+    public function actionUpload()
+    {
         $images = \Yii::$app->session['images'] ?? [];
 
         if (isset(\Yii::$app->session['errors'])) {

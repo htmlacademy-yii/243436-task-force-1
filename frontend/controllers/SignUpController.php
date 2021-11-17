@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\controllers;
 
 use frontend\models\Cities;
@@ -9,6 +8,11 @@ use Taskforce\BusinessLogic\Task;
 
 class SignupController extends Controller
 {
+    /**
+     * Рендерит страницу index
+     *
+     * @return mixed
+     */
     public function actionIndex()
     {
         if (!\Yii::$app->user->isGuest) {
@@ -44,4 +48,3 @@ class SignupController extends Controller
         return $this->render('index', compact('user_form', 'cities_list'));
     }
 }
-

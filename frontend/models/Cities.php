@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\models;
 
 use Yii;
@@ -79,7 +78,7 @@ class Cities extends \yii\db\ActiveRecord
 
         $cities = Cities::find()->select('name')->select('id, name')->indexBy('id')->all();
 
-        foreach($cities as $key => $city) {
+        foreach ($cities as $key => $city) {
             $cities_list[$key] = $city['name'];
         }
 

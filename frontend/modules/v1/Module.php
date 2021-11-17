@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\modules\v1;
 
 use yii\filters\AccessControl;
@@ -9,6 +8,9 @@ use yii\filters\AccessControl;
  */
 class Module extends \yii\base\Module
 {
+    /**
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [

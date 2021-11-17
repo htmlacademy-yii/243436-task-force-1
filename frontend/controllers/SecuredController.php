@@ -7,6 +7,9 @@ use frontend\controllers\behaviors\DateVisitBehavior;
 
 abstract class SecuredController extends Controller
 {
+    /**
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [

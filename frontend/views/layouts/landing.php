@@ -21,7 +21,7 @@
     <body class="landing">
     <?php $this->beginBody() ?>
         <div class="table-layout">
-            <header class=" page-header--index">
+            <header class="page-header--index">
                 <div class="main-container page-header__container page-header__container--index">
                     <div class="page-header__logo--index">
                         <a>

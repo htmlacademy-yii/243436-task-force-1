@@ -18,10 +18,10 @@
         <link rel="stylesheet" href="css/style.css">
         <?php $this->head() ?>
     </head>
-    <body class="landing">
+    <body class="landing23">
     <?php $this->beginBody() ?>
         <div class="table-layout">
-            <header class="page-header--index">
+            <header class="page-header--index landing">
                 <div class="main-container page-header__container page-header__container--index">
                     <div class="page-header__logo--index">
                         <a>

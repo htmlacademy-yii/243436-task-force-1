@@ -21,7 +21,7 @@ class SignupController extends Controller
 
         $this->view->title = 'Регистрация аккаунта';
 
-        $user_form = new Users;
+        $user_form = new Users();
 
         $cities = new Cities();
 
@@ -31,12 +31,17 @@ class SignupController extends Controller
             $user_form->load(\Yii::$app->request->post());
 
             if ($user_form->validate()) {
+                $city = Cities::find()
+                    ->where(['id' => $user_form->city_id])
+                    ->one();
+
                 $user_form->password = \Yii::$app->security->generatePasswordHash($user_form->password);
                 $user_form->role = Task::CREATOR;
                 $user_form->new_message = '1';
                 $user_form->action_task = '1';
                 $user_form->new_review = '1';
                 $user_form->path = 'img/avtar.png';
+                $user_form->address = $city['name'];
 
                 $user_form->save();
                 $user = $user_form->getUser();

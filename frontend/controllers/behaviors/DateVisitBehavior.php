@@ -10,7 +10,7 @@ class DateVisitBehavior extends Behavior
     /**
      * Вызывает метод записи даты активности пользователя до action
      */
-    public function events()
+    public function events() : array
     {
         return [
             Controller::EVENT_AFTER_ACTION => 'currentDate'
@@ -20,7 +20,7 @@ class DateVisitBehavior extends Behavior
     /**
      * @return users Записывает в БД дату автивности пользователя
      */
-    public function currentDate()
+    public function currentDate() : users
     {
         if (!\Yii::$app->user->isGuest) {
             $user = Users::find()->where(['id' => \Yii::$app->user->getId()])->one();

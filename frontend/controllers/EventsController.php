@@ -18,8 +18,6 @@ class EventsController extends SecuredController
     {
         $user = Users::find()->where(['id' => \Yii::$app->user->getId()])->one();
 
-        $messages = '';
-
         if ($user->role === 'Заказчик') {
             $messages = Messages::find()
                 ->where(['read' => '0', 'user_id_create' => null])

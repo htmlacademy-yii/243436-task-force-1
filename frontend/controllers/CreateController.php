@@ -14,7 +14,7 @@ class CreateController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
+    public function behaviors() : array
     {
         return [
             'access' => [
@@ -58,18 +58,12 @@ class CreateController extends Controller
 
         $session = \Yii::$app->session;
 
-        $task_id = '';
-
-        $clips = '';
-
         if (\Yii::$app->request->getIsPost()) {
             $tasks_form->load(\Yii::$app->request->post());
 
             if ($tasks_form->validate()) {
                 $tasks_form->save();
                 $task_id = $tasks_form->id;
-                $task_lat = $tasks_form->lat;
-                $task_lon = $tasks_form->lon;
 
                 if (isset($session['images']) && !empty($session['images'])) {
                     foreach ($session['images'] as $image) {

@@ -51,49 +51,6 @@ class ImporterSpl
     }
 
     /**
-     * @param array $columns колонки файла
-     *
-     * @return bool Валидация колонок файла
-     */
-    private function validateColumns(array $columns) : bool
-    {
-        $result = true;
-
-        foreach ($columns as $column) {
-            if (!is_string($column)) {
-                $result = false;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * @return array|null Заголовки таблицы
-     */
-    private function getHeaderData() : ?array
-    {
-        $this->fileObject->rewind();
-        $data = $this->fileObject->fgetcsv();
-
-        return $data;
-    }
-
-    /**
-     * @return iterable|null Объект файла
-     */
-    private function getNextLine() : ?iterable
-    {
-        $result = null;
-
-        while (!$this->fileObject->eof()) {
-            yield $this->fileObject->fgetcsv();
-        }
-
-        return $result;
-    }
-
-    /**
      * @return array Данные таблицы
      */
     public function getData() : array
@@ -139,5 +96,48 @@ class ImporterSpl
         fwrite($fp, $insert);
 
         fclose($fp);
+    }
+
+    /**
+     * @param array $columns колонки файла
+     *
+     * @return bool Валидация колонок файла
+     */
+    private function validateColumns(array $columns) : bool
+    {
+        $result = true;
+
+        foreach ($columns as $column) {
+            if (!is_string($column)) {
+                $result = false;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array|null Заголовки таблицы
+     */
+    private function getHeaderData() : ?array
+    {
+        $this->fileObject->rewind();
+        $data = $this->fileObject->fgetcsv();
+
+        return $data;
+    }
+
+    /**
+     * @return iterable|null Объект файла
+     */
+    private function getNextLine() : ?iterable
+    {
+        $result = null;
+
+        while (!$this->fileObject->eof()) {
+            yield $this->fileObject->fgetcsv();
+        }
+
+        return $result;
     }
 }

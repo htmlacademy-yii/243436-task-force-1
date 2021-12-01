@@ -19,6 +19,18 @@ return [
         ],
     ],
     'components' => [
+        'assetManager' => [
+            'bundles' => [
+                'all' => [
+                    'class' => 'yii\web\AssetBundle',
+                    'basePath' => '@webroot/frontend/web',
+                    'baseUrl' => '@web/frontend/web',
+                    'css' => ['css/all-css.css'],
+                    'js' => ['js/all-script.js'],
+                ],
+                'frontend\assets\AppAsset' => ['css' => [], 'js' => [], 'depends' => ['all']],
+            ],
+        ],
         'i18n' => [
             'translations' => [
                 'app*' => [
@@ -31,7 +43,7 @@ return [
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'baseUrl' => '',
-            'enableCsrfValidation' => false,
+            'enableCsrfValidation' => true,
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
             ]
@@ -90,6 +102,9 @@ return [
                     'clientSecret' => '9vMvtjYNKlVGdTwUMDkK',
                 ],
             ],
+        ],
+        'geoCoder' => [
+            'class' => 'frontend\components\GeoCoder'
         ]
     ],
     'params' => $params,

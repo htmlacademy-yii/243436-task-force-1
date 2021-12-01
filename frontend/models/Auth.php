@@ -18,7 +18,7 @@ class Auth extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName() : string
     {
         return 'auth';
     }
@@ -26,7 +26,7 @@ class Auth extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules() : array
     {
         return [
             [['user_id'], 'required'],
@@ -40,7 +40,7 @@ class Auth extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels() : array
     {
         return [
             'id' => 'ID',

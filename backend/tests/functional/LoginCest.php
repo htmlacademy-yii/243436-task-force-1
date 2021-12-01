@@ -1,5 +1,4 @@
 <?php
-
 namespace backend\tests\functional;
 
 use backend\tests\FunctionalTester;
@@ -21,12 +20,12 @@ class LoginCest
     {
         return [
             'user' => [
-                'class' => UserFixture::className(),
+                'class' => UserFixture::class,
                 'dataFile' => codecept_data_dir() . 'login_data.php'
             ]
         ];
     }
-    
+
     /**
      * @param FunctionalTester $I
      */

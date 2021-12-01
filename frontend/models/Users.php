@@ -34,13 +34,16 @@ use yii\web\IdentityInterface;
  */
 class Users extends ActiveRecord implements IdentityInterface
 {
+    public $avatar;
+    private $_user;
+
     /**
      * Finds an identity by the given ID.
      *
      * @param string|int $id the ID to be looked for
      * @return IdentityInterface|null the identity object that matches the given ID.
      */
-    public static function findIdentity($id)
+    public static function findIdentity($id) : IdentityInterface|null
     {
         return static::findOne($id);
     }
@@ -59,7 +62,7 @@ class Users extends ActiveRecord implements IdentityInterface
     /**
      * @return int|string current user ID
      */
-    public function getId()
+    public function getId() : int|string
     {
         return $this->id;
     }
@@ -85,7 +88,7 @@ class Users extends ActiveRecord implements IdentityInterface
      * @param string $password
      * @return bool if password is valid for current user
      */
-    public function validatePassword($password)
+    public function validatePassword($password) : bool
     {
         return \Yii::$app->security->validatePassword($password, $this->password);
     }
@@ -93,7 +96,7 @@ class Users extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName() : string
     {
         return 'users';
     }
@@ -101,7 +104,7 @@ class Users extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules() : array
     {
         return [
             [['email', 'name', 'password'], 'required'],
@@ -130,7 +133,7 @@ class Users extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels() : array
     {
         return [
             'id' => 'ID',
@@ -312,7 +315,7 @@ class Users extends ActiveRecord implements IdentityInterface
      *
      * @return string|null возвращает среднюю оценку всех отзывов
      */
-    public function getAverageRating()
+    public function getAverageRating() : string|null
     {
         $reviews = Reviews::find()->where(['user_id_executor' => $this->id])->all();
 
@@ -341,7 +344,7 @@ class Users extends ActiveRecord implements IdentityInterface
      *
      * @return string id исполнителей, у которых есть отзывы
      */
-    public function getUserIdExecutor()
+    public function getUserIdExecutor() : int|string
     {
         $id = Reviews::find()->select('user_id_executor')->distinct()->column();
 
@@ -359,7 +362,7 @@ class Users extends ActiveRecord implements IdentityInterface
      *
      * @return string id исполнителей, которые находятся в избранном
      */
-    public function getFavoritesId()
+    public function getFavoritesId() : int|string
     {
         $id = Favorites::find()->select('user_id_executor')->distinct()->column();
 
@@ -372,12 +375,10 @@ class Users extends ActiveRecord implements IdentityInterface
         return $executor;
     }
 
-    private $_user;
-
     /**
      * Возвращает пользователя из БД по email
      *
-     * @return object данные пользователя по email
+     * @return mixed данные пользователя по email
      */
     public function getUser()
     {
@@ -387,8 +388,6 @@ class Users extends ActiveRecord implements IdentityInterface
 
         return $this->_user;
     }
-
-    public $avatar;
 
     /**
      * Сохраняет файл в нужную директорию и присваивает имя файлу в данной модели

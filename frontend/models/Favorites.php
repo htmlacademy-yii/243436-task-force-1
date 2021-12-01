@@ -18,7 +18,7 @@ class Favorites extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName() : string
     {
         return 'favorites';
     }
@@ -26,7 +26,7 @@ class Favorites extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules() : array
     {
         return [
             [['user_id_create', 'user_id_executor'], 'required'],
@@ -41,7 +41,7 @@ class Favorites extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels() : array
     {
         return [
             'id' => 'ID',

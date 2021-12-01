@@ -18,7 +18,7 @@ class Categories extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName() : string
     {
         return 'categories';
     }
@@ -26,7 +26,7 @@ class Categories extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules() : array
     {
         return [
             [['name', 'icon'], 'required'],
@@ -38,7 +38,7 @@ class Categories extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels() : array
     {
         return [
             'id' => 'ID',
@@ -70,7 +70,7 @@ class Categories extends \yii\db\ActiveRecord
     /**
      * @return array возвращает список категорий
      */
-    public function categoryList()
+    public function categoryList() : array
     {
         $category_list = [];
 

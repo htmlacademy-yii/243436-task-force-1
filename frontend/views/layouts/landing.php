@@ -14,8 +14,6 @@
         <meta charset="<?= Yii::$app->charset ?>">
         <?php $this->registerCsrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/style.css">
         <?php $this->head() ?>
     </head>
     <body class="landing23">
@@ -298,7 +296,6 @@
             </section>
         </div>
         <div class="overlay"></div>
-        <script src="js/main.js"></script>
     <?php $this->endBody() ?>
     </body>
     </html>

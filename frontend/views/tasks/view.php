@@ -264,14 +264,17 @@
     <?php endif; ?>
 </section>
 
-<script src="https://api-maps.yandex.ru/2.1/?apikey=<?= \Yii::$app->params['apikey']; ?>&lang=ru_RU"></script>
-<script>
-    ymaps.ready(init);
-    function init(){
-        var myMap = new ymaps.Map("map", {
-            center: [<?= $tasks->lat; ?>, <?= $tasks->lon; ?>],
-            zoom: 15
-        });
-    }
-</script>
+<span class="lat_data" style="display: none;"><?= $tasks->lat; ?></span>
+<span class="lon_data" style="display: none;"><?= $tasks->lon; ?></span>
 
+<?php
+    $this->registerJsFile(
+        "https://api-maps.yandex.ru/2.1/?apikey=".\Yii::$app->params['apikey']."&lang=ru_RU",
+        ['depends' => 'yii\web\YiiAsset']
+    );
+
+    $this->registerJsFile(
+        '@web/js/maps.js',
+        ['depends' => 'yii\web\YiiAsset']
+    );
+?>

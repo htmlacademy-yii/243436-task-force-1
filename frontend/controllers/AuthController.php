@@ -9,7 +9,7 @@ class AuthController extends Controller
     /**
      * Вызов метода авторизации, после ответа клиента
      */
-    public function actions()
+    public function actions() : array
     {
         return [
             'auth' => [

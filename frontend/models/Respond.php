@@ -21,7 +21,7 @@ class Respond extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName() : string
     {
         return 'respond';
     }
@@ -29,7 +29,7 @@ class Respond extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules() : array
     {
         return [
             [['task_id', 'user_id_executor', 'budget'], 'integer'],
@@ -49,7 +49,7 @@ class Respond extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels() : array
     {
         return [
             'id' => 'ID',

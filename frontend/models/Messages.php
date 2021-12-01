@@ -22,7 +22,7 @@ class Messages extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName() : string
     {
         return 'messages';
     }
@@ -30,7 +30,7 @@ class Messages extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules() : array
     {
         return [
             [['message'], 'required'],
@@ -50,7 +50,7 @@ class Messages extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels() : array
     {
         return [
             'id' => 'ID',
@@ -65,7 +65,7 @@ class Messages extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function fields()
+    public function fields() : array
     {
         return [
             'id',

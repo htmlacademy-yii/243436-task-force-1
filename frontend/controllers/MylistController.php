@@ -16,8 +16,6 @@ class MylistController extends SecuredController
     {
         $this->view->title = 'Мои задания';
 
-        $filter = '';
-
         if ($status === 'performed') {
             $filter = Task::STATUS_PERFORMED;
         } elseif ($status === 'new') {

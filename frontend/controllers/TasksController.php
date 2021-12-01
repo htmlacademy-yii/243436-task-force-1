@@ -13,7 +13,6 @@ use Taskforce\BusinessLogic\Task;
 use Taskforce\BusinessLogic\Email;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
-use yii\data\ActiveDataProvider;
 
 class TasksController extends SecuredController
 {
@@ -32,68 +31,7 @@ class TasksController extends SecuredController
 
         $tasksForm->load(\Yii::$app->request->get());
 
-        $user = Users::find()->where(['id' => \Yii::$app->user->getId()])->one();
-
-        $session = \Yii::$app->session;
-
-        if (\Yii::$app->request->get('city')) {
-            $session['city_id'] = \Yii::$app->request->get('city');
-        }
-
-        $tasks = Tasks::find()
-            ->where(['status' => 'Новое'])
-            ->joinWith(['category', 'city', 'creator', 'executor'])
-            ->orderBy('date_add DESC');
-
-        if (\Yii::$app->request->get('city') || $session['city_id']) {
-            $tasks->andWhere(
-                "tasks.city_id is null or tasks.city_id = :city_id",
-                [":city_id" => $session['city_id'] ?? $user['city_id']]
-            );
-        }
-
-        if ($tasksForm->category) {
-            $tasks->andWhere(['category_id' => $tasksForm->category]);
-        }
-
-        if (is_array($tasksForm->more)) {
-            $conditions = [];
-
-            if (in_array($tasksForm::NOT_EXECUTOR, $tasksForm->more)) {
-                $conditions[] = 'user_id_executor IS NULL';
-            }
-            if (in_array($tasksForm::DISTANT_WORK, $tasksForm->more)) {
-                $conditions[] = 'tasks.city_id IS NULL';
-            }
-
-            if (count($conditions) > 0) {
-                $tasks->andWhere(implode(" or ", $conditions));
-            }
-        }
-
-        if ($tasksForm->period === $tasksForm::DAY) {
-            $tasks->andWhere('tasks.date_add BETWEEN CURDATE() AND (CURDATE() + 1)');
-        }
-
-        if ($tasksForm->period === $tasksForm::WEEK) {
-            $tasks->andWhere('tasks.date_add >= DATE_SUB(NOW(), INTERVAL 7 DAY)');
-        }
-
-        if ($tasksForm->period === $tasksForm::MONTH) {
-            $tasks->andWhere('tasks.date_add >= DATE_SUB(NOW(), INTERVAL 30 DAY)');
-        }
-
-        if ($tasksForm->search) {
-            $tasks->andWhere(['like', 'tasks.name', $tasksForm->search]);
-        }
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $tasks,
-            'pagination' => [
-                'pageSize' => 5,
-                'pageSizeParam' => false
-            ]
-        ]);
+        $dataProvider = $tasksForm->filter();
 
         return $this->render('index', compact('tasksForm', 'categories', 'dataProvider'));
     }
@@ -158,7 +96,6 @@ class TasksController extends SecuredController
             ->where(['task_id' => $id])
             ->all();
 
-
         $responds = "";
 
         $allRespond = Respond::find()
@@ -171,7 +108,6 @@ class TasksController extends SecuredController
             $responds = $allRespond;
         }
 
-
         $oneRespond = Respond::find()
             ->where(['task_id' => $id, 'user_id_executor' => \Yii::$app->user->getId()])
             ->joinWith(['executor'])
@@ -181,8 +117,6 @@ class TasksController extends SecuredController
         && \Yii::$app->user->getId() === $oneRespond[0]->user_id_executor) {
             $responds = $oneRespond;
         }
-
-        $selectUser = '';
 
         $user = Users::find()
             ->where(['users.id' => \Yii::$app->user->getId()])

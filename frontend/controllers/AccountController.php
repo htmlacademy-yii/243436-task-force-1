@@ -41,8 +41,6 @@ class AccountController extends SecuredController
 
         $session = \Yii::$app->session;
 
-        $photoWork = '';
-
         if (\Yii::$app->request->getIsPost()) {
             $user->load(\Yii::$app->request->post());
             $tasksForm->load(\Yii::$app->request->post());

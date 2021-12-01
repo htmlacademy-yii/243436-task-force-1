@@ -17,7 +17,7 @@ class UsersAndCategories extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName() : string
     {
         return 'users_and_categories';
     }
@@ -25,7 +25,7 @@ class UsersAndCategories extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules() : array
     {
         return [
             [['user_id', 'category_id'], 'required'],
@@ -40,7 +40,7 @@ class UsersAndCategories extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels() : array
     {
         return [
             'user_id' => 'User ID',
@@ -71,7 +71,7 @@ class UsersAndCategories extends \yii\db\ActiveRecord
     /**
      * @return array возвращает список категорий
      */
-    public function usersAndCategoriesList($id)
+    public function usersAndCategoriesList($id) : array
     {
         $user_id_list = [];
 

@@ -13,7 +13,7 @@ class AuthForm extends Model
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules() : array
     {
         return [
             [['email', 'password'], 'required'],
@@ -28,7 +28,7 @@ class AuthForm extends Model
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels() : array
     {
         return [
             'email' => 'Email',
@@ -79,7 +79,7 @@ class AuthForm extends Model
      *
      * @return object данные пользователя по email
      */
-    public function getUser()
+    public function getUser() : object
     {
         if ($this->_user === null) {
             $this->_user = Users::findOne(['email' => $this->email]);

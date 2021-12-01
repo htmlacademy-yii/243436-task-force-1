@@ -19,7 +19,7 @@ class Cities extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName() : string
     {
         return 'cities';
     }
@@ -27,7 +27,7 @@ class Cities extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules() : array
     {
         return [
             [['name', 'lat', 'lon'], 'required'],
@@ -39,7 +39,7 @@ class Cities extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels() : array
     {
         return [
             'id' => 'ID',
@@ -72,7 +72,7 @@ class Cities extends \yii\db\ActiveRecord
     /**
      * @return array возвращает список городов
      */
-    public function citiesList()
+    public function citiesList() : array
     {
         $cities_list = [];
 

@@ -53,6 +53,8 @@ class LandingController extends Controller
 
     /**
      * Разлогирование пользователя
+     *
+     * @return \yii\web\Response
      */
     public function actionLogout()
     {

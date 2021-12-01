@@ -14,7 +14,7 @@ class ChangePasswordForm extends Model
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules() : array
     {
         return [
             [['password', 'password_new', 'password_repeat'], 'string', 'max' => 64],
@@ -30,7 +30,7 @@ class ChangePasswordForm extends Model
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels() : array
     {
         return [
             'password' => 'Текущий пароль',
@@ -159,7 +159,7 @@ class ChangePasswordForm extends Model
      *
      * @return object данные пользователя по id
      */
-    public function getUser()
+    public function getUser() : object
     {
         if ($this->_user === null) {
             $this->_user = Users::findOne(['id' => \Yii::$app->user->getId()]);

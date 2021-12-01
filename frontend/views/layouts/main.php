@@ -2,12 +2,14 @@
     use yii\helpers\Html;
     use yii\helpers\Url;
     use frontend\assets\AppAsset;
+    use frontend\assets\AutoComplete;
     use yii\widgets\ActiveForm;
     use Taskforce\BusinessLogic\Task;
     use frontend\components\NoticeWidget;
     use frontend\components\CityWidget;
 
     AppAsset::register($this);
+    AutoComplete::register($this);
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -17,8 +19,6 @@
         <?php $this->registerCsrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
-        <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.6/dist/autoComplete.min.js">
-        </script>
     </head>
     <body>
     <?php $this->beginBody() ?>

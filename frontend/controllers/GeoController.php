@@ -14,7 +14,6 @@ class GeoController extends Controller
     public function actionIndex()
     {
         if (\Yii::$app->request->post('q')) {
-
             $geoCoder = Yii::$app->geoCoder;
 
             $test = $geoCoder->getCityData(\Yii::$app->request->post('q'));

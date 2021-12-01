@@ -304,5 +304,4 @@
     $this->registerJsFile(
         '@web/js/account.js',
         ['depends' => 'yii\web\YiiAsset']
-    );
-?>
+    ); ?>

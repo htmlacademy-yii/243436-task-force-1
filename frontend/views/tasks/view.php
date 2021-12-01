@@ -276,5 +276,4 @@
     $this->registerJsFile(
         '@web/js/maps.js',
         ['depends' => 'yii\web\YiiAsset']
-    );
-?>
+    ); ?>
